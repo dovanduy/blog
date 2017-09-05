@@ -138,4 +138,8 @@ class PostController extends Controller
         $post->save();
         return $post;
     }
+
+    public function validateTitleSeo(Request $request) {
+        return $request->title_seo;
+    }
 }

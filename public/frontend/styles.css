@@ -10,59 +10,15 @@ a:hover {
     text-decoration: none;
 }
 
+p[data-id], p[data-id] ~ p {
+    margin-bottom: 0;
+}
 .sticky {
     top: 0;
     position: fixed;
 }
 
-.ct {
-    padding: 3px;
-    font-size: 13px;
-    border-radius: 3px;
-    font-weight: 500;
-}
-
-.ct-1 {
-    background: #f1c40f;
-}
-
-.ct-2 {
-    background: #f39c12;
-}
-
-.ct-3 {
-    background: #2ecc71;
-}
-
-.ct-4 {
-    background: #27ae60;
-}
-
-.ct-5 {
-    background: #e67e22;
-}
-
-.ct-6 {
-    background: #d35400;
-}
-
-.ct-7 {
-    background: #3498db;
-}
-
-.ct-8 {
-    background: #2980b9;
-}
-
-.ct-9 {
-    background: #ea6153;
-}
-
-.ct-10 {
-    background: #c0392b;
-}
-
-#sidebar-title, #content-title {
+.sidebar-title, .content-title {
     font-size: 20px;
     background: #ccc;
     padding: 5px 10px;
@@ -71,26 +27,26 @@ a:hover {
     margin-bottom: 0;
 }
 
-#content-title {
+.content-title {
     margin-bottom: 10px;
 }
 
-#content-title i {
+.content-title i {
     margin-right: 5px;
 }
 
-#item-sidebar {
+.item-sidebar {
     border: 1px solid #ccc;
     border-bottom: 0;
     padding: 5px 10px;
     position: relative;
 }
 
-#item-sidebar:last-child {
+.item-sidebar:last-child {
     border-bottom: 1px solid #ccc;
 }
 
-#item-sidebar #rank-story-sidebar-1 {
+.rank-story-sidebar {
     position: absolute;
     padding: 3px 8px;
     background: black;
@@ -99,47 +55,11 @@ a:hover {
     right: 0;
 }
 
-#item-sidebar #rank-story-sidebar-2 {
-    position: absolute;
-    padding: 3px 8px;
-    background: black;
-    color: white;
-    bottom: 0;
-    right: 0;
-}
-
-#item-sidebar #rank-story-sidebar-3 {
-    position: absolute;
-    padding: 3px 8px;
-    background: black;
-    color: white;
-    bottom: 0;
-    right: 0;
-}
-
-#item-sidebar #rank-story-sidebar-4 {
-    position: absolute;
-    padding: 3px 8px;
-    background: black;
-    color: white;
-    bottom: 0;
-    right: 0;
-}
-
-#item-sidebar #rank-story-sidebar-5 {
-    position: absolute;
-    padding: 3px 8px;
-    background: black;
-    color: white;
-    bottom: 0;
-    right: 0;
-}
-
-#item-sidebar #stats {
+.item-sidebar .stats {
     font-size: 13px;
 }
 
-p#name {
+p.name {
     margin-bottom: 0px;
 }
 
@@ -180,11 +100,11 @@ p#name {
     margin-bottom: 8px;
 }
 
-.wrap main .content .item p#name {
+.wrap main .content .item p.name {
     font-weight: bold;
 }
 
-.wrap main .content .item p#description {
+.wrap main .content .item p.description {
     margin-bottom: 0px;
     border-top: 1px solid #ccc;
 }

@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="short_content">Title seo</label>
-                <textarea class="form-control" id="short_content" name="title_seo" placeholder="Title seo" required></textarea>
+                <input class="form-control" id="title_seo" name="title_seo" placeholder="Title seo" required>
             </div>
             <div class="form-group">
                 <label for="content">Nội dung</label>
@@ -45,7 +45,27 @@
 @endsection
 @section('js')
     <script type="text/javascript">
-        CKEDITOR.replace('short_content');
+//        CKEDITOR.replace('short_content');
         CKEDITOR.replace('content');
+        $(document).ready(function () {
+            $('#title').on('keyup', function () {
+                var title_seo = $(this).val();
+                console.log(title_seo.replace(/ /g, '-'));
+                $.ajax({
+                    type:'POST',
+                    url: '{{ route('ajax.validateTitleSeo') }}',
+                    data: {"_token": "{{ csrf_token() }}",
+                        'title_seo':title_seo},
+                    dataType:'JSON',
+                    success: function (rsp) {
+
+                    },
+                    error: function () {
+                        location.reload();
+                    },
+                    timeout: 3000
+                })
+            });
+        });
     </script>
 @endsection

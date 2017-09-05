@@ -16,10 +16,10 @@
     {{--font awesome--}}
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.css')}}" />
+
     {{--my style--}}
     <link href="{{asset('frontend/styles.css')}}" rel="stylesheet" />
-
-    <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.css')}}" />
     @yield('css')
 
 </head>
