@@ -1,0 +1,261 @@
+body {
+    background: #dadada;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.sticky {
+    top: 0;
+    position: fixed;
+}
+
+.ct {
+    padding: 3px;
+    font-size: 13px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.ct-1 {
+    background: #f1c40f;
+}
+
+.ct-2 {
+    background: #f39c12;
+}
+
+.ct-3 {
+    background: #2ecc71;
+}
+
+.ct-4 {
+    background: #27ae60;
+}
+
+.ct-5 {
+    background: #e67e22;
+}
+
+.ct-6 {
+    background: #d35400;
+}
+
+.ct-7 {
+    background: #3498db;
+}
+
+.ct-8 {
+    background: #2980b9;
+}
+
+.ct-9 {
+    background: #ea6153;
+}
+
+.ct-10 {
+    background: #c0392b;
+}
+
+#sidebar-title, #content-title {
+    font-size: 20px;
+    background: #ccc;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+#content-title {
+    margin-bottom: 10px;
+}
+
+#content-title i {
+    margin-right: 5px;
+}
+
+#item-sidebar {
+    border: 1px solid #ccc;
+    border-bottom: 0;
+    padding: 5px 10px;
+    position: relative;
+}
+
+#item-sidebar:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+#item-sidebar #rank-story-sidebar-1 {
+    position: absolute;
+    padding: 3px 8px;
+    background: black;
+    color: white;
+    bottom: 0;
+    right: 0;
+}
+
+#item-sidebar #rank-story-sidebar-2 {
+    position: absolute;
+    padding: 3px 8px;
+    background: black;
+    color: white;
+    bottom: 0;
+    right: 0;
+}
+
+#item-sidebar #rank-story-sidebar-3 {
+    position: absolute;
+    padding: 3px 8px;
+    background: black;
+    color: white;
+    bottom: 0;
+    right: 0;
+}
+
+#item-sidebar #rank-story-sidebar-4 {
+    position: absolute;
+    padding: 3px 8px;
+    background: black;
+    color: white;
+    bottom: 0;
+    right: 0;
+}
+
+#item-sidebar #rank-story-sidebar-5 {
+    position: absolute;
+    padding: 3px 8px;
+    background: black;
+    color: white;
+    bottom: 0;
+    right: 0;
+}
+
+#item-sidebar #stats {
+    font-size: 13px;
+}
+
+p#name {
+    margin-bottom: 0px;
+}
+
+.wrap {
+    max-width: 992px;
+    margin: auto;
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.03);
+}
+
+.wrap header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.wrap header .row {
+    height: 100%;
+}
+
+.wrap main {
+    background: white;
+}
+
+.wrap main .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.wrap main .content {
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.wrap main .content .item {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.wrap main .content .item p#name {
+    font-weight: bold;
+}
+
+.wrap main .content .item p#description {
+    margin-bottom: 0px;
+    border-top: 1px solid #ccc;
+}
+
+.wrap main .content .pagination {
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.wrap main .sidebar {
+    padding-top: 15px;
+}
+
+#story .breadcrumb {
+    background: #ccc;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+#story .breadcrumb a {
+    color: black;
+}
+
+#story .description-story {
+    margin-top: 1px;
+    margin-bottom: -1px;
+}
+
+#story .cung-the-loai {
+    margin-bottom: 20px;
+}
+
+#stats i {
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .wrap main .sidebar {
+        padding-top: 0;
+    }
+}
+
+.wrap main .sidebar i {
+    margin-right: 5px;
+}
+
+.wrap main .sidebar .list-categories {
+    margin-bottom: 20px;
+}
+
+.wrap main .sidebar .top-story {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 60px !important;
+    overflow: auto;
+}
+
+@media (max-width: 767px) {
+    .wrap main .sidebar .top-story {
+        margin-bottom: 25px;
+    }
+}
+
+.wrap footer {
+    background: #374760;
+    height: 50px;
+}
+
+.wrap footer span {
+    line-height: 50px;
+    float: right;
+    color: white;
+    padding-right: 15px;
+}
