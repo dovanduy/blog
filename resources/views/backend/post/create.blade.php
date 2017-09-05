@@ -48,23 +48,27 @@
 //        CKEDITOR.replace('short_content');
         CKEDITOR.replace('content');
         $(document).ready(function () {
+            var timeout = null;
             $('#title').on('keyup', function () {
+                clearTimeout(timeout);
                 var title_seo = $(this).val();
                 console.log(title_seo.replace(/ /g, '-'));
-                $.ajax({
-                    type:'POST',
-                    url: '{{ route('ajax.validateTitleSeo') }}',
-                    data: {"_token": "{{ csrf_token() }}",
-                        'title_seo':title_seo},
-                    dataType:'JSON',
-                    success: function (rsp) {
+                timeout = setTimeout(function () {
+                    $.ajax({
+                        type:'POST',
+                        url: '{{ route('ajax.validateTitleSeo') }}',
+                        data: {"_token": "{{ csrf_token() }}",
+                            'title_seo':title_seo},
+                        dataType:'JSON',
+                        timeout: 3000,
+                        success: function (rsp) {
 
-                    },
-                    error: function () {
-                        location.reload();
-                    },
-                    timeout: 3000
-                })
+                        },
+                        error: function () {
+                            location.reload();
+                        }
+                    })
+                }, 1000)
             });
         });
     </script>
