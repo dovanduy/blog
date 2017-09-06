@@ -60,12 +60,12 @@
                         data: {"_token": "{{ csrf_token() }}",
                             'title_seo':title_seo},
                         dataType:'JSON',
-                        timeout: 3000,
+                        timeout: 1000,
                         success: function (rsp) {
-
+                            console.log(rsp);
                         },
                         error: function () {
-                            location.reload();
+//                            location.reload();
                         }
                     })
                 }, 1000)

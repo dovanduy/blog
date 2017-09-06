@@ -140,6 +140,7 @@ class PostController extends Controller
     }
 
     public function validateTitleSeo(Request $request) {
-        return $request->title_seo;
+        $title_seo = changeTitle($request->title_seo);
+        return $title_seo;
     }
 }

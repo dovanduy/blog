@@ -5,16 +5,6 @@
 //         "app/function/function.php"
 // ]
 // Chạy cmd : composer  dumpautoload
-function changeTitle($str,$strSymbol='-',$case=MB_CASE_LOWER){// MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER
-    $str=trim($str);
-    if ($str=="") return "";
-    $str =str_replace('"','',$str);
-    $str =str_replace("'",'',$str);
-    $str = stripUnicode($str);
-    $str = mb_convert_case($str,$case,'utf-8');
-    $str = preg_replace('/[\W|_]+/',$strSymbol,$str);
-    return $str;
-}
 function stripUnicode($str){
     if(!$str) return '';
     //$str = str_replace($a, $b, $str);
@@ -70,6 +60,17 @@ function stripUnicode($str){
         $arr=explode("|",$codau);
         $str = str_replace($arr,$khongdau,$str);
     }
+    return $str;
+}
+//chang title
+function changeTitle($str,$strSymbol='-',$case=MB_CASE_LOWER){// MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER
+    $str=trim($str);
+    if ($str=="") return "";
+    $str =str_replace('"','',$str);
+    $str =str_replace("'",'',$str);
+    $str = stripUnicode($str);
+    $str = mb_convert_case($str,$case,'utf-8');
+    $str = preg_replace('/[\W|_]+/',$strSymbol,$str);
     return $str;
 }
 
