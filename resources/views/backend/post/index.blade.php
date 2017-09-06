@@ -161,10 +161,10 @@ $role_bus = 3;
                                         {{csrf_field()}}
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Sửa Nội dung ngắn</h4>
+                                            <h4 class="modal-title">Title SEO</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <textarea class="aj-text-page" name="short-content" id="short-content-{{$key}}">{!! ($post->title_seo) !!}</textarea>
+                                            <input class="aj-text-page" name="title_seo" id="title_seo-{{$key}}" value="{!! ($post->title_seo) !!}">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit"  data-id="{{$post->id}}" class="btn btn-default sm-short-content-page">Thay đổi</button>
@@ -189,7 +189,6 @@ $role_bus = 3;
     <script type="text/javascript">
         for(var i= 0; i < $('.selected-page').length; i++) {
             CKEDITOR.replace('content-' + i);
-            CKEDITOR.replace('short-content-' + i);
         }
 //short text
         function TruncateText(text)
@@ -205,7 +204,8 @@ $role_bus = 3;
             $('.sm-short-content-page').click(function () {
                 var get_id_ckeditor = $(this).closest('.aj-form-page').find('.aj-text-page').attr('id');
                 var id = $(this).data('id');
-                var title_seo = CKEDITOR.instances[get_id_ckeditor].getData();
+                var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
+                console.log(title_seo)
                 $.ajax({
                     type:'POST',
                     url: '{{ route('ajax.editShortContent') }}',
@@ -216,7 +216,7 @@ $role_bus = 3;
                     success: function (rsp) {
                         alert('Cập nhật truyện thành công!');
                         $('#short-content-after-edit-'+ rsp.id).empty();
-                        $('#short-content-after-edit-'+ rsp.id).append(TruncateText(rsp.short_content));
+                        $('#short-content-after-edit-'+ rsp.id).append(TruncateText(rsp.title_seo));
                     },
                     error: function () {
                         location.reload();

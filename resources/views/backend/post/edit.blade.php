@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="short_content">Title seo</label>
-                <textarea class="form-control" id="short_content" name="title_seo" placeholder="Nhập title seo" required>{!! $post->title_seo !!}</textarea>
+                <input class="form-control" id="title_eo" name="title_seo" placeholder="Nhập title seo" value="{!! $post->title_seo !!}" required>
             </div>
             <div class="form-group">
                 <label for="content">Nội dung</label>
@@ -45,7 +45,6 @@
 @endsection
 @section('js')
     <script type="text/javascript">
-        CKEDITOR.replace('short_content');
         CKEDITOR.replace('content');
     </script>
 @endsection
