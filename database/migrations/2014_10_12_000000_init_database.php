@@ -11,6 +11,12 @@ class InitDatabase extends Migration
      *
      * @return void
      */
+
+    public $TYPE_1 = 'Truyện người lớn';
+    public $TYPE_2 = 'Truyện loạn luân';
+    public $TYPE_3 = 'Truyện phá trinh';
+    public $TYPE_4 = 'Truyện ma';
+
     public function up()
     {
         Schema::defaultStringLength(191);
@@ -54,14 +60,15 @@ class InitDatabase extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('name_unicode');
             $table->timestamps();
         });
         // Insert type init
         $types = [
-            ['id' => 1, 'name' => 'Truyện người lớn'],
-            ['id' => 2, 'name' => 'Truyện loạn luân'],
-            ['id' => 3, 'name' => 'Truyện phá trinh'],
-            ['id' => 4, 'name' => 'Truyện ma']
+            ['id' => 1, 'name' => $this->TYPE_1, 'name_unicode' => changeTitle($this->TYPE_1)],
+            ['id' => 2, 'name' => $this->TYPE_2, 'name_unicode' => changeTitle($this->TYPE_2)],
+            ['id' => 3, 'name' => $this->TYPE_3, 'name_unicode' => changeTitle($this->TYPE_3)],
+            ['id' => 4, 'name' => $this->TYPE_4, 'name_unicode' => changeTitle($this->TYPE_4)]
         ];
 
         foreach($types as $type) {

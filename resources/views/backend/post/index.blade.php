@@ -83,7 +83,7 @@ $role_bus = 3;
             <h4 style="color: #7da8c3">Các thể loại:</h4>
             @foreach($types as $type)
                 <div class="form-group">
-                    <a href="#"><span class="fa fa-close" style="color: #ff2222"></span></a>
+                    <a href="#" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close" style="color: #ff2222"></span></a>
                     <input type="text" class="form-control" value="{{$type->name}}" disabled>
                 </div>
             @endforeach
