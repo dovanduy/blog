@@ -31,8 +31,8 @@ class PostController extends Controller
         } else {
             $posts = Post::with('Type')->orderBy('id','DESC')->where('user_id', $user_id)->paginate(10);
         }
-
-        return view('backend.post.index', compact('posts'));
+        $types = Type::all();
+        return view('backend.post.index', compact('posts', 'types'));
     }
     //Thêm truyện
     public function create() {
@@ -141,6 +141,14 @@ class PostController extends Controller
 
     public function validateTitleSeo(Request $request) {
         $title_seo = changeTitle($request->title_seo);
-        return $title_seo;
+        $val=Post::select('title_seo')->whereTitle_seo($title_seo)->get();
+
+        $rt=null;
+        if(count($val) == 0) {
+            $a[] =$title_seo;
+        } else {
+            $a[]= $title_seo . '-' . time();
+        }
+        return $a;
     }
 }

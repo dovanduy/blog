@@ -45,11 +45,11 @@
 @endsection
 @section('js')
     <script type="text/javascript">
-//        CKEDITOR.replace('short_content');
+
         CKEDITOR.replace('content');
         $(document).ready(function () {
             var timeout = null;
-            $('#title').on('keyup', function () {
+            $('#title, #title_seo').on('keyup', function () {
                 clearTimeout(timeout);
                 var title_seo = $(this).val();
                 console.log(title_seo.replace(/ /g, '-'));
@@ -62,13 +62,13 @@
                         dataType:'JSON',
                         timeout: 1000,
                         success: function (rsp) {
-                            console.log(rsp);
+                            $('#title_seo').val(rsp);
                         },
                         error: function () {
-//                            location.reload();
+                            location.reload();
                         }
                     })
-                }, 1000)
+                }, 800)
             });
         });
     </script>

@@ -24,7 +24,7 @@ class PostsTableSeeder extends Seeder
             $status = rand(0, 1);
             $post->fill([
                 'title' => $title,
-                'title_seo' => str_replace(' ', '_', $title),
+                'title_seo' => changeTitle($title),
                 'type' => $type,
                 'content' => '<p>' . $faker->realText(rand(100, 100000)) . '</p>',
                 'view' => $view,

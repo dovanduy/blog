@@ -79,6 +79,24 @@ $role_bus = 3;
             <h5>@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader) Có tất cả: <span style="color: pink"> {{$posts->total()}}</span></h5>
             <h5>Bạn có tất cả:<span style="color: pink"> {{(\App\Post::where('user_id', \Illuminate\Support\Facades\Auth::id())->count())}}</span></h5>@endif
         </div>
+        <div>
+            <h4 style="color: #7da8c3">Các thể loại:</h4>
+            @foreach($types as $type)
+                <div class="form-group">
+                    <a href="#"><span class="fa fa-close" style="color: #ff2222"></span></a>
+                    <input type="text" class="form-control" value="{{$type->name}}" disabled>
+                </div>
+            @endforeach
+            <div class="form-group">
+                <h5 style="color: #9b8a30">Thêm thể loại:</h5>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="type" placeholder="Thêm thể loại">
+                    </div>
+                    <button type="submit" class="btn btn-default">Thêm</button>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="col-md-10 col-sm-10 col-xs-12">
         <div class="x_panel tile fixed_height_320 widget-custom-padding">
@@ -164,7 +182,7 @@ $role_bus = 3;
                                             <h4 class="modal-title">Title SEO</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="aj-text-page" name="title_seo" id="title_seo-{{$key}}" value="{!! ($post->title_seo) !!}">
+                                            <input class="aj-text-page form-control" name="title_seo" id="title_seo-{{$key}}" value="{!! ($post->title_seo) !!}">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit"  data-id="{{$post->id}}" class="btn btn-default sm-short-content-page">Thay đổi</button>
