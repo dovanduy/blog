@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 255);
             $table->string('title_seo', 255);
             $table->integer('type')->references('id')->on('types')->default(1);
+            $table->string('image', 255);
             $table->longText('content');
             $table->integer('view')->default(0);
             $table->integer('user_id')->references('id')->on('users');
