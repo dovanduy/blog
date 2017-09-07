@@ -32,7 +32,7 @@ class PostController extends Controller
             $posts = Post::with('Type')->orderBy('id','DESC')->where('user_id', $user_id)->paginate(10);
         }
         $types = Type::all();
-        return view('backend.post.index', compact('posts', 'types'));
+        return view('backend.post.index', compact('posts', 'types', 'role'));
     }
     //Thêm truyện
     public function create() {
@@ -108,6 +108,28 @@ class PostController extends Controller
             return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
         } elseif ($ar_user_id['id'] == Auth::id() &&  $role == $this->role_bus) {} else {
             return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+        }
+
+    }
+
+    //xóa kiểu
+    public function typeDelete($id) {
+        $role = '';
+        $user_id_ = Post::with('User')->whereId($id)->get();
+        $ar_user_id = Post::whereId($id)->pluck('user_id');
+        foreach ($user_id_ as $val) {
+            if ($val->User()->first() == null) {
+                $role = 1;
+            } else {
+                $role =  $val->User()->first()->role;
+            }
+        }
+        if ($role == $this->role_admin || $role == $this->role_leader) {
+            $post = Type::find($id);
+            $post->delete();
+            return redirect(route('post'))->with('mes', 'Đã xóa thể loại...');
+        } elseif ($ar_user_id['id'] == Auth::id() &&  $role == $this->role_bus) {} else {
+            return redirect(route('post'))->with('er', 'Bạn không có quyền...');
         }
 
     }

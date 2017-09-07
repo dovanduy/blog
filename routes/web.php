@@ -36,5 +36,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('ajaxEditContent', 'Backend\PostController@ajaxEditContent')->name('ajax.editContent');
         Route::post('ajaxEditStatus', 'Backend\PostController@ajaxEditStatus')->name('ajax.editStatus');
         Route::post('validateTitleSeo', 'Backend\PostController@validateTitleSeo')->name('ajax.validateTitleSeo');
+        //delete type
+        Route::get('deleteType/{id}', 'Backend\PostController@typeDelete');
     });
 });
