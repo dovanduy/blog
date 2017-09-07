@@ -83,17 +83,18 @@ $role_bus = 3;
             <h4 style="color: #7da8c3">Các thể loại:</h4>
             @foreach($types as $type)
                 <div class="form-group">
-                    <a href="#" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close" style="color: #ff2222"></span></a>
+                    <a href="{{url('admin/post/typeDelete/' . $type->id)}}" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close" style="color: #ff2222"></span></a>
                     <input type="text" class="form-control" value="{{$type->name}}" disabled>
                 </div>
             @endforeach
             <div class="form-group">
                 <h5 style="color: #9b8a30">Thêm thể loại:</h5>
-                <form class="form-inline">
+                <form class="form-inline" method="POST" action="{{route('addType')}}">
+                    {{csrf_field()}}
                     <div class="form-group">
-                        <input type="text" class="form-control" id="type" placeholder="Thêm thể loại">
+                        <input type="text" class="form-control" id="type" name="type" placeholder="Thêm thể loại">
                     </div>
-                    <button type="submit" class="btn btn-default">Thêm</button>
+                    <button type="submit" class="btn btn-default" id="add_type">Thêm</button>
                 </form>
             </div>
         </div>
@@ -125,7 +126,7 @@ $role_bus = 3;
                         <tr id="{{$post->id}}" class="selected-page">
                             <td title="Ngày cập nhật truyện: {{$post->updated_at}}">{{$key+1}}</td>
                             <td>{{ str_limit($post->title, $limit = 100, $end='...') }}</td>
-                            <td>{!! $post->Type()->first()->name !!}</td>
+                            <td>{!! ($post->Type['name']) !!}</td>
                             <td id="short-content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-short-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
                             <td id="content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
                             @if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
@@ -299,5 +300,6 @@ $role_bus = 3;
         setTimeout(function () {
             $('.mes-page').empty();
         }, 1500);
+        //
     </script>
 @endsection

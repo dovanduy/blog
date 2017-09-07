@@ -42,10 +42,10 @@ class PostController extends Controller
 
     public function postCreate(Request $request) {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $count_title_seo = Post::whereTitle_seo(str_replace(' ', '_', $request->title))->count();
+        $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
         $post = new Post();
         $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = stripUnicode(str_replace(' ', '_', $request->title) + '_' + time()) : stripUnicode($post->title_seo = str_replace(' ', '_', $request->title));
+        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) + '-' . time() : changeTitle($request->title);
         $post->title_seo = $request->title_seo;
         $post->content = $request->content_;
         $post->type = $request->type;
@@ -80,7 +80,7 @@ class PostController extends Controller
         $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
         $post = Post::find($id);
         $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = stripUnicode(str_replace(' ', '_', $request->title) + '_' + time()) : stripUnicode($post->title_seo = str_replace(' ', '_', $request->title));
+        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
         $post->title_seo = $request->title_seo;
         $post->content = $request->content_;
         $post->type = $request->type;
@@ -131,7 +131,6 @@ class PostController extends Controller
         } elseif ($ar_user_id['id'] == Auth::id() &&  $role == $this->role_bus) {} else {
             return redirect(route('post'))->with('er', 'Bạn không có quyền...');
         }
-
     }
 
     public function ajaxEditShortContent(Request $request) {
@@ -172,5 +171,14 @@ class PostController extends Controller
             $a[]= $title_seo . '-' . time();
         }
         return $a;
+    }
+
+    public function addType(Request $request) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $type = new Type();
+        $type->name = $request->type;
+        $type->name_unicode = changeTitle($request->type);
+        $type->save();
+        return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
     }
 }
