@@ -49,7 +49,7 @@ class InitDatabase extends Migration
         });
 
         // Insert user init
-        DB::table('users')->insert([
+        DB::table('users')->insert([[
             'name' => 'Giám mục',
             'email' => 'admin',
             'password' => bcrypt('story123'),
@@ -57,7 +57,13 @@ class InitDatabase extends Migration
         ],
             [
                 'name' => 'Cố vấn',
-                'email' => 'manager',
+                'email' => 'manager1',
+                'password' => bcrypt('manager123'),
+                'role' => 2
+            ],
+            [
+                'name' => 'Thái giám',
+                'email' => 'manager2',
                 'password' => bcrypt('manager123'),
                 'role' => 2
             ],
@@ -66,7 +72,7 @@ class InitDatabase extends Migration
                 'email' => 'membership',
                 'password' => bcrypt('membership123'),
                 'role' => 3
-            ]);
+            ]]);
 
 //        create type table
         Schema::create('types', function (Blueprint $table) {
