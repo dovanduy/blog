@@ -85,6 +85,7 @@ class PostController extends Controller
     //Sửa truyện
     public function edit($id)
     {
+        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -94,44 +95,68 @@ class PostController extends Controller
             $post = Post::find($id);
             return view('backend.post.edit', compact('types', 'post'));
         } else {
-            if ($this->role($user_id) == $this->role_bus && in_array($id, json_decode($story_user_id))) {
+            if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_user_id))) {
                 $types = Type::all();
                 $post = Post::find($id);
                 return view('backend.post.edit', compact('types', 'post'));
-            }
-        }
-        $user_id_ = Post::with('User')->whereId($id)->get();
-        $ar_user_id = Post::whereId($id)->pluck('user_id');
-        foreach ($user_id_ as $val) {
-            if ($val->User()->first() == null) {
-                $role = 1;
-            } else {
-                $role = $val->User()->first()->role;
-            }
-        }
-        if ($role == $this->role_admin || $role == $this->role_leader) {
-            $types = Type::all();
-            $post = Post::find($id);
-            return view('backend.post.edit', compact('types', 'post'));
-        } elseif ($ar_user_id['id'] == Auth::id() && $role == $this->role_bus) {
-        } else {
-            return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+            } elseif ($this->role($user_id)[0] == $this->role_leader) {
+                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
+                    $types = Type::all();
+                    $post = Post::find($id);
+                    return view('backend.post.edit', compact('types', 'post'));
+                } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+            } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
         }
     }
 
     public function postEdit($id, Request $request)
     {
-        $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
-        $post = Post::find($id);
-        $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
-        $post->title_seo = $request->title_seo;
-        $post->content = $request->content_;
-        $post->type = $request->type;
-        $post->user_id = Auth::id();
-        $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
-        $post->save();
-        return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
+        $user_id = Auth::id();
+        $story_user_id = Post::whereId($id)->pluck('user_id');
+        $all_story_id = Post::pluck('id');
+
+        if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
+            $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
+            $post = Post::find($id);
+            $post->title = $request->title;
+            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
+            $post->title_seo = $request->title_seo;
+            $post->content = $request->content_;
+            $post->type = $request->type;
+            $post->user_id = Auth::id();
+            $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+            $post->save();
+            return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+        } else {
+            if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_user_id))) {
+                $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
+                $post = Post::find($id);
+                $post->title = $request->title;
+                $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
+                $post->title_seo = $request->title_seo;
+                $post->content = $request->content_;
+                $post->type = $request->type;
+                $post->user_id = Auth::id();
+                $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+                $post->save();
+                return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+            } elseif ($this->role($user_id)[0] == $this->role_leader) {
+                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
+                    $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
+                    $post = Post::find($id);
+                    $post->title = $request->title;
+                    $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
+                    $post->title_seo = $request->title_seo;
+                    $post->content = $request->content_;
+                    $post->type = $request->type;
+                    $post->user_id = Auth::id();
+                    $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+                    $post->save();
+                    return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+                } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+            } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+        }
     }
 
     //xóa truyện
