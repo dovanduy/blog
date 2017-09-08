@@ -22,24 +22,35 @@ class PostController extends Controller
         $this->middleware('auth');
     }
 
+    //id truyen trong role =2 ko phai id cua role 2
+    public function authors_not_curent() {
+        $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
+            ->where('posts.user_id', '<>', Auth::id())
+            ->where('users.role', '=', $this->role_leader)
+            ->pluck('posts.id');
+        return json_decode($authors_not_curent);
+    }
+    //id truyen trong role =2 và =3
+
+    //all role
+    public function role($user_id) {
+        $role = User::where('id', $user_id)->pluck('role');
+        return json_decode($role);
+    }
+
     public function index()
     {
         $user_id = Auth::id();
-        $role = User::where('id', $user_id)->pluck('role');
         $authors = Post::with('User')->select('user_id')->get();
-        $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
-            ->where('posts.user_id', '<>', $user_id)
-            ->where('users.role', '=', $this->role_leader)
-            ->pluck('posts.id');
 
-        if ($role[0] == $this->role_admin) {
+        if ($this->role($user_id)[0] == $this->role_admin) {
             $posts = Post::with('Type')->orderBy('id', 'DESC')->paginate(10);
-        } elseif ($role[0] == $this->role_leader) {
+        } elseif ($this->role($user_id)[0] == $this->role_leader) {
             $posts = Post::with('Type')
                 ->join('users', 'posts.user_id', '=', 'users.id')
                 ->selectRaw('posts.*, users.role')
                 ->whereIn('users.role', [$this->role_leader, $this->role_bus])
-                ->whereNotIn('posts.id', $authors_not_curent)
+                ->whereNotIn('posts.id', $this->authors_not_curent())
                 ->orderBy('id', 'DESC')->paginate(10);
         } else {
             $posts = Post::with('Type')->orderBy('id', 'DESC')->where('user_id', $user_id)->paginate(10);
@@ -74,7 +85,21 @@ class PostController extends Controller
     //Sửa truyện
     public function edit($id)
     {
-        $role = '';
+        $user_id = Auth::id();
+        $story_user_id = Post::whereId($id)->pluck('user_id');
+        $all_story_id = Post::pluck('id');
+
+        if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
+            $types = Type::all();
+            $post = Post::find($id);
+            return view('backend.post.edit', compact('types', 'post'));
+        } else {
+            if ($this->role($user_id) == $this->role_bus && in_array($id, json_decode($story_user_id))) {
+                $types = Type::all();
+                $post = Post::find($id);
+                return view('backend.post.edit', compact('types', 'post'));
+            }
+        }
         $user_id_ = Post::with('User')->whereId($id)->get();
         $ar_user_id = Post::whereId($id)->pluck('user_id');
         foreach ($user_id_ as $val) {
@@ -112,28 +137,24 @@ class PostController extends Controller
     //xóa truyện
     public function delete($id)
     {
-        $role = User::whereId(Auth::id())->pluck('role');
+        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
+        $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
-
+        $story_id = Post::pluck('user_id');
         $all_story_id = Post::pluck('id');
-
-        $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
-            ->where('posts.user_id', '<>', Auth::id())
-            ->where('users.role', '=', $this->role_leader)
-            ->pluck('posts.id');
-        if ($role[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
+        if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
             $post = Post::find($id);
             $post->delete();
             return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
         } else {
-            if ($role[0] == $this->role_bus && in_array($id, json_decode($all_story_id))) {
+            if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_id))) {
                 if ($story_user_id[0] == Auth::id()) {
                     $post = Post::find($id);
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
-            } elseif ($role[0] == $this->role_leader) {
-                if (!in_array($id, json_decode($authors_not_curent)) && in_array($id, json_decode($all_story_id))) {
+            } elseif ($this->role($user_id)[0] == $this->role_leader) {
+                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
                     $post = Post::find($id);
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
