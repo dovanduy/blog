@@ -115,23 +115,25 @@ class PostController extends Controller
         $role = User::whereId(Auth::id())->pluck('role');
         $story_user_id = Post::whereId($id)->pluck('user_id');
 
+        $all_story_id = Post::pluck('id');
+
         $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
             ->where('posts.user_id', '<>', Auth::id())
             ->where('users.role', '=', $this->role_leader)
             ->pluck('posts.id');
-        if ($role[0] == $this->role_admin) {
+        if ($role[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
             $post = Post::find($id);
             $post->delete();
             return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
         } else {
-            if ($role[0] == $this->role_bus) {
+            if ($role[0] == $this->role_bus && in_array($id, json_decode($all_story_id))) {
                 if ($story_user_id[0] == Auth::id()) {
                     $post = Post::find($id);
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
             } elseif ($role[0] == $this->role_leader) {
-                if (!in_array($id, json_decode($authors_not_curent))) {
+                if (!in_array($id, json_decode($authors_not_curent)) && in_array($id, json_decode($all_story_id))) {
                     $post = Post::find($id);
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');

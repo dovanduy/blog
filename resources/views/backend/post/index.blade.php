@@ -67,7 +67,7 @@ $role_bus = 3;
     @if(session('er'))
         <div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">
             <div class="alert alert-danger" role="alert">
-                <strong>Thành công!</strong> {{session('er')}}.
+                <strong>Lỗi!</strong> {{session('er')}}.
             </div>
         </div>
     @endif
