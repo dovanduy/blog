@@ -54,7 +54,19 @@ class InitDatabase extends Migration
             'email' => 'admin',
             'password' => bcrypt('story123'),
             'role' => 1
-        ]);
+        ],
+            [
+                'name' => 'Cố vấn',
+                'email' => 'manager',
+                'password' => bcrypt('manager123'),
+                'role' => 2
+            ],
+            [
+                'name' => 'Nhân viên',
+                'email' => 'membership',
+                'password' => bcrypt('membership123'),
+                'role' => 3
+            ]);
 
 //        create type table
         Schema::create('types', function (Blueprint $table) {

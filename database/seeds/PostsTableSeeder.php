@@ -18,7 +18,7 @@ class PostsTableSeeder extends Seeder
         for ($i = 0; $i <= 50; $i++) {
             $title = $faker->realText(rand(10, 40));
             $post = new Post();
-            $user_id = 1;
+            $user_id = rand(1,3);
             $view = rand(0, 100000);
             $type = rand(1, 4);
             $status = rand(0, 1);
