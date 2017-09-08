@@ -172,9 +172,9 @@ $role_bus = 3;
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal short content-->
+                        <!-- Modal title seo-->
                         <div class="modal fade" id="myModal-short-content-{{$key}}" role="dialog">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog">
                                 <div class="modal-content aj-form-page">
                                     <form>
                                         {{csrf_field()}}

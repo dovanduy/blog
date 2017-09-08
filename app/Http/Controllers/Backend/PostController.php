@@ -116,42 +116,25 @@ class PostController extends Controller
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
 
+        $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
+        $post->title_seo = $request->title_seo;
+        $post->content = $request->content_;
+        $post->type = $request->type;
+        $post->user_id = Auth::id();
+        $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+
         if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
-            $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
-            $post = Post::find($id);
-            $post->title = $request->title;
-            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
-            $post->title_seo = $request->title_seo;
-            $post->content = $request->content_;
-            $post->type = $request->type;
-            $post->user_id = Auth::id();
-            $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
             $post->save();
             return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
         } else {
             if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_user_id))) {
-                $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
-                $post = Post::find($id);
-                $post->title = $request->title;
-                $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
-                $post->title_seo = $request->title_seo;
-                $post->content = $request->content_;
-                $post->type = $request->type;
-                $post->user_id = Auth::id();
-                $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
                 $post->save();
                 return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
             } elseif ($this->role($user_id)[0] == $this->role_leader) {
                 if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
-                    $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
-                    $post = Post::find($id);
-                    $post->title = $request->title;
-                    $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
-                    $post->title_seo = $request->title_seo;
-                    $post->content = $request->content_;
-                    $post->type = $request->type;
-                    $post->user_id = Auth::id();
-                    $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
                     $post->save();
                     return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');

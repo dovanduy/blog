@@ -36,7 +36,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Story
                 </a>
             </div>
 
@@ -104,10 +104,15 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
+                                    <a>
+                                        <span class="fa fa-gear"></span>&nbsp;&nbsp;Thay đổi mật khẩu
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Logout
+                                        <span class="fa fa-reply-all"></span>&nbsp;&nbsp;Đăng xuất
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
