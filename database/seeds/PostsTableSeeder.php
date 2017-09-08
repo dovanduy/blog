@@ -26,7 +26,7 @@ class PostsTableSeeder extends Seeder
                 'title' => $title,
                 'title_seo' => changeTitle($title),
                 'type' => $type,
-                'content' => '<p>' . $faker->realText(rand(100, 100000)) . '</p>',
+                'content' => '<p>' . $faker->realText(rand(1000, 100000)) . '</p>',
                 'view' => $view,
                 'user_id' => $user_id,
                 'status' => $status
