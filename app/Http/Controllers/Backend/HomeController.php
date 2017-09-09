@@ -16,6 +16,9 @@ class HomeController extends Controller
 
     public function index()
     {
+//        $html = file_get_contents('http://truyensex88.net/ky-uc-da-qua.html');
+//        echo htmlspecialchars($html);die;
+//        echo htmlspecialchars($html);die;
         $chart = [
             'days' => [],
             'data' => [],
