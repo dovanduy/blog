@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Post;
+use App\Type;
+use App\User;
 
 class PostsTableSeeder extends Seeder
 {
@@ -14,13 +16,12 @@ class PostsTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-
         for ($i = 0; $i <= 50; $i++) {
             $title = $faker->realText(rand(10, 40));
             $post = new Post();
-            $user_id = rand(1,4);
-            $view = rand(0, 100000);
-            $type = rand(1, 4);
+            $user_id = array_random(json_decode(User::pluck('id')));
+            $view = rand(0, 1000);
+            $type = array_random(json_decode(Type::pluck('id')));
             $status = rand(0, 1);
             $post->fill([
                 'title' => $title,

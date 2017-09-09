@@ -78,7 +78,7 @@
                         @endif
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)
                             <li>
-                                <a href="{{route('post.create')}}">
+                                <a href="{{route('post')}}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Đăng bài</span>
                                 </a>
                             </li>

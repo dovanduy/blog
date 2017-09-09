@@ -22,16 +22,6 @@ class PostController extends Controller
         $this->middleware('auth');
     }
 
-    //id truyen trong role =2 ko phai id cua role 2
-    public function authors_not_curent() {
-        $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
-            ->where('posts.user_id', '<>', Auth::id())
-            ->where('users.role', '=', $this->role_leader)
-            ->pluck('posts.id');
-        return json_decode($authors_not_curent);
-    }
-    //id truyen trong role =2 và =3
-
     //all role
     public function role($user_id) {
         $role = User::where('id', $user_id)->pluck('role');
@@ -40,6 +30,7 @@ class PostController extends Controller
 
     public function index()
     {
+        $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
         $authors = Post::with('User')->select('user_id')->get();
 
@@ -50,7 +41,7 @@ class PostController extends Controller
                 ->join('users', 'posts.user_id', '=', 'users.id')
                 ->selectRaw('posts.*, users.role')
                 ->whereIn('users.role', [$this->role_leader, $this->role_bus])
-                ->whereNotIn('posts.id', $this->authors_not_curent())
+                ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
                 ->orderBy('id', 'DESC')->paginate(10);
         } else {
             $posts = Post::with('Type')->orderBy('id', 'DESC')->where('user_id', $user_id)->paginate(10);
@@ -122,13 +113,15 @@ class PostController extends Controller
 
     public function postEdit($id, Request $request)
     {
+        $story_role_leader = new PostStoryLeader();
+        $user_id = Auth::id();
         $this->validate($request, [
             'content_' => 'required|min:10'
         ], [
             'content_.required' => 'Bạn cần xem lại nội dung đã nhập...',
             'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
         ]);
-        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
+        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -151,7 +144,7 @@ class PostController extends Controller
                 $post->save();
                 return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
             } elseif ($this->role($user_id)[0] == $this->role_leader) {
-                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
+                if (!in_array($id, $story_role_leader->StoryIdNotLeader($user_id)) && in_array($id, json_decode($role_leader))) {
                     $post->save();
                     return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
@@ -162,8 +155,9 @@ class PostController extends Controller
     //xóa truyện
     public function delete($id)
     {
-        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
+        $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
+        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $story_id = Post::pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -179,7 +173,7 @@ class PostController extends Controller
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
             } elseif ($this->role($user_id)[0] == $this->role_leader) {
-                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
+                if (!in_array($id, $story_role_leader->StoryIdNotLeader($user_id)) && in_array($id, json_decode($role_leader))) {
                     $post = Post::find($id);
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
@@ -187,7 +181,6 @@ class PostController extends Controller
             }
             else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
         }
-
     }
 
     //xóa kiểu

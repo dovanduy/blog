@@ -11,10 +11,6 @@ class PostStoryLeader
     public $role_admin = 1;
     public $role_leader = 2;
 
-    public function AllStory($story_id) {
-        return Post::whereId($story_id)->pluck('user_id');
-    }
-
     //role leader
     public function StoryIdNotLeader($id_user) {
         $authors_not_curent = Post::join('users', 'posts.user_id', '=', 'users.id')
