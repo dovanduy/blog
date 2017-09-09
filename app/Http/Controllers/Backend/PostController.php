@@ -125,7 +125,6 @@ class PostController extends Controller
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
         } else {
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
-
         }
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
