@@ -73,7 +73,7 @@ class PostController extends Controller
             $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
             $post = new Post();
             $post->title = $request->title;
-            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) + '-' . time() : changeTitle($request->title);
+            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : $post->title_seo = changeTitle($request->title);
             $post->title_seo = $request->title_seo;
             $post->content = $content;
             $post->type = $request->type;
@@ -121,7 +121,12 @@ class PostController extends Controller
             'content_.required' => 'Bạn cần xem lại nội dung đã nhập...',
             'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
         ]);
-        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
+        if(count($story_role_leader->StoryIdNotLeader($user_id)) >0) {
+            $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
+        } else {
+            $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
+
+        }
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -134,7 +139,11 @@ class PostController extends Controller
         $post->content = $request->content_;
         $post->type = $request->type;
         $post->user_id = Auth::id();
-        $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+        if(isset($request->status)) {
+            $post->status =1;
+        } else {
+            $post->status =0;
+        }
 
         if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
             $post->save();
@@ -157,7 +166,11 @@ class PostController extends Controller
     {
         $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
-        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
+        if(count($story_role_leader->StoryIdNotLeader($user_id)) >0) {
+            $role_leader = Post::where('user_id', '<>', $this->role_admin)->whereIn('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
+        } else {
+            $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
+        }
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $story_id = Post::pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -166,7 +179,7 @@ class PostController extends Controller
             $post->delete();
             return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
         } else {
-            if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_id))) {
+            if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($all_story_id))) {
                 if ($story_user_id[0] == Auth::id()) {
                     $post = Post::find($id);
                     $post->delete();
