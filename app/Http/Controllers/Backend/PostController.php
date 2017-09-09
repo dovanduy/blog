@@ -69,17 +69,28 @@ class PostController extends Controller
     public function postCreate(Request $request)
     {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
-        $post = new Post();
-        $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) + '-' . time() : changeTitle($request->title);
-        $post->title_seo = $request->title_seo;
-        $post->content = $request->content_;
-        $post->type = $request->type;
-        $post->user_id = Auth::id();
-        $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
-        $post->save();
-        return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
+        $content = $request->content_;
+        $this->validate($request, [
+            'content_' => 'required|min:10'
+        ], [
+            'content_.required' => 'Bạn cần xem lại nội dung đã nhập...',
+            'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
+        ]);
+        if (!isset($content)) {
+            return redirect(url(route('post.create').'/create'))->with('er', 'Vui lòng bạn nhập lại');
+        } else {
+            $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
+            $post = new Post();
+            $post->title = $request->title;
+            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) + '-' . time() : changeTitle($request->title);
+            $post->title_seo = $request->title_seo;
+            $post->content = $content;
+            $post->type = $request->type;
+            $post->user_id = Auth::id();
+            $request->status == '1' || $request->status == 1 ? $post->status = 1 : $post->status = 0;
+            $post->save();
+            return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
+        }
     }
 
     //Sửa truyện

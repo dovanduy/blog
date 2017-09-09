@@ -1,8 +1,22 @@
 @extends('layouts.backend')
 
 @section('content')
+    @if ($errors->any())
+        <div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">
+            <div class="alert alert-danger">
+                <ul>
+                    <li><strong>Lỗi !</strong></li>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
     <div class="col-md-3 col-sm-3">
-        <a href="{{route('post')}}"><button class="btn btn-success"><span class="fa fa-arrow-left"></span>&nbsp;&nbsp;Quay lại</button></a>
+        <a href="{{route('post')}}">
+            <button class="btn btn-success"><span class="fa fa-arrow-left"></span>&nbsp;&nbsp;Quay lại</button>
+        </a>
     </div>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <fieldset class="form-group">
@@ -20,7 +34,8 @@
             </div>
             <div class="form-group">
                 <label for="content">Nội dung</label>
-                <textarea class="form-control" id="content" name="content_" placeholder="Nhập nội dung" required></textarea>
+                <textarea class="form-control" id="content" name="content_" placeholder="Nhập nội dung"
+                          required></textarea>
             </div>
             <div class="form-group">
                 <label for="type">Thể loại</label>
@@ -55,11 +70,13 @@
                 console.log(title_seo.replace(/ /g, '-'));
                 timeout = setTimeout(function () {
                     $.ajax({
-                        type:'POST',
+                        type: 'POST',
                         url: '{{ route('ajax.validateTitleSeo') }}',
-                        data: {"_token": "{{ csrf_token() }}",
-                            'title_seo':title_seo},
-                        dataType:'JSON',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            'title_seo': title_seo
+                        },
+                        dataType: 'JSON',
                         timeout: 1000,
                         success: function (rsp) {
                             $('#title_seo').val(rsp);
@@ -71,5 +88,9 @@
                 }, 800)
             });
         });
+        setTimeout(function () {
+            $('.mes-page').empty();
+        }, 1500);
     </script>
+
 @endsection
