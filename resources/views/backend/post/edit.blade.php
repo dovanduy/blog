@@ -1,6 +1,18 @@
 @extends('layouts.backend')
 
 @section('content')
+    @if ($errors->any())
+        <div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">
+            <div class="alert alert-danger">
+                <ul>
+                    <li><strong>Lỗi !</strong></li>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
     <div class="col-md-3 col-sm-3">
         <a href="{{route('post')}}"><button class="btn btn-success"><span class="fa fa-arrow-left"></span>&nbsp;&nbsp;Quay lại</button></a>
     </div>

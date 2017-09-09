@@ -122,6 +122,12 @@ class PostController extends Controller
 
     public function postEdit($id, Request $request)
     {
+        $this->validate($request, [
+            'content_' => 'required|min:10'
+        ], [
+            'content_.required' => 'Bạn cần xem lại nội dung đã nhập...',
+            'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
+        ]);
         $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
