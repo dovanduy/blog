@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Post;
 use App\Type;
+use App\PostStoryLeader;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -15,7 +16,6 @@ class PostController extends Controller
     public $role_admin = 1;
     public $role_leader = 2;
     public $role_bus = 3;
-
 
     public function __construct()
     {
@@ -85,7 +85,7 @@ class PostController extends Controller
     //Sửa truyện
     public function edit($id)
     {
-        $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $this->authors_not_curent())->pluck('id');
+        $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
@@ -100,7 +100,7 @@ class PostController extends Controller
                 $post = Post::find($id);
                 return view('backend.post.edit', compact('types', 'post'));
             } elseif ($this->role($user_id)[0] == $this->role_leader) {
-                if (!in_array($id, $this->authors_not_curent()) && in_array($id, json_decode($role_leader))) {
+                if (!in_array($id, $story_role_leader->StoryIdNotLeader($user_id)) && in_array($id, $story_role_leader->PostStoryLeader($user_id))) {
                     $types = Type::all();
                     $post = Post::find($id);
                     return view('backend.post.edit', compact('types', 'post'));
