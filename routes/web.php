@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('searchSite', 'Backend\ToolController@searchSite')->name('tool.ajax.searchSite');
         //get story
         Route::post('getStory', 'Backend\ToolController@getStory')->name('tool.ajax.getStory');
+        Route::post('postCreate', 'Backend\ToolController@postCreate')->name('tool.postCreate');
 
     });
 });

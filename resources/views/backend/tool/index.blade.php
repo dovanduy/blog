@@ -119,7 +119,7 @@
         <fieldset class="form-group">
             <legend>Tool truyện</legend>
         </fieldset>
-        <form method="POST" action="{{route('post.postCreate')}}">
+        <form method="POST" action="{{route('tool.postCreate')}}">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="title">Tiêu đề</label>
@@ -279,8 +279,24 @@
                         dataType: 'JSON',
                         timeout: 1000,
                         success: function (rsp) {
-//                            CKEDITOR.instances['content'].insertHtml(rsp[0]);
-                            console.log(rsp);
+                            CKEDITOR.instances['content'].insertHtml(rsp['content']);
+                            $('#title').val(rsp['title']);
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ route('ajax.validateTitleSeo') }}',
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    'title_seo': rsp['title']
+                                },
+                                dataType: 'JSON',
+                                timeout: 1000,
+                                success: function (rsp) {
+                                    $('#title_seo').val(rsp);
+                                },
+                                error: function () {
+                                    location.reload();
+                                }
+                            })
                         },
                         error: function () {
 //                            location.reload();
