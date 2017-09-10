@@ -245,6 +245,15 @@
             });
         });
 
+        $('#search_site_2').blur(function () {
+            if ($('.install_search').length > 0) {
+
+            } else {
+                $('#install_search_2').empty();
+                $('#install_search_2').css({'display': 'none'});
+            }
+        });
+
         {{--//end search site to cru(d)--}}
 
         //height
