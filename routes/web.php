@@ -45,6 +45,8 @@ Route::group(['prefix' => 'admin'], function() {
     //tool đăng bài tự động
     Route::group(['prefix' => 'tool', 'middleware' => 'post'], function () {
         Route::get('/', 'Backend\ToolController@index')->name('tool');
+        Route::get('siteDelete/{id}', 'Backend\toolController@siteDelete');
         Route::post('siteStory', 'Backend\ToolController@siteStory')->name('tool.siteStory');
+        Route::post('searchSite', 'Backend\ToolController@searchSite')->name('tool.ajax.searchSite');
     });
 });

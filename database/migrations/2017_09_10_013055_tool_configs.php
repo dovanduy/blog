@@ -15,6 +15,7 @@ class ToolConfigs extends Migration
     {
         Schema::create('tool_configs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->references('id')->on('users');
             $table->string('site', '255');
             $table->string('start_title_code');
             $table->string('end_title_code');
