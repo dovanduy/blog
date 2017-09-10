@@ -279,6 +279,7 @@
                         dataType: 'JSON',
                         timeout: 1000,
                         success: function (rsp) {
+//                            CKEDITOR.instances['content'].insertHtml(rsp[0]);
                             console.log(rsp);
                         },
                         error: function () {
