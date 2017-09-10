@@ -87,7 +87,7 @@
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)
                             <li>
                                 <a href="{{route('tool')}}">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Đăng bài tự động</span>
+                                    <i class="fa fa-asl-interpreting" aria-hidden="true"></i> <span>Đăng bài tự động</span>
                                 </a>
                             </li>
                         @else

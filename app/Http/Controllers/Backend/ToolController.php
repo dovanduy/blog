@@ -14,7 +14,13 @@ class ToolController extends Controller
         return view('backend.tool.index', compact('types'));
     }
 
-    public function getStory() {
+    public function getStory(Request $request) {
+        $html = file_get_contents('http://truyensex88.net/ky-uc-da-qua.html');
+        return htmlspecialchars($html);
+    }
 
+    public function siteStory(Request $request) {
+
+        return redirect(route('tool'));
     }
 }

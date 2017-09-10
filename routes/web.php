@@ -43,5 +43,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('addType', 'Backend\PostController@addType')->name('addType');
     });
     //tool đăng bài tự động
-    Route::get('tool', 'Backend\ToolController@index')->name('tool');
+    Route::group(['prefix' => 'tool', 'middleware' => 'post'], function () {
+        Route::get('/', 'Backend\ToolController@index')->name('tool');
+        Route::post('siteStory', 'Backend\ToolController@siteStory')->name('tool.siteStory');
+    });
 });

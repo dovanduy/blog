@@ -13,23 +13,70 @@
             </div>
         </div>
     @endif
-    <div class="col-md-3 col-sm-3">
+    <div class="col-md-3 col-sm-3" style="overflow-y: scroll; height: auto">
         <div class="form-group">
             <div class="form-group">
                 <h6>Hunter is my life:</h6>
             </div>
             <div class="form-group">
+                <label for="short_content">Tìm kiếm site</label>
+                <input type="url" class="form-control" id="search_site" placeholder="search" required>
+            </div>
+            <div class="form-group">
                 <label for="short_content">Link truyện</label>
                 <input type="url" class="form-control" id="get_content" placeholder="Link truyện" required>
             </div>
-            <div class="form-group">
-                <a href="#">
-                    <button class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span class="fa fa-arrow-right"></span></button>
-                </a>
+            <div class="form-inline">
+                <div class="form-group">
+                    <a href="#" title="Sẽ chuyển truyện sang phải">
+                        <button class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span class="fa fa-arrow-right"></span></button>
+                    </a>
+                </div>
+                <div class="form-group">
+                    <a href="#">
+                        <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <h3 style="color: #9c3328"><span class="fa fa-cogs"></span>&nbsp;&nbsp;Config</h3>
+            <div class="form-group">
+                <h3 style="color: #9c3328"><span class="fa fa-cogs"></span>&nbsp;&nbsp;Config</h3>
+            </div>
+            <form method="Post" action="{{route('tool.siteStory')}}">
+                {{csrf_field()}}
+                {{--<div class="form-group">--}}
+                    {{--<label for="site">Chọn site:</label>--}}
+                    {{--<select class="form-control" id="site">--}}
+                        {{--<option>...</option>--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+                <div class="form-group">
+                    <label for="short_content">Chọn site hoặc thêm site</label>
+                    <input type="url" class="form-control" id="start_content_code" placeholder="Site" required>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="short_content">Config start title code</label>
+                    <input type="text" class="form-control" id="start_content_code" placeholder="Start title code" required>
+                </div>
+                <div class="form-group">
+                    <label for="short_content">Config end title code</label>
+                    <input type="text" class="form-control" id="end_title_code" placeholder="End title code" required>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="short_content">Config start content code</label>
+                    <input type="text" class="form-control" id="start_content_code" placeholder="Start content code" required>
+                </div>
+                <div class="form-group">
+                    <label for="short_content">Config end content code</label>
+                    <input type="text" class="form-control" id="end_content_code" placeholder="End content code" required>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit">Thay đổi hoặc thêm vào</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="col-md-9 col-sm-9 col-xs-12">
