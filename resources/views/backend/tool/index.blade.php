@@ -43,19 +43,16 @@
             </div>
             <div class="form-group">
                 <label for="short_content">Link truyện</label>
-                <input type="url" class="form-control" id="get_content" placeholder="Link truyện" required>
+                <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required>
             </div>
             <div class="form-inline">
                 <div class="form-group">
-                    <a href="#" title="Sẽ chuyển truyện sang phải" id="get_story">
-                        <button class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span class="fa fa-arrow-right"></span>
-                        </button>
-                    </a>
+                    <button type="button" title="Sẽ chuyển truyện sang phải" id="get_story" class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span
+                                class="fa fa-arrow-right"></span>
+                    </button>
                 </div>
                 <div class="form-group">
-                    <a href="#">
-                        <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
-                    </a>
+                    <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
                 </div>
             </div>
         </div>
@@ -261,5 +258,37 @@
             $height_current = $(window).height() - $('#app').height() - 70;
             $('.height_page').css({'height': $height_current});
         });
+
+        //get story
+        $(document).ready(function () {
+            var timeout = null;
+            clearTimeout(timeout);
+            $('#get_story').click(function () {
+                var get_site = $('#get_site').val();
+                var select_site = $('#select_site').val();
+                console.log(select_site);
+                timeout = setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('tool.ajax.getStory') }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            'get_site': get_site,
+                            'select_site' : select_site
+                        },
+                        dataType: 'JSON',
+                        timeout: 1000,
+                        success: function (rsp) {
+                            console.log(rsp);
+                        },
+                        error: function () {
+//                            location.reload();
+                        }
+                    })
+                }, 800)
+                return false;
+            });
+        });
+
     </script>
 @endsection

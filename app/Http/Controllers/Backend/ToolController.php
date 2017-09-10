@@ -19,7 +19,7 @@ class ToolController extends Controller
 
     public function getStory(Request $request) {
         $html = file_get_contents('http://truyensex88.net/ky-uc-da-qua.html');
-        return htmlspecialchars($html);
+        return array(htmlspecialchars($html));
     }
 
     public function siteStory(Request $request) {

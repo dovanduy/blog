@@ -48,5 +48,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('siteDelete/{id}', 'Backend\toolController@siteDelete');
         Route::post('siteStory', 'Backend\ToolController@siteStory')->name('tool.siteStory');
         Route::post('searchSite', 'Backend\ToolController@searchSite')->name('tool.ajax.searchSite');
+        //get story
+        Route::post('getStory', 'Backend\ToolController@getStory')->name('tool.ajax.getStory');
+
     });
 });
