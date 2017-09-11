@@ -1,4 +1,7 @@
 @extends('layouts.backend')
+<?php $select_url = ['?','/'];
+    $count_url = count($select_url);
+?>
 
 @section('content')
     @if ($errors->any())
@@ -89,25 +92,34 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label for="short_content">Config start title code</label>
+                    <label for="start_title_code">Config start title code</label>
                     <input type="text" class="form-control" id="start_title_code" name="start_title_code"
                            placeholder="Start title code" required>
                 </div>
                 <div class="form-group">
-                    <label for="short_content">Config end title code</label>
+                    <label for="end_title_code">Config end title code</label>
                     <input type="text" class="form-control" id="end_title_code" name="end_title_code"
                            placeholder="End title code" required>
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label for="short_content">Config start content code</label>
+                    <label for="start_content_code">Config start content code</label>
                     <input type="text" class="form-control" id="start_content_code" name="start_content_code"
                            placeholder="Start content code" required>
                 </div>
                 <div class="form-group">
-                    <label for="short_content">Config end content code</label>
+                    <label for="end_content_code">Config end content code</label>
                     <input type="text" class="form-control" id="end_content_code" name="end_content_code"
                            placeholder="End content code" required>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="url_slow">Nhập kiểu đi page</label>
+                    <input type="text" class="form-control" id="url_slow" name="url_slow" placeholder="Nhập vào kiểu chuyển trang truyện" required>
+                </div>
+                <div class="form-group">
+                    <label for="url_flat">Nhập kiểu đi nhanh</label>
+                    <input type="text" class="form-control" id="url_flat" name="url_flat" placeholder="Nhập vào kiểu di chuyển nhanh" required>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-default" type="submit">Thay đổi hoặc thêm vào</button>

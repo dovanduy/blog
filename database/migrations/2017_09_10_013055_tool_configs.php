@@ -21,6 +21,8 @@ class ToolConfigs extends Migration
             $table->string('end_title_code');
             $table->string('start_content_code');
             $table->string('end_content_code');
+            $table->string('url_child');
+            $table->string('url_parent');
             $table->timestamps();
         });
     }
