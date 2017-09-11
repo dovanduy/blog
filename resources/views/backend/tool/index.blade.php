@@ -114,13 +114,31 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label for="url_slow">Nhập kiểu đi page</label>
-                    <input type="text" class="form-control" id="url_slow" name="url_slow" placeholder="Nhập vào kiểu chuyển trang truyện" required>
+                    <label for="url_child">Nhập kiểu đi page</label>
+                    <input type="text" class="form-control" id="url_child" name="url_child" placeholder="Nhập vào kiểu di chuyển trang con vd: ?page= hoặc /" required>
                 </div>
                 <div class="form-group">
-                    <label for="url_flat">Nhập kiểu đi nhanh</label>
-                    <input type="text" class="form-control" id="url_flat" name="url_flat" placeholder="Nhập vào kiểu di chuyển nhanh" required>
+                    <label for="start_url_child">Nhập code trang con bắt đầu</label>
+                    <input type="text" class="form-control" id="start_url_child" name="start_url_child" placeholder="Nhập vào kiểu đoạn code bắt đầu" required>
                 </div>
+                <div class="form-group">
+                    <label for="end_url_child">Nhập code trang con kết thúc</label>
+                    <input type="text" class="form-control" id="end_url_child" name="end_url_child" placeholder="Nhập vào kiểu đoạn code kết thúc" required>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="url_parent">Nhập kiểu đi nhanh</label>
+                    <input type="text" class="form-control" id="url_parent" name="url_parent" placeholder="Nhập vào kiểu di chuyển nhanh vd:?page= hoặc /" required>
+                </div>
+                <div class="form-group">
+                    <label for="start_url_parent">Nhập code trang to bắt đầu</label>
+                    <input type="text" class="form-control" id="start_url_parent" name="start_url_parent" placeholder="Nhập vào kiểu đoạn code bắt đầu" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_url_parent">Nhập code trang to kết thúc</label>
+                    <input type="text" class="form-control" id="end_url_parent" name="end_url_parent" placeholder="Nhập vào kiểu đoạn code kết thúc" required>
+                </div>
+                <hr>
                 <div class="form-group">
                     <button class="btn btn-default" type="submit">Thay đổi hoặc thêm vào</button>
                 </div>
@@ -229,7 +247,7 @@
                                 $('#install_search_2').empty();
                                 $('#install_search_2').css({'display': 'block'});
                                 for (var i = 0; i < count_rsp; i++) {
-                                    $('#install_search_2').append('<div style="padding-left: 20px; margin-top: 20px; cursor: pointer" class="install_search" title="' + rsp[i] + '">' + shortTextSearch(rsp[i]) + '</div><hr>');
+                                    $('#install_search_2').append('<div style="padding-left: 20px; margin-top: 20px; cursor: pointer" class="install_search" title="' + rsp[i].site + '">' + shortTextSearch(rsp[i].site) + '</div><hr>');
                                 }
                             } else {
                                 $('#install_search_2').empty();
@@ -291,6 +309,7 @@
                         dataType: 'JSON',
                         timeout: 1000,
                         success: function (rsp) {
+                            console.log(rsp);
                             CKEDITOR.instances['content'].insertHtml(rsp['content']);
                             $('#title').val(rsp['title']);
                             $.ajax({

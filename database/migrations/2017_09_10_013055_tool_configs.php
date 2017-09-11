@@ -22,7 +22,11 @@ class ToolConfigs extends Migration
             $table->string('start_content_code');
             $table->string('end_content_code');
             $table->string('url_child');
+            $table->string('start_url_child');
+            $table->string('end_url_child');
             $table->string('url_parent');
+            $table->string('start_url_parent');
+            $table->string('end_url_parent');
             $table->timestamps();
         });
     }

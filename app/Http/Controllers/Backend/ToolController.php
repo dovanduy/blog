@@ -11,6 +11,23 @@ use Auth;
 
 class ToolController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function codeHtml($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+// receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        return $server_output;
+    }
+
     public function index()
     {
         $sites = Tool::all();
@@ -23,29 +40,44 @@ class ToolController extends Controller
         $code = [
             'content' => [],
             'title' => []
+//            'pagination' => ''
         ];
         $get_site = $request->get_site;
         $id = $request->select_site;
         $site_id = json_decode(Tool::pluck('id'));
         $tool = Tool::find($id);
-        if ($get_site!=null || in_array($id, $site_id)) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $get_site);
-            curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
-// receive server response ...
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //content db
+        $start_content_code = $tool->start_content_code;
+        $end_content_code = $tool->end_content_code;
+        //title db
+        $start_title_code = $tool->start_title_code;
+        $end_title_code = $tool->end_title_code;
+        // pagination
+        $start_url_child = $tool->start_url_child;
+        $end_url_child = $tool->end_url_child;
 
-            $server_output = curl_exec($ch);
-            curl_close($ch);
+        if ($get_site != null || in_array($id, $site_id)) {
+            $server_output = $this->codeHtml($get_site);
 //content
-            $start_content = strpos("$server_output", "$tool->start_content_code")+strlen("$tool->start_content_code");
-            $end_content = strpos("$server_output", "$tool->end_content_code")-$start_content;
+            $start_content = strpos("$server_output", $start_content_code) + strlen($start_content_code);
+            $end_content = strpos("$server_output", $end_content_code) - $start_content;
             $code['content'] = substr($server_output, $start_content, $end_content);
 //title
-            $start_title = strpos("$server_output", "$tool->start_title_code")+strlen("$tool->start_title_code");
-            $end_title = strpos("$server_output", "$tool->end_title_code")-$start_title;
+            $start_title = strpos("$server_output", $start_title_code) + strlen($start_title_code);
+            $end_title = strpos("$server_output", $end_title_code) - $start_title;
             $code['title'] = substr($server_output, $start_title, $end_title);
 
+// pagination
+            if (strpos("$server_output", $end_url_child)) {
+                $start_pagination = strpos("$server_output", $start_url_child) + strlen($start_url_child);
+                $end_pagination = strpos("$server_output", $end_url_child) - $start_pagination;
+                $pagination = substr($server_output, $start_pagination, $end_pagination);
+                $pagination_strlen = strlen($pagination);
+                $pagination_final = (int)substr($pagination, $pagination_strlen - 1); //get end page
+                for ($i = 2; $i <= $pagination_final; $i++) {
+
+                }
+            }
             return $code;
         }
     }
@@ -62,6 +94,13 @@ class ToolController extends Controller
             $tool->end_title_code = $request->end_title_code;
             $tool->start_content_code = $request->start_content_code;
             $tool->end_content_code = $request->end_content_code;
+
+            $tool->url_child = $request->url_child;
+            $tool->start_url_child = $request->start_url_child;
+            $tool->end_url_child = $request->end_url_child;
+            $tool->url_parent = $request->url_parent;
+            $tool->start_url_parent = $request->start_url_parent;
+            $tool->end_url_parent = $request->end_url_parent;
             $tool->save();
             return redirect(route('tool'))->with('mes', 'Đã thêm site thành công...');
         } else {
@@ -70,12 +109,20 @@ class ToolController extends Controller
             $tool->end_title_code = $request->end_title_code;
             $tool->start_content_code = $request->start_content_code;
             $tool->end_content_code = $request->end_content_code;
+
+            $tool->url_child = $request->url_child;
+            $tool->start_url_child = $request->start_url_child;
+            $tool->end_url_child = $request->end_url_child;
+            $tool->url_parent = $request->url_parent;
+            $tool->start_url_parent = $request->start_url_parent;
+            $tool->end_url_parent = $request->end_url_parent;
             $tool->save();
             return redirect(route('tool'))->with('mes', 'Đã sửa site thành công...');
         }
     }
 
-    public function postCreate(Request $request) {
+    public function postCreate(Request $request)
+    {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $content = $request->content_;
         $this->validate($request, [
@@ -85,7 +132,7 @@ class ToolController extends Controller
             'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
         ]);
         if (!isset($content)) {
-            return redirect(url(route('post.create').'/create'))->with('er', 'Vui lòng bạn nhập lại');
+            return redirect(url(route('post.create') . '/create'))->with('er', 'Vui lòng bạn nhập lại');
         } else {
             $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
             $post = new Post();
@@ -111,7 +158,7 @@ class ToolController extends Controller
     public function searchSite(Request $request)
     {
         $site = $request->search_site;
-        $search = json_decode(Tool::where('site', 'LIKE', "%$site%")->limit(5)->pluck('site'));
+        $search = Tool::where('site', 'LIKE', "%$site%")->limit(5)->get();
         return $search;
     }
 }
