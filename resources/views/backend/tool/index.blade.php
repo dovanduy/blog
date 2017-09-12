@@ -309,7 +309,6 @@
                         dataType: 'JSON',
                         timeout: 1000,
                         success: function (rsp) {
-                            console.log(rsp);
                             CKEDITOR.instances['content'].insertHtml(rsp['content']);
                             $('#title').val(rsp['title']);
                             $.ajax({
