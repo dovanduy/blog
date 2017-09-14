@@ -48,6 +48,10 @@
                 <label for="short_content">Link truyện</label>
                 <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required>
             </div>
+            <div class="form-group">
+                <label for="short_content">Pagination</label>
+                <input type="number" class="form-control" id="get_pagination" name="get_pagination" placeholder="Tổng số trang truyện" required>
+            </div>
             <div class="form-inline">
                 <div class="form-group">
                     <button type="button" title="Sẽ chuyển truyện sang phải" id="get_story" class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span
@@ -195,7 +199,7 @@
             }
             return text;
         }
-
+//title seo
         CKEDITOR.replace('content');
         $(document).ready(function () {
             var timeout = null;
@@ -225,6 +229,37 @@
         setTimeout(function () {
             $('.mes-page').empty();
         }, 1500);
+        //get pagination
+        $(document).ready(function () {
+            var timeout = null;
+            $('#get_site').on('blur', function () {
+                clearTimeout(timeout);
+                var site = $(this).val();
+                var select_site = $('#select_site').val();
+                timeout = setTimeout(function () {
+                    $.ajax({
+                        type: 'Post',
+                        url: '{{ route('tool.ajax.pagination') }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            'site': site,
+                            'id' : select_site
+                        },
+                        dataType: 'JSON',
+                        timeout: 700,
+                        success: function (rsp) {
+                            console.log(rsp);
+                            $('#get_pagination').val(rsp);
+                        },
+                        error: function () {
+//                            location.reload();
+                        }
+                    })
+                }, 500)
+            });
+        });
+
+
         //search site to cru(d) site 2
         $(document).ready(function () {
             var timeout = null;
@@ -296,6 +331,7 @@
             $('#get_story').click(function () {
                 var get_site = $('#get_site').val();
                 var select_site = $('#select_site').val();
+                var get_pagination = $('#get_pagination').val()
                 console.log(select_site);
                 timeout = setTimeout(function () {
                     $.ajax({
@@ -304,7 +340,8 @@
                         data: {
                             "_token": "{{ csrf_token() }}",
                             'get_site': get_site,
-                            'select_site' : select_site
+                            'select_site' : select_site,
+                            'get_pagintion' : get_pagination
                         },
                         dataType: 'JSON',
                         timeout: 1000,

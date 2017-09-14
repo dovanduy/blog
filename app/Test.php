@@ -41,4 +41,32 @@ class Test
         curl_close($ch);
         return $server_output;
     }
+    public function paginationCodeHtml($urls)
+    {
+        $count_site = count($urls);
+
+        $curl_arr = array();
+        $master = curl_multi_init();
+
+        for ($i = 0; $i < $count_site; $i++) {
+            $url = $urls[$i];
+            $curl_arr[$i] = curl_init($url);
+            curl_setopt($curl_arr[$i], CURLOPT_USERAGENT, "Mozilla/5.0");
+//            curl_setopt($curl_arr[$i], CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($curl_arr[$i], CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl_arr[$i], CURLOPT_PROGRESSFUNCTION, true);
+            curl_multi_add_handle($master, $curl_arr[$i]);
+        }
+
+
+        do {
+            curl_multi_exec($master, $running);
+        } while ($running > 0);
+
+        $results = array();
+        for ($i = 0; $i < $count_site; $i++) {
+            $results[] = curl_multi_getcontent($curl_arr[$i]);
+        }
+        return $results;
+    }
 }
