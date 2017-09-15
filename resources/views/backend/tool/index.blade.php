@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label for="short_content">Link truyện</label>
-                <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required>
+                <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
             </div>
             <div class="form-group">
                 <label for="short_content">Pagination</label>
@@ -229,36 +229,6 @@
         setTimeout(function () {
             $('.mes-page').empty();
         }, 1500);
-        //get pagination
-        $(document).ready(function () {
-            var timeout = null;
-            $('#get_site').on('blur', function () {
-                clearTimeout(timeout);
-                var site = $(this).val();
-                var select_site = $('#select_site').val();
-                timeout = setTimeout(function () {
-                    $.ajax({
-                        type: 'Post',
-                        url: '{{ route('tool.ajax.pagination') }}',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            'site': site,
-                            'id' : select_site
-                        },
-                        dataType: 'JSON',
-                        timeout: 700,
-                        success: function (rsp) {
-                            console.log(rsp);
-                            $('#get_pagination').val(rsp);
-                        },
-                        error: function () {
-//                            location.reload();
-                        }
-                    })
-                }, 500)
-            });
-        });
-
 
         //search site to cru(d) site 2
         $(document).ready(function () {

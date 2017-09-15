@@ -17,24 +17,6 @@ class ToolController extends Controller
         $this->middleware('auth');
     }
 
-    public function codeHtml($url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_USERAGENT, "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0");
-// receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-//        curl_setopt($ch, CURLOPT_REFERER, $parent);
-
-        curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, true);
-        $server_output = curl_exec($ch);
-//        curl_copy_handle($ch);
-        curl_close($ch);
-        return $server_output;
-    }
-
     public function index()
     {
         $sites = Tool::all();
@@ -69,20 +51,25 @@ class ToolController extends Controller
         return $res;
     }
 
+    public function getStringStotry($html, $start, $end) {
+        $start_content = strpos($html, $start) + strlen($start);
+        if ($html <= $start_content) {
+            return '';
+        } else {
+            $end_content = strpos($html, $end) - $start_content;
+            return substr($html, $start_content, $end_content);
+        }
+    }
+
     public function getStory(Request $request)
     {
         $code = [
-            'content' => [],
-            'title' => []
+            'content' => '',
+            'title' => ''
         ];
-
-        $content = array();
-
-        $site_pagination = array();
         $get_site = rtrim($request->get_site, '/');
         $id = $request->select_site;
-        $get_pagintion = $request->get_pagintion;
-        $site_id = json_decode(Tool::pluck('id'));
+        $request->get_pagintion >=1 ? $get_pagintion = $request->get_pagintion : $get_pagintion = 15;
         $tool = Tool::find($id);
 
         //content db
@@ -91,13 +78,10 @@ class ToolController extends Controller
         //title db
         $start_title_code = $tool->start_title_code;
         $end_title_code = $tool->end_title_code;
-        // pagination
-        $start_url_child = $tool->start_url_child;
-        $end_url_child = $tool->end_url_child;
         $site = array();
 
         for ($i = 1; $i <= (int)$get_pagintion; $i++) {
-            if ($i==1) {
+            if ($i == 1) {
                 $site[] = $get_site;
             } else {
                 $site[] = $get_site . $tool->url_child . $i;
@@ -106,51 +90,26 @@ class ToolController extends Controller
 //        sleep(1000);
         $request_sites = array_values($this->multiple_threads_request($site));
 
-//        foreach ($request_sites as  $request_site) {}
         for ($i = 0; $i < (int)$get_pagintion; $i++) {
-            $start_content = strpos( $request_sites[$i], $start_content_code ) + strlen($start_content_code);
-            $end_content = strpos( $request[$i], $end_content_code ) - $start_content;
-            $content[] = substr( $request_sites[$i], $start_content, $end_content);
+            $html = $request_sites[$i];
+            if ($i == 0) {
+                //title
+                $code['title'] = $this->getStringStotry($html, $start_title_code, $end_title_code);
+            }
+            if ($html != '') {
+                //content
+//                $content[] = $this->getStringStotry($html, $start_content_code, $end_content_code);
+                $start_content = strpos($html, $start_content_code) + strlen($start_content_code);
+                $end_content = strpos($html, $end_content_code) - $start_content;
+                $content[] = substr($html, $start_content, $end_content);
+            }
         }
 
-
-        return $content;
-
-//            $server_output = (new Test())->test($get_site);
-
-//            $server_output = $this->codeHtml($get_site);
-//            $b = $this->codeHtml($get_site);
-        // pagination
-//            if (strpos("$server_output", $end_url_child)) {
-//                $start_pagination = strpos("$server_output", $start_url_child) + strlen($start_url_child);
-//                $end_pagination = strpos("$server_output", $end_url_child) - $start_pagination;
-//                $pagination = substr($server_output, $start_pagination, $end_pagination);
-//                $pagination_strlen = strlen($pagination);
-//                $code['pagination'] = substr($pagination, $pagination_strlen - 1); //get end page
-//            }
-//            for ($i =2 ; $i <=(int)$code['pagination']; $i++) {
-//                $site_pagination[] = $get_site . $tool->url_child . $i;
-//            }
-//content
-//            $start_content = strpos("$server_output", $start_content_code) + strlen($start_content_code);
-//            $end_content = strpos("$server_output", $end_content_code) - $start_content;
-//            $code['content'] = substr($server_output, $start_content, $end_content);
-//
-//            $str_content = $code['content'];
-
-//            for ($i =2 ; $i <=(int)$code['pagination']; $i++) {
-//                $site_pagination[] = $get_site . $tool->url_child . $i;
-//            }
-
-//            $code['test'][] = $this->paginationCodeHtml($site_pagination);
-
-//title
-//        $start_title = strpos("$server_output", $start_title_code) + strlen($start_title_code);
-//        $end_title = strpos("$server_output", $end_title_code) - $start_title;
-//        $code['title'] = substr($server_output, $start_title, $end_title);
-//
-//        return $code;
-
+        $count_content = count($content);
+        for ($i = 0; $i < $count_content; $i++) {
+            $code['content'] = $code['content'] . $content[$i];
+        }
+        return $code;
     }
 
 
