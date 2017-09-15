@@ -35,33 +35,34 @@
             <div class="form-group">
                 <h6>Hunter is my life:</h6>
             </div>
-
-            <div class="form-group">
-                <label for="select_site">Chọn các site sau:</label>
-                <select class="form-control" id="select_site" name="select_site">
-                    @foreach($sites as $site)
-                        <option value="{{$site->id}}">{{ str_limit($site->site, $limit = 40, $end='...') }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="short_content">Link truyện</label>
-                <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
-            </div>
-            <div class="form-group">
-                <label for="short_content">Pagination</label>
-                <input type="number" class="form-control" id="get_pagination" name="get_pagination" placeholder="Tổng số trang truyện" required>
-            </div>
-            <div class="form-inline">
+            <form name="validate">
                 <div class="form-group">
-                    <button type="button" title="Sẽ chuyển truyện sang phải" id="get_story" class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span
-                                class="fa fa-arrow-right"></span>
-                    </button>
+                    <label for="select_site">Chọn các site sau:</label>
+                    <select class="form-control" id="select_site" name="select_site">
+                        @foreach($sites as $site)
+                            <option value="{{$site->id}}">{{ str_limit($site->site, $limit = 40, $end='...') }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
+                    <label for="short_content">Link truyện</label>
+                    <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="short_content">Pagination</label>
+                    <input type="number" class="form-control" id="get_pagination" name="get_pagination" placeholder="Tổng số trang truyện" required>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <button type="button" title="Sẽ chuyển truyện sang phải" id="get_story" class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span
+                                    class="fa fa-arrow-right"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="form-group">
             <h4 style="color: #7da8c3">Các thể loại:</h4>
@@ -226,9 +227,6 @@
                 }, 800)
             });
         });
-        setTimeout(function () {
-            $('.mes-page').empty();
-        }, 1500);
 
         //search site to cru(d) site 2
         $(document).ready(function () {
@@ -336,13 +334,24 @@
                             })
                         },
                         error: function () {
-//                            location.reload();
+                            $('body').append('<div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">\n' +
+                                '            <div class="alert alert-danger">\n' +
+                                    '<strong>Lỗi rồi,</strong> Bạn hãy thử lại xem...'+
+                                '            </div>\n' +
+                                '        </div>');
+                            setTimeout(function () {
+                                $('.mes-page').empty();
+                            }, 1500);
                         }
                     })
                 }, 800)
                 return false;
             });
         });
+
+        setTimeout(function () {
+            $('.mes-page').empty();
+        }, 1500);
 
     </script>
 @endsection

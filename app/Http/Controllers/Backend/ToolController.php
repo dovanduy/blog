@@ -98,7 +98,6 @@ class ToolController extends Controller
             }
             if ($html != '') {
                 //content
-//                $content[] = $this->getStringStotry($html, $start_content_code, $end_content_code);
                 $start_content = strpos($html, $start_content_code) + strlen($start_content_code);
                 $end_content = strpos($html, $end_content_code) - $start_content;
                 $content[] = substr($html, $start_content, $end_content);
