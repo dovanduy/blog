@@ -132,15 +132,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                            <label>Mật khẩu cũ:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
                                    placeholder="Nhập mật khẩu cũ">
                         </div>
                         <div class="form-group">
-                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                            <label>Mật khẩu mới:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
                                    placeholder="Nhập mật khẩu mới">
                         </div>
                         <div class="form-group">
-                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                            <label>Nhập lại mật khẩu cũ:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
                                    placeholder="Nhập lại mật khẩu mới">
                         </div>
                     </div>

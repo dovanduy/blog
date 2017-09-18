@@ -265,4 +265,14 @@ class PostController extends Controller
         $id = $request->id;
         return Post::find($id);
     }
+
+    public function ajaxEditType(Request $request)
+    {
+        $id = $request->id;
+        $type = $request->type_id;
+        $post = Post::find($id);
+        $post->type = $type;
+        $post->save();
+        return $post;
+    }
 }

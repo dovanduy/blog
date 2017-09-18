@@ -126,7 +126,13 @@ $role_bus = 3;
                         <tr id="{{$post->id}}" class="selected-page">
                             <td title="Ngày cập nhật truyện: {{$post->updated_at}}">{{$key+1}}</td>
                             <td>{{ str_limit($post->title, $limit = 100, $end='...') }}</td>
-                            <td>{!! ($post->Type['name']) !!}</td>
+                            <td>
+                                <select class="form-control change-type">
+                                    @foreach($types as $type)
+                                        <option {{ $post->Type['name']== $type->name? 'selected' : ''}} value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                             <td class="title-seo-after-edit" data-toggle="modal" data-target=".myModal-title-seo" title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
                             <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
                             @if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
@@ -231,6 +237,7 @@ $role_bus = 3;
                         $('#title_seo').val(rsp.title_seo)
                     },
                     error: function () {
+                        alert('Đã có lỗi xảy ra xin thử lại!');
                         location.reload();
                     }
                 });
@@ -274,6 +281,7 @@ $role_bus = 3;
                         CKEDITOR.instances['aj-content'].setData(rsp.content)
                     },
                     error: function () {
+                        alert('Đã có lỗi xảy ra xin thử lại!');
                         location.reload();
                     }
                 });
@@ -296,10 +304,34 @@ $role_bus = 3;
                         $('#'+rsp.id).find('.content-after-edit').append(TruncateText(rsp.content));
                     },
                     error: function () {
+                        alert('Đã có lỗi xảy ra xin thử lại!');
                         location.reload();
                     }
                 })
-            })
+            });
+
+            //change typr
+            $('.change-type').change(function () {
+                var id = $(this).closest('tr').attr('id');
+                var type_id = $(this).val();
+
+                $.ajax({
+                    type:'POST',
+                    url: '{{ route('ajax.EditType') }}',
+                    data: {"_token": "{{ csrf_token() }}",
+                        'id':id,
+                        'type_id' : id
+                        },
+                    dataType:'JSON',
+                    success: function (rsp) {
+                        alert('Cập nhật thể loại thành công!');
+                    },
+                    error: function () {
+                        alert('Đã có lỗi xảy ra xin thử lại!');
+                        location.reload();
+                    }
+                })
+            });
         });
 
         //status
