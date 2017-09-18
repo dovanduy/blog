@@ -56,4 +56,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('postCreate', 'Backend\ToolController@postCreate')->name('tool.postCreate');
 
     });
+    //change password
+    Route::post('changePassword', 'Backend\ChangePassword@postCredentials')->name('changePassword');
 });

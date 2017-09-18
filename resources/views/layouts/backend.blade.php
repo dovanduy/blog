@@ -23,6 +23,20 @@
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
+            @if(session()->has('pw'))
+                <div class="mes-pw" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%; top:50px">
+                    <div class="alert alert-success" role="alert">
+                        <strong>Thành công!</strong> {{session('pw')}}.
+                    </div>
+                </div>
+            @endif
+                @if(session()->has('pw-er'))
+                    <div class="mes-pw" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%; top:50px">
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Thất bại!</strong> {{session('pw-er')}}.
+                        </div>
+                    </div>
+                @endif
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -124,31 +138,45 @@
     <div class="modal fade" id="change-password" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content aj-form-page">
-                <form>
-                    {{csrf_field()}}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thay đổi mật khẩu</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Mật khẩu cũ:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
-                                   placeholder="Nhập mật khẩu cũ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thay đổi mật khẩu</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form-change-password" role="form" method="POST" action="{{ route('changePassword') }}"
+                          novalidate class="form-horizontal">
+                        <div class="col-md-9">
+                            <label for="current-password" class="col-sm-4 control-label">Mật khẩu hiện tạih</label>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="password" class="form-control" id="current-password"
+                                           name="current-password" placeholder="Password">
+                                </div>
+                            </div>
+                            <label for="password" class="col-sm-4 control-label">Mật khẩu mới</label>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           placeholder="Password">
+                                </div>
+                            </div>
+                            <label for="password_confirmation" class="col-sm-4 control-label">Nhập lại mật khẩu</label>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password_confirmation"
+                                           name="password_confirmation" placeholder="Re-enter Password">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Mật khẩu mới:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
-                                   placeholder="Nhập mật khẩu mới">
+                            <div class="col-sm-offset-5 col-sm-6">
+                                <button type="submit" class="btn btn-danger">Thay đổi</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Nhập lại mật khẩu cũ:</label><input class="aj-text-page form-control" name="change-password" id="change-password"
-                                   placeholder="Nhập lại mật khẩu mới">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default sm-change-password-page">Thay đổi</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -165,6 +193,12 @@
 
 {{--ckeditor--}}
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+<script>
+    setTimeout(function () {
+        $('.mes-pw').empty();
+    }, 1500);
+</script>
 
 @yield('js')
 
