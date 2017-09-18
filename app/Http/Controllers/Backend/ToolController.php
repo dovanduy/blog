@@ -51,13 +51,15 @@ class ToolController extends Controller
         return $res;
     }
 
-    public function getStringStotry($html, $start, $end) {
+    public function getStringStotry($html, $start, $end)
+    {
         $start_content = strpos($html, $start) + strlen($start);
-        if ($html <= $start_content) {
-            return '';
+        $end_content = strpos($html, $end) - $start_content;
+        $result = substr($html, $start_content, $end_content);
+        if( strlen($result ) <= 255) {
+            return $result;
         } else {
-            $end_content = strpos($html, $end) - $start_content;
-            return substr($html, $start_content, $end_content);
+            return '';
         }
     }
 
@@ -69,7 +71,7 @@ class ToolController extends Controller
         ];
         $get_site = rtrim($request->get_site, '/');
         $id = $request->select_site;
-        $request->get_pagintion >=1 ? $get_pagintion = $request->get_pagintion : $get_pagintion = 15;
+        $request->get_pagintion >= 1 ? $get_pagintion = $request->get_pagintion : $get_pagintion = 15;
         $tool = Tool::find($id);
 
         //content db

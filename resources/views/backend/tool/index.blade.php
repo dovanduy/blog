@@ -81,12 +81,6 @@
             </div>
             <form method="Post" action="{{route('tool.siteStory')}}">
                 {{csrf_field()}}
-                {{--<div class="form-group">--}}
-                {{--<label for="site">Chọn site:</label>--}}
-                {{--<select class="form-control" id="site">--}}
-                {{--<option>...</option>--}}
-                {{--</select>--}}
-                {{--</div>--}}
                 <div class="form-group">
                     <label for="search_site_2">Chọn site hoặc thêm site</label>
                     <input type="url" class="form-control" id="search_site_2" name="site" placeholder="Site"
