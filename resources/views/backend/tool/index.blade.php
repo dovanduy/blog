@@ -58,9 +58,6 @@
                                     class="fa fa-arrow-right"></span>
                         </button>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-info">Auto&nbsp;&nbsp;<span class="fa fa-bolt"></span></button>
-                    </div>
                 </div>
             </form>
         </div>
@@ -244,7 +241,7 @@
                                 $('#install_search_2').empty();
                                 $('#install_search_2').css({'display': 'block'});
                                 for (var i = 0; i < count_rsp; i++) {
-                                    $('#install_search_2').append('<div style="padding-left: 20px; margin-top: 20px; cursor: pointer" class="install_search" title="' + rsp[i].site + '">' + shortTextSearch(rsp[i].site) + '</div><hr>');
+                                    $('#install_search_2').append('<div data-search="'+ rsp[i].id +'" style="padding-left: 20px; margin-top: 20px; cursor: pointer" class="install_search" title="' + rsp[i].site + '">' + shortTextSearch(rsp[i].site) + '</div><hr>');
                                 }
                             } else {
                                 $('#install_search_2').empty();

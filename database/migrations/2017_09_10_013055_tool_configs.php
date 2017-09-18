@@ -30,7 +30,7 @@ class ToolConfigs extends Migration
             $table->timestamps();
         });
 
-        DB::table('tool_configs')->insert([[
+        DB::table('tool_configs')->insert([
             'site' => 'http://truyensex88.net',
             'start_title_code' => '<h2><em><strong>',
             'end_title_code' => '</strong></em></h2>',
@@ -42,7 +42,7 @@ class ToolConfigs extends Migration
             'url_parent' => '/page/',
             'start_url_parent' => '',
             'end_url_parent' => ''
-        ]]);
+        ]);
     }
 
     /**
