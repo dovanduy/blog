@@ -261,4 +261,8 @@ class PostController extends Controller
         $type->save();
         return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
     }
+    public function mainContent(Request $request) {
+        $id = $request->id;
+        return Post::find($id);
+    }
 }

@@ -127,8 +127,8 @@ $role_bus = 3;
                             <td title="Ngày cập nhật truyện: {{$post->updated_at}}">{{$key+1}}</td>
                             <td>{{ str_limit($post->title, $limit = 100, $end='...') }}</td>
                             <td>{!! ($post->Type['name']) !!}</td>
-                            <td id="short-content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-short-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
-                            <td id="content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
+                            <td class="title-seo-after-edit" data-toggle="modal" data-target=".myModal-title-seo" title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
+                            <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
                             @if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
                                 <td>@foreach(App\User::select('name')->where('id', $post->user_id)->get() as $val) {{$val->name}} @endforeach</td>
                             @endif
@@ -151,48 +151,6 @@ $role_bus = 3;
                                 </div>
                             </td>
                         </tr>
-                        <!-- Modal content-->
-                        <div class="modal fade" id="myModal-content-{{$key}}" role="dialog">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content aj-form-page">
-                                    <form>
-                                        {{csrf_field()}}
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Sửa Nội dung</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <textarea class="aj-text-page" name="content" id="content-{{$key}}">{!! ($post->content) !!}</textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" data-id="{{$post->id}}" class="btn btn-default sm-content-page">Thay đổi</button>
-                                            <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal title seo-->
-                        <div class="modal fade" id="myModal-short-content-{{$key}}" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content aj-form-page">
-                                    <form>
-                                        {{csrf_field()}}
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Title SEO</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input class="aj-text-page form-control" name="title_seo" id="title_seo-{{$key}}" value="{!! ($post->title_seo) !!}">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit"  data-id="{{$post->id}}" class="btn btn-default sm-short-content-page">Thay đổi</button>
-                                            <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     @endforeach
                     </tbody>
                 </table>
@@ -201,14 +159,54 @@ $role_bus = 3;
         {!! $posts->render() !!}
     </div>
 
+    <!-- Modal content-->
+    <div class="modal fade myModal-content" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content aj-form-page">
+                <form>
+                    {{csrf_field()}}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sửa Nội dung</h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="aj-text-page" name="content" id="aj-content"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="submit-content" data-content="" class="btn btn-default sm-content-page">Thay đổi</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal title seo-->
+    <div class="modal fade myModal-title-seo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content aj-form-page">
+                <form>
+                    {{csrf_field()}}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Title SEO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input class="aj-text-page form-control" name="title_seo" id="title_seo" placeholder="Nhập title seo">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="submit-title-seo" data-seo="" class="btn btn-default sm-title-seo-page">Thay đổi</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
 @section('js')
     <script type="text/javascript">
-        for(var i= 0; i < $('.selected-page').length; i++) {
-            CKEDITOR.replace('content-' + i);
-        }
+        CKEDITOR.replace('aj-content');
 //short text
         function TruncateText(text)
         {
@@ -218,13 +216,29 @@ $role_bus = 3;
             }
             return text;
         }
-//short content
+//title seo
         $(document).ready(function () {
-            $('.sm-short-content-page').click(function () {
-                var get_id_ckeditor = $(this).closest('.aj-form-page').find('.aj-text-page').attr('id');
-                var id = $(this).data('id');
+            $(document).on('click', '.title-seo-after-edit',function () {
+                var id = $(this).closest('tr').attr('id');
+                $('#submit-title-seo').attr('data-seo', id);
+                $.ajax({
+                    type:'POST',
+                    url: '{{ route('ajax.mainContent') }}',
+                    data: {"_token": '{{ csrf_token() }}',
+                        'id':id},
+                    dataType:'JSON',
+                    success: function (rsp) {
+                        $('#title_seo').val(rsp.title_seo)
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            });
+
+            $('.sm-title-seo-page').click(function () {
+                var id = $(this).data('seo');
                 var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
-                console.log(title_seo)
                 $.ajax({
                     type:'POST',
                     url: '{{ route('ajax.editShortContent') }}',
@@ -234,10 +248,11 @@ $role_bus = 3;
                     dataType:'JSON',
                     success: function (rsp) {
                         alert('Cập nhật truyện thành công!');
-                        $('#short-content-after-edit-'+ rsp.id).empty();
-                        $('#short-content-after-edit-'+ rsp.id).append(TruncateText(rsp.title_seo));
+                        $('#'+rsp.id).find('.title-seo-after-edit').empty();
+                        $('#'+rsp.id).find('.title-seo-after-edit').append(TruncateText(rsp.title_seo));
                     },
                     error: function () {
+                        alert('Có một lỗi xảy ra!');
                         location.reload();
                     }
                 })
@@ -246,9 +261,27 @@ $role_bus = 3;
 
         //content
         $(document).ready(function () {
+            $(document).on('click', '.content-after-edit',function () {
+                var id = $(this).closest('tr').attr('id');
+                $('#submit-content').attr('data-content', id);
+                $.ajax({
+                    type:'POST',
+                    url: '{{ route('ajax.mainContent') }}',
+                    data: {"_token": '{{ csrf_token() }}',
+                        'id':id},
+                    dataType:'JSON',
+                    success: function (rsp) {
+                        CKEDITOR.instances['aj-content'].setData(rsp.content)
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            });
+
             $('.sm-content-page').click(function () {
                 var get_id_ckeditor = $(this).closest('.aj-form-page').find('.aj-text-page').attr('id');
-                var id = $(this).data('id');
+                var id = $(this).data('content');
                 var content = CKEDITOR.instances[get_id_ckeditor].getData();
                 $.ajax({
                     type:'POST',
@@ -259,8 +292,8 @@ $role_bus = 3;
                     dataType:'JSON',
                     success: function (rsp) {
                         alert('Cập nhật truyện thành công!');
-                        $('#content-after-edit-'+ rsp.id).empty();
-                        $('#content-after-edit-'+ rsp.id).append(TruncateText(rsp.content));
+                        $('#'+rsp.id).find('.content-after-edit').empty();
+                        $('#'+rsp.id).find('.content-after-edit').append(TruncateText(rsp.content));
                     },
                     error: function () {
                         location.reload();

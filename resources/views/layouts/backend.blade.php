@@ -50,22 +50,6 @@
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-                        {{--<li class="dropdown show-on-hover">--}}
-                        {{--<a href="" class="dropdown-toggle" data-toggle="dropdown">--}}
-                        {{--<i class="fa fa-list-alt"></i> <span> Quan</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                        {{--<li>--}}
-                        {{--<a href=""><i class="fa fa-reply-all" aria-hidden="true"></i> Tất cả</a>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                        {{--<a href=""><i class="fa fa-archive" aria-hidden="true"></i> Đóng hàng</a>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                        {{--<a href=""><i class="fa fa-truck" aria-hidden="true"></i> Chuyển hàng</a>--}}
-                        {{--</li>--}}
-                        {{--</ul>--}}
-                        {{--</li>--}}
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2)
                             <li>
                                 <a href="{{ url('admin/user') }}">
@@ -87,7 +71,8 @@
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)
                             <li>
                                 <a href="{{route('tool')}}">
-                                    <i class="fa fa-asl-interpreting" aria-hidden="true"></i> <span>Đăng bài tự động</span>
+                                    <i class="fa fa-asl-interpreting" aria-hidden="true"></i>
+                                    <span>Đăng bài tự động</span>
                                 </a>
                             </li>
                         @else
@@ -111,8 +96,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a>
+                                <li data-toggle="modal" data-target="#change-password">
+                                    <a href="#">
                                         <span class="fa fa-gear"></span>&nbsp;&nbsp;Thay đổi mật khẩu
                                     </a>
                                 </li>
@@ -135,6 +120,38 @@
             </div>
         </div>
     </nav>
+    <!-- Modal title seo-->
+    <div class="modal fade" id="change-password" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content aj-form-page">
+                <form>
+                    {{csrf_field()}}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thay đổi mật khẩu</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                                   placeholder="Nhập mật khẩu cũ">
+                        </div>
+                        <div class="form-group">
+                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                                   placeholder="Nhập mật khẩu mới">
+                        </div>
+                        <div class="form-group">
+                            <input class="aj-text-page form-control" name="change-password" id="change-password"
+                                   placeholder="Nhập lại mật khẩu mới">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default sm-change-password-page">Thay đổi</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     @yield('content')
 </div>
