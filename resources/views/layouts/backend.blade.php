@@ -64,14 +64,13 @@
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-                        @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2)
+                        @if(\App\User::find(Auth::id())->role == 1)
                             <li>
                                 <a href="{{ url('admin/user') }}">
                                     <i class="fa fa-address-book-o" aria-hidden="true"></i>
                                     <span>Tài khoản</span>
                                 </a>
                             </li>
-
                         @else
                         @endif
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)

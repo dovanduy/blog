@@ -17,26 +17,99 @@ $role_bus = 3;
             </div>
         </div>
     @endif
-    <div class="col-md-2 col-sm-2 col-xs-12">
-        <div class="form-group">
-            <a href="{{route('post.create')}}">
-                <button class="btn btn-success"><span class="fa fa-plus"></span>&nbsp;&nbsp;Thêm Tài khoản</button>
-            </a>
-        </div>
-        <div class="form-group">
-            <a href="{{route('post.create')}}">
-                <button class="btn btn-success"><span class="fa fa-plus"></span>&nbsp;&nbsp;Thêm Tài khoản</button>
-            </a>
-        </div>
-        <div class="form-group">
-            {{--<h5>@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader) Có tất cả: <span style="color: pink"> {{$posts->total()}}</span></h5>--}}
-            {{--<h5>Bạn có tất cả:<span style="color: pink"> {{(\App\Post::where('user_id', \Illuminate\Support\Facades\Auth::id())->count())}}</span></h5>@endif--}}
-        </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        {{--<form id="form-change-password" role="form" method="POST" action="{{ route('changePassword') }}"--}}
+        {{--{{ csrf_field() }}--}}
+              {{--novalidate class="form-horizontal">--}}
+            {{--<div class="col-md-9">--}}
+                {{--<div class="form-group">--}}
+                    {{--<label for="password">Tên tài khoản</label>--}}
+                    {{--<input type="password" class="form-control" id="password" name="password"--}}
+                           {{--placeholder="Tên tài khoản">--}}
+                {{--</div>--}}
+                {{--<div class="form-group">--}}
+                    {{--<label for="password">Mật khẩu</label>--}}
+                    {{--<input type="password" class="form-control" id="password" name="password"--}}
+                           {{--placeholder="Mật khẩu">--}}
+                {{--</div>--}}
+                {{--<div class="form-group">--}}
+                    {{--<label for="password">Nhập lại mật</label>--}}
+                    {{--<input type="password" class="form-control" id="password" name="password"--}}
+                           {{--placeholder="Nhập lại mật khẩu">--}}
+                {{--</div>--}}
+                {{--<hr>--}}
+                {{--<div class="form-group">--}}
+                    {{--<button type="submit" class="btn btn-default"><i class="fa fa-plus"></i>Thêm tài khoản</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</form>--}}
+        <h3>Tạo tài khoản</h3>
+        <form class="form-horizontal" method="POST" action="">
+            {{ csrf_field() }}
+
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                <label for="name" class="col-md-4 control-label">Tác giả</label>
+
+                <div class="col-md-6">
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+                    @if ($errors->has('name'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <label for="email" class="col-md-4 control-label">Tên tài khoản</label>
+
+                <div class="col-md-6">
+                    <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required>
+
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <label for="password" class="col-md-4 control-label">Mật khẩu</label>
+
+                <div class="col-md-6">
+                    <input id="password" type="password" class="form-control" name="password" required>
+
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password-confirm" class="col-md-4 control-label">Nhập lại mật khẩu</label>
+
+                <div class="col-md-6">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Tạo tài khoản
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-md-10 col-sm-10 col-xs-12">
+    <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="x_panel tile fixed_height_320 widget-custom-padding">
             <div class="content">
-                <h4>Tất cả các bài viết.</h4>
+                <h4>Tất cả các tài khoản.</h4>
             </div>
             <div class="content">
                 <table class="table table-hover">
@@ -44,90 +117,25 @@ $role_bus = 3;
                     <tr>
                         <th>STT</th>
                         <th>Tên tài khoản</th>
-                        <th>Thể loại</th>
-                        <th>Nội dung</th>
-                        <th>Nội dung ngắn</th>
-                        {{--@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)--}}
-                            {{--<th>Tác giả</th>--}}
-                        {{--@endif--}}
-                        <th>Trạng thái</th>
-                        <th>Ngày đăng</th>
+                        <th>Chức vụ</th>
+                        <th>Gh chú</th>
+                        <th>Ngày tạo</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {{--@foreach($posts as $key=>$post)--}}
-                        {{--<tr id="{{$post->id}}" class="selected-page">--}}
-                            {{--<td title="Ngày cập nhật truyện: {{$post->updated_at}}">{{$key+1}}</td>--}}
-                            {{--<td>{{ str_limit($post->title, $limit = 100, $end='...') }}</td>--}}
-                            {{--<td>{!! $post->Type()->first()->name !!}</td>--}}
-                            {{--<td id="content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>--}}
-                            {{--<td id="short-content-after-edit-{{$post->id}}" data-toggle="modal" data-target="#myModal-short-content-{{$key}}" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->short_content, $limit=100, $end = '...') !!}</td>--}}
-                            {{--@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)--}}
-                                {{--<td>@foreach(App\User::select('name')->where('id', \Illuminate\Support\Facades\Auth::id())->get() as $val) {{$val->name}} @endforeach</td>--}}
-                            {{--@endif--}}
-                            {{--<td>--}}
-                                {{--<div class="onoffswitch">--}}
-                                    {{--<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-{{$key}}" value="{{$post->status}}" {{$post->status == 1? 'checked':''}}>--}}
-                                    {{--<label class="onoffswitch-label" for="myonoffswitch-{{$key}}">--}}
-                                        {{--<span class="onoffswitch-inner"></span>--}}
-                                        {{--<span class="onoffswitch-switch"></span>--}}
-                                    {{--</label>--}}
-                                {{--</div>--}}
-                            {{--</td>--}}
-                            {{--<td>{{ $post->created_at }}</td>--}}
-                            {{--<td>--}}
-                                {{--<div>--}}
-                                    {{--<a title="Xóa truyện" href="{{url('admin/post/delete/' . $post->id)}}" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-trash"></span></a>--}}
-                                {{--</div>--}}
-                                {{--<div>--}}
-                                    {{--<a title="Sửa truyện" href="{{url('admin/post/edit/' . $post->id)}}"><span class="fa fa-edit"></span></a>--}}
-                                {{--</div>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
-                        {{--<!-- Modal content-->--}}
-                        {{--<div class="modal fade" id="myModal-content-{{$key}}" role="dialog">--}}
-                            {{--<div class="modal-dialog modal-lg">--}}
-                                {{--<div class="modal-content aj-form-page">--}}
-                                    {{--<form>--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--<div class="modal-header">--}}
-                                            {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-                                            {{--<h4 class="modal-title">Sửa Nội dung</h4>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="modal-body">--}}
-                                            {{--<textarea class="aj-text-page" name="content" id="content-{{$key}}">{!! ($post->content) !!}</textarea>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="modal-footer">--}}
-                                            {{--<button type="submit" data-id="{{$post->id}}" class="btn btn-default sm-content-page">Thay đổi</button>--}}
-                                            {{--<button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>--}}
-                                        {{--</div>--}}
-                                    {{--</form>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- Modal short content-->--}}
-                        {{--<div class="modal fade" id="myModal-short-content-{{$key}}" role="dialog">--}}
-                            {{--<div class="modal-dialog modal-lg">--}}
-                                {{--<div class="modal-content aj-form-page">--}}
-                                    {{--<form>--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--<div class="modal-header">--}}
-                                            {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-                                            {{--<h4 class="modal-title">Sửa Nội dung ngắn</h4>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="modal-body">--}}
-                                            {{--<textarea class="aj-text-page" name="short-content" id="short-content-{{$key}}">{!! ($post->short_content) !!}</textarea>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="modal-footer">--}}
-                                            {{--<button type="submit"  data-id="{{$post->id}}" class="btn btn-default sm-short-content-page">Thay đổi</button>--}}
-                                            {{--<button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>--}}
-                                        {{--</div>--}}
-                                    {{--</form>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--@endforeach--}}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a href="#"><i class="fa fa-remove"></i></a>&nbsp;&nbsp;
+                            <a href="#"><i class="fa fa-refresh"></i></a>&nbsp;&nbsp;
+                            <a href="#"><i class="fa fa-pencil-square"></i></a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

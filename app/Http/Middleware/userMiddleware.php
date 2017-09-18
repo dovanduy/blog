@@ -18,7 +18,7 @@ class userMiddleware
     public function handle($request, Closure $next)
     {
         $role = User::find(Auth::id())->role;
-        if($role == 1 || $role == 2){
+        if($role == 1){
             return $next($request);
         }else{
             return redirect(route('admin'));
