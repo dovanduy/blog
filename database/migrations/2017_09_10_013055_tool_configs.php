@@ -29,6 +29,20 @@ class ToolConfigs extends Migration
             $table->string('end_url_parent');
             $table->timestamps();
         });
+
+        DB::table('tool_configs')->insert([[
+            'site' => 'http://truyensex88.net',
+            'start_title_code' => '<h2><em><strong>',
+            'end_title_code' => '</strong></em></h2>',
+            'start_content_code' => '<div id="content" class="pad">',
+            'end_content_code' => '<a class="addthis_button_google_plusone"',
+            'url_child' => '/',
+            'start_url_child' => '<div id="wp_page" class="wp-pagenavi">',
+            'end_url_child' => '</a></p></div></div>',
+            'url_parent' => '/page/',
+            'start_url_parent' => '',
+            'end_url_parent' => ''
+        ]]);
     }
 
     /**

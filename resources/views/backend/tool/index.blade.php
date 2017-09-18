@@ -49,7 +49,7 @@
                     <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
                 </div>
                 <div class="form-group">
-                    <label for="short_content">Pagination</label>
+                    <label for="short_content">Pagination (Mặc định: 15 page)</label>
                     <input type="number" class="form-control" id="get_pagination" name="get_pagination" placeholder="Tổng số trang truyện" required>
                 </div>
                 <div class="form-inline">
