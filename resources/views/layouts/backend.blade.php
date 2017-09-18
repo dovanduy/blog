@@ -30,13 +30,13 @@
                     </div>
                 </div>
             @endif
-                @if(session()->has('pw-er'))
-                    <div class="mes-pw" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%; top:50px">
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Thất bại!</strong> {{session('pw-er')}}.
-                        </div>
+            @if(session()->has('pw-er'))
+                <div class="mes-pw" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%; top:50px">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Thất bại!</strong> {{session('pw-er')}}.
                     </div>
-                @endif
+                </div>
+            @endif
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -98,10 +98,7 @@
             <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                    @else
+                    @if (!Auth::guest())
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">

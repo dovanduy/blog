@@ -54,10 +54,6 @@
                                 <button type="submit" class="btn btn-primary">
                                     Đăng nhập
                                 </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
                             </div>
                         </div>
                     </form>
