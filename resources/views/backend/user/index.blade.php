@@ -44,9 +44,8 @@ $role_bus = 3;
         {{--</div>--}}
         {{--</form>--}}
         <h3>Tạo tài khoản</h3>
-        <form class="form-horizontal" method="POST" action="">
+        <form class="form-horizontal" method="POST" action="{{route('user.create')}}">
             {{ csrf_field() }}
-
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-4 control-label">Tác giả</label>
 

@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('dashboard', 'Backend\HomeController@index')->name('admin');
 //    quản lý tài khoản
     Route::get('user', 'Backend\UserController@index')->name('user')->middleware('user');
+    Route::post('user/create', 'Backend\UserController@create')->name('user.create')->middleware('user');
     Route::get('user/delete/{id}', 'Backend\UserController@delete')->middleware('user');
 //quản lý truyện
     Route::group(['prefix' => 'post', 'middleware' => 'post'], function () {

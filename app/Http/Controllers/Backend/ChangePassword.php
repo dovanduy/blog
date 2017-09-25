@@ -63,7 +63,7 @@ class ChangePassword extends Controller
 
     public function resetPassword($id) {
         $obj_user = User::find($id);
-        $obj_user->password = Hash::make('Story123');;
+        $obj_user->password = Hash::make('Story123');
         $obj_user->save();
         return redirect()->back()->with('pw', 'Đã reset Tài khoản ' . $obj_user->email);
     }
