@@ -20,28 +20,28 @@ $role_bus = 3;
     <div class="col-md-4 col-sm-4 col-xs-12">
         {{--<form id="form-change-password" role="form" method="POST" action="{{ route('changePassword') }}"--}}
         {{--{{ csrf_field() }}--}}
-              {{--novalidate class="form-horizontal">--}}
-            {{--<div class="col-md-9">--}}
-                {{--<div class="form-group">--}}
-                    {{--<label for="password">Tên tài khoản</label>--}}
-                    {{--<input type="password" class="form-control" id="password" name="password"--}}
-                           {{--placeholder="Tên tài khoản">--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<label for="password">Mật khẩu</label>--}}
-                    {{--<input type="password" class="form-control" id="password" name="password"--}}
-                           {{--placeholder="Mật khẩu">--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<label for="password">Nhập lại mật</label>--}}
-                    {{--<input type="password" class="form-control" id="password" name="password"--}}
-                           {{--placeholder="Nhập lại mật khẩu">--}}
-                {{--</div>--}}
-                {{--<hr>--}}
-                {{--<div class="form-group">--}}
-                    {{--<button type="submit" class="btn btn-default"><i class="fa fa-plus"></i>Thêm tài khoản</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+        {{--novalidate class="form-horizontal">--}}
+        {{--<div class="col-md-9">--}}
+        {{--<div class="form-group">--}}
+        {{--<label for="password">Tên tài khoản</label>--}}
+        {{--<input type="password" class="form-control" id="password" name="password"--}}
+        {{--placeholder="Tên tài khoản">--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+        {{--<label for="password">Mật khẩu</label>--}}
+        {{--<input type="password" class="form-control" id="password" name="password"--}}
+        {{--placeholder="Mật khẩu">--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+        {{--<label for="password">Nhập lại mật</label>--}}
+        {{--<input type="password" class="form-control" id="password" name="password"--}}
+        {{--placeholder="Nhập lại mật khẩu">--}}
+        {{--</div>--}}
+        {{--<hr>--}}
+        {{--<div class="form-group">--}}
+        {{--<button type="submit" class="btn btn-default"><i class="fa fa-plus"></i>Thêm tài khoản</button>--}}
+        {{--</div>--}}
+        {{--</div>--}}
         {{--</form>--}}
         <h3>Tạo tài khoản</h3>
         <form class="form-horizontal" method="POST" action="">
@@ -51,7 +51,8 @@ $role_bus = 3;
                 <label for="name" class="col-md-4 control-label">Tác giả</label>
 
                 <div class="col-md-6">
-                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required
+                           autofocus>
 
                     @if ($errors->has('name'))
                         <span class="help-block">
@@ -93,7 +94,8 @@ $role_bus = 3;
                 <label for="password-confirm" class="col-md-4 control-label">Nhập lại mật khẩu</label>
 
                 <div class="col-md-6">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                           required>
                 </div>
             </div>
 
@@ -117,30 +119,38 @@ $role_bus = 3;
                     <tr>
                         <th>STT</th>
                         <th>Tên tài khoản</th>
+                        <th>Tác giả</th>
                         <th>Chức vụ</th>
-                        <th>Gh chú</th>
                         <th>Ngày tạo</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a href="#"><i class="fa fa-remove"></i></a>&nbsp;&nbsp;
-                            <a href="#"><i class="fa fa-refresh"></i></a>&nbsp;&nbsp;
-                            <a href="#"><i class="fa fa-pencil-square"></i></a>
-                        </td>
-                    </tr>
+                    @foreach($users as $key=>$user)
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>
+                                @foreach($roles as $role)
+                                    @if($role->id == $user->role)
+                                        {{$role->name}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>{{$user->created_at==''?'Khởi tạo từ đầu':$user->created_at}}</td>
+                            <td>
+                                <a title="Xóa tài khoản"  href="{{url('/admin/user/delete/' . $user->id)}}"><i class="fa fa-remove"></i></a>&nbsp;&nbsp;
+                                <a title="Reset mật khẩu và tất cả mật khẩu sẽ được trở về 'story123'" href="{{url('/admin/user/reset/' . $user->id)}}"><i class="fa fa-refresh"></i></a>&nbsp;&nbsp;
+                                <a title="Sửa mật khẩu" href="#"><i class="fa fa-pencil-square"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        {{--{!! $posts->render() !!}--}}
+        {!! $users->render() !!}
     </div>
 
 

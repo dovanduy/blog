@@ -12,7 +12,7 @@ use App\User;
 
 class ChangePassword extends Controller
 {
-    public function adminCredentialRules(array $data)
+    private function adminCredentialRules(array $data)
     {
         $messages = [
             'current-password.required' => 'Please enter current password',
@@ -59,5 +59,12 @@ class ChangePassword extends Controller
         {
             return redirect()->back();
         }
+    }
+
+    public function resetPassword($id) {
+        $obj_user = User::find($id);
+        $obj_user->password = Hash::make('Story123');;
+        $obj_user->save();
+        return redirect()->back()->with('pw', 'Đã reset Tài khoản ' . $obj_user->email);
     }
 }

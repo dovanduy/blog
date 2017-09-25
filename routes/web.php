@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('dashboard', 'Backend\HomeController@index')->name('admin');
 //    quản lý tài khoản
     Route::get('user', 'Backend\UserController@index')->name('user')->middleware('user');
+    Route::get('user/delete/{id}', 'Backend\UserController@delete')->middleware('user');
 //quản lý truyện
     Route::group(['prefix' => 'post', 'middleware' => 'post'], function () {
         Route::get('/', 'Backend\PostController@index')->name('post');
@@ -61,4 +62,6 @@ Route::group(['prefix' => 'admin'], function() {
     });
     //change password
     Route::post('changePassword', 'Backend\ChangePassword@postCredentials')->name('changePassword');
+    //reset password
+    Route::get('user/reset/{id}', 'Backend\ChangePassword@resetPassword')->name('resetPassword');
 });
