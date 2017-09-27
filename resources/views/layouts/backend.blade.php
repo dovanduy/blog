@@ -130,7 +130,7 @@
             </div>
         </div>
     </nav>
-    <!-- Modal title seo-->
+    <!-- Modal change password-->
     <div class="modal fade" id="change-password" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content aj-form-page">
@@ -142,7 +142,7 @@
                     <form id="form-change-password" role="form" method="POST" action="{{ route('changePassword') }}"
                           novalidate class="form-horizontal">
                         <div class="col-md-9">
-                            <label for="current-password" class="col-sm-4 control-label">Mật khẩu hiện tạih</label>
+                            <label for="current-password" class="col-sm-4 control-label">Mật khẩu hiện tại</label>
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

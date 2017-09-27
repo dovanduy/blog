@@ -67,4 +67,13 @@ class ChangePassword extends Controller
         $obj_user->save();
         return redirect()->back()->with('pw', 'Đã reset Tài khoản ' . $obj_user->email);
     }
+
+    public function postChangeUserPassword(Request $request){
+        $id = $request->user_id;
+        $pw = $request->pw;
+        $obj_user = User::find($id);
+        $obj_user->password = Hash::make($pw);
+        $obj_user->save();
+        return array('Đã được thay đổi mật khẩu');
+    }
 }

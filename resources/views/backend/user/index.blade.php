@@ -18,31 +18,6 @@ $role_bus = 3;
         </div>
     @endif
     <div class="col-md-4 col-sm-4 col-xs-12">
-        {{--<form id="form-change-password" role="form" method="POST" action="{{ route('changePassword') }}"--}}
-        {{--{{ csrf_field() }}--}}
-        {{--novalidate class="form-horizontal">--}}
-        {{--<div class="col-md-9">--}}
-        {{--<div class="form-group">--}}
-        {{--<label for="password">Tên tài khoản</label>--}}
-        {{--<input type="password" class="form-control" id="password" name="password"--}}
-        {{--placeholder="Tên tài khoản">--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-        {{--<label for="password">Mật khẩu</label>--}}
-        {{--<input type="password" class="form-control" id="password" name="password"--}}
-        {{--placeholder="Mật khẩu">--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-        {{--<label for="password">Nhập lại mật</label>--}}
-        {{--<input type="password" class="form-control" id="password" name="password"--}}
-        {{--placeholder="Nhập lại mật khẩu">--}}
-        {{--</div>--}}
-        {{--<hr>--}}
-        {{--<div class="form-group">--}}
-        {{--<button type="submit" class="btn btn-default"><i class="fa fa-plus"></i>Thêm tài khoản</button>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</form>--}}
         <h3>Tạo tài khoản</h3>
         <form class="form-horizontal" method="POST" action="{{route('user.create')}}">
             {{ csrf_field() }}
@@ -126,9 +101,9 @@ $role_bus = 3;
                     </thead>
                     <tbody>
                     @foreach($users as $key=>$user)
-                        <tr>
+                        <tr id="{{$user->id}}">
                             <td>{{$key+1}}</td>
-                            <td>{{$user->email}}</td>
+                            <td class="username">{{$user->email}}</td>
                             <td>{{$user->name}}</td>
                             <td>
                                 @foreach($roles as $role)
@@ -139,9 +114,12 @@ $role_bus = 3;
                             </td>
                             <td>{{$user->created_at==''?'Khởi tạo từ đầu':$user->created_at}}</td>
                             <td>
-                                <a title="Xóa tài khoản"  href="{{url('/admin/user/delete/' . $user->id)}}"><i class="fa fa-remove"></i></a>&nbsp;&nbsp;
-                                <a title="Reset mật khẩu và tất cả mật khẩu sẽ được trở về 'story123'" href="{{url('/admin/user/reset/' . $user->id)}}"><i class="fa fa-refresh"></i></a>&nbsp;&nbsp;
-                                <a title="Sửa mật khẩu" href="#"><i class="fa fa-pencil-square"></i></a>
+                                <a style="color:#cc6699" title="Xóa tài khoản"
+                                   href="{{url('/admin/user/delete/' . $user->id)}}"><i class="fa fa-remove"></i></a>&nbsp;&nbsp;
+                                <a title="Reset mật khẩu và tất cả mật khẩu sẽ được trở về 'story123'"
+                                   href="{{url('/admin/user/reset/' . $user->id)}}"><i class="fa fa-refresh"></i></a>&nbsp;&nbsp;
+                                <a data-toggle="modal" data-target="#change-password-user" title="Sửa mật khẩu"
+                                   href="#"><i class="fa fa-pencil-square"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -152,5 +130,81 @@ $role_bus = 3;
         {!! $users->render() !!}
     </div>
 
-
+    <!-- Modal change password-->
+    <div class="modal fade" id="change-password-user" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content aj-form-page">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thay đổi mật khẩu tài khoản <span style="font-weight: bold"
+                                                                              class="username-ad"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form-change-password-ad" role="form"
+                          novalidate class="form-horizontal">
+                        <div class="col-md-9">
+                            <label for="password_ad" class="col-sm-4 control-label">Mật khẩu mới</label>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password_ad" name="password"
+                                           placeholder="Password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-5 col-sm-6">
+                                <button type="button" data-id="" id="chang-pw-ad" class="btn btn-danger">Thay đổi</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('.fa-pencil-square').click(function () {
+                var name = $(this).closest('tr').find('.username').text();
+                $('.username-ad').empty();
+                $('.username-ad').append('"' + name + '"');
+                var user_id = $(this).closest('tr').attr('id');
+                $('#chang-pw-ad').attr('data-id', user_id);
+            });
+            $('#chang-pw-ad').click(function () {
+                var id = parseInt($(this).attr('data-id'));
+                var pw = $('#password_ad').val();
+                console.log(id, pw)
+                if (pw != '') {
+                    $.ajax({
+                        url: '{{route('changeUserPassword')}}',
+                        type: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            user_id: id,
+                            pw: pw
+                        },
+                        dataType: 'JSON',
+                        success: function (rsp) {
+                            $('#change-password-user').modal('hide');
+                            $('body').append('<div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">\n' +
+                                '<div class="alert alert-success" role="alert">\n' +
+                                '<strong>Thành công!    </strong>'+ rsp[0] +' .\n' +
+                                '</div>\n' +
+                                '</div>');
+                            setTimeout(function () {
+                                $('.mes-page').empty();
+                            }, 1500);
+                        }, error: function () {
+                        location.reload();
+                        }
+                    });
+                } else {
+                    alert('Bạn nhập mật khẩu mới có thể sử dụng chức năng này...');
+                }
+            });
+        });
+    </script>
 @endsection
