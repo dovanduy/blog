@@ -44,7 +44,8 @@ class InitDatabase extends Migration
             $table->string('email', 50)->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
-            $table->integer('role')->references('id')->on('roles')->default(0);
+            $table->string('ip')->nullable();
+            $table->tinyInteger('role')->references('id')->on('roles')->default(0);
             $table->timestamps();
         });
 

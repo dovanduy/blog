@@ -1,10 +1,4 @@
 @extends('layouts.backend')
-<?php
-$role_admin = 1;
-$role_leader = 2;
-$role_bus = 3;
-?>
-
 @section('css')
 
 @endsection
@@ -17,6 +11,9 @@ $role_bus = 3;
             </div>
         </div>
     @endif
+    <div class="col-md-2 col-sm-2 col-xs-12">
+        <span style="font-size: 50px; font-weight: bold">IP</span><small>"Internet Protocol"</small>
+    </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
         <h3>Tạo tài khoản</h3>
         <form class="form-horizontal" method="POST" action="{{route('user.create')}}">
@@ -80,7 +77,7 @@ $role_bus = 3;
             </div>
         </form>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12">
+    <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel tile fixed_height_320 widget-custom-padding">
             <div class="content">
                 <h4>Tất cả các tài khoản.</h4>
