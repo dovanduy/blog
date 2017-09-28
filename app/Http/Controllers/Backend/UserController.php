@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\IP;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -15,11 +16,14 @@ class UserController extends Controller
     //
     public function index() {
         $users = User::where('id', '<>', Auth::id())->paginate(10);
-        $roles = Role::all();
-        return view('backend.user.index', compact('users', 'roles'));
+        $alluser = User::all();
+        $roles = Role::where('id', '<>', Auth::id())->get();
+        $ips = IP::orderBy('id', 'desc')->get();
+        return view('backend.user.index', compact('users', 'roles', 'ips', 'alluser'));
     }
 
     public function create(Request $request) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
@@ -39,6 +43,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
+            $request->role_new_user==null?$user->role='':$user->role = $request->role_new_user;
             $user->save();
             return redirect()->back()->with('pw', 'Đã thêm tài khoản ');
         } else {

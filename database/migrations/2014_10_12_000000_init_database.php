@@ -30,7 +30,8 @@ class InitDatabase extends Migration
         $roles = [
             ['id' => 1, 'name' => 'Admin'],
             ['id' => 2, 'name' => 'Quản lý'],
-            ['id' => 3, 'name' => 'Xe bus']
+            ['id' => 3, 'name' => 'Xe bus'],
+            ['id' => 4, 'name' => 'Vô gia cư'],
         ];
 
         foreach($roles as $role) {
@@ -40,6 +41,7 @@ class InitDatabase extends Migration
         // Create Users tale
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('image', 255)->nullable();
             $table->string('name');
             $table->string('email', 50)->nullable();
             $table->string('password')->nullable();

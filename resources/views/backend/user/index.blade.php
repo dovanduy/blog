@@ -11,8 +11,36 @@
             </div>
         </div>
     @endif
-    <div class="col-md-2 col-sm-2 col-xs-12">
+    <div class="col-md-3 col-sm-3 col-xs-12">
         <span style="font-size: 50px; font-weight: bold">IP</span><small>"Internet Protocol"</small>
+        <div class="content">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>IP</th>
+                    <th>Username</th>
+                    <th>Logged</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($ips as $key=>$ip)
+                    <tr>
+                        <td>{{$key+1}}</td>
+                        <td>{{$ip->ip}}</td>
+                        <td>
+                            @foreach($alluser as $val)
+                                @if($val->id == $ip->user_id)
+                                    {{$val->name}}
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>{{$ip->created_at}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
         <h3>Tạo tài khoản</h3>
@@ -69,6 +97,18 @@
             </div>
 
             <div class="form-group">
+                <label for="role-new-user" class="col-md-4 control-label">Chức vụ</label>
+
+                <div class="col-md-6">
+                    <select id="role-new-user" class="form-control" name="role_new_user">
+                        @foreach($roles as $role)
+                                <option value="{{$role->id}}">{{$role->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                     <button type="submit" class="btn btn-default">
                         <i class="fa fa-plus"></i>&nbsp;&nbsp;Tạo tài khoản
@@ -77,7 +117,7 @@
             </div>
         </form>
     </div>
-    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-5 col-sm-5 col-xs-12">
         <div class="x_panel tile fixed_height_320 widget-custom-padding">
             <div class="content">
                 <h4>Tất cả các tài khoản.</h4>

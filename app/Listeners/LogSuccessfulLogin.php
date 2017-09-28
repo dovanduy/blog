@@ -7,6 +7,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Http\Request;
+use App\IP;
+use Auth;
 
 class LogSuccessfulLogin
 {
@@ -29,9 +31,15 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event)
     {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         //
+        $addressIp = $this->request->ip();
         $user = $event->user;
-        $user->ip = $this->request->ip();
+        $user->ip = $addressIp;
         $user->save();
+        $ip = new IP();
+        $ip->user_id = Auth::id();
+        $ip->ip = $addressIp;
+        $ip->save();
     }
 }

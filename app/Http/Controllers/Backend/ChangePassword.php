@@ -30,6 +30,7 @@ class ChangePassword extends Controller
 
     public function postCredentials(Request $request)
     {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         if(Auth::Check())
         {
             $request_data = $request->All();
@@ -62,6 +63,7 @@ class ChangePassword extends Controller
     }
 
     public function resetPassword($id) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $obj_user = User::find($id);
         $obj_user->password = Hash::make('Story123');
         $obj_user->save();
@@ -69,6 +71,7 @@ class ChangePassword extends Controller
     }
 
     public function postChangeUserPassword(Request $request){
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $id = $request->user_id;
         $pw = $request->pw;
         $obj_user = User::find($id);
