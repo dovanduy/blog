@@ -1,3 +1,7 @@
+<?php
+    $site = array('dashboard'=>'dashboard', 'user' => 'user','post'=>'post', 'tool'=>'tool');
+    $arr = explode("/",Request::path());
+?>
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -58,14 +62,15 @@
             @if (!Auth::guest())
                 <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li>
+                        <li @if (in_array($site['dashboard'], $arr))class="selected-menu"@endif>
                             <a href="{{route('admin')}}">
                                 <i class="fa fa-tachometer" aria-hidden="true"></i>
                                 <span>Tổng quan</span>
                             </a>
                         </li>
+                        {{--{{in_array($site['dashboard'], $arr)?'class="selected-menu"':''}}--}}
                         @if(\App\User::find(Auth::id())->role == 1)
-                            <li>
+                            <li @if (in_array($site['user'], $arr))class="selected-menu"@endif>
                                 <a href="{{ url('admin/user') }}">
                                     <i class="fa fa-address-book-o" aria-hidden="true"></i>
                                     <span>Tài khoản</span>
@@ -74,7 +79,7 @@
                         @else
                         @endif
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)
-                            <li>
+                            <li @if (in_array($site['post'], $arr))class="selected-menu"@endif>
                                 <a href="{{route('post')}}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Đăng bài</span>
                                 </a>
@@ -82,7 +87,7 @@
                         @else
                         @endif
                         @if(\App\User::find(Auth::id())->role == 1 || \App\User::find(Auth::id())->role == 2 || \App\User::find(Auth::id())->role == 3)
-                            <li>
+                            <li  @if (in_array($site['tool'], $arr))class="selected-menu"@endif>
                                 <a href="{{route('tool')}}">
                                     <i class="fa fa-asl-interpreting" aria-hidden="true"></i>
                                     <span>Đăng bài tự động</span>
