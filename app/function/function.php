@@ -79,7 +79,7 @@ function changeTitle($str, $strSymbol = '-', $case = MB_CASE_LOWER)
     if ($last_str === "-") {
         $string = rtrim($str, "-");
     } else $string = $str;
-    return $string;
+    return $string . '.html';
 }
 
 //config time

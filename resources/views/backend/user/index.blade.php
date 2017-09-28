@@ -48,6 +48,11 @@
     </div>
     <div id="form-col-user" class="col-md-1 col-sm-1 col-xs-12">
         <button id="btn-show-hide" data-action="0" class="btn btn-info">Hiện...&nbsp;&nbsp;<span class="fa fa-arrow-circle-o-right"></span></button>
+        <div>
+            <label for="btn-show-hide">
+                <small style="cursor: pointer">Thêm tài khoản</small>
+            </label>
+        </div>
         <div id="form-add-user" style="display: none">
             <h3>Tạo tài khoản</h3>
             <form class="form-horizontal" method="POST" action="{{route('user.create')}}">

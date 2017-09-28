@@ -17,7 +17,7 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Frontend\Homecontroller@index');
-Route::get('/{title}', 'Frontend\Homecontroller@story');
+Route::get('/{name}', 'Frontend\StoryController@index');
 Route::group(['prefix' => 'admin'], function() {
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

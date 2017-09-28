@@ -11,7 +11,7 @@
                     <div class="item">
                         <p data-id="{{$post->id}}"><a href="{{ url($post->title_seo) }}">{{$post->title}}</a></p>
                         <span><i class="fa fa-eye" aria-hidden="true">
-                            </i> {{$post->view}}-<i class="fa fa-clock-o" aria-hidden="true">
+                            </i> {{$post->view}}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true">
                                 <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{time_elapsed_string($post->created_at) }}
                             </i>
                         </span>
@@ -63,9 +63,6 @@
                                             <span class="page-link">...<span class="sr-only">(current)</span></span>
                                         </li>
                                     @endif
-                                    {{--<li class="page-item">--}}
-                                    {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                    {{--</li>--}}
                                 @endif
 
                                 {{--page hien ta page thu 5 tro len--}}
@@ -103,14 +100,6 @@
                                             <li class="page-item">
                                                 <span class="page-link">...<span class="sr-only">(current)</span></span>
                                             </li>
-                                            {{--@elseif($posts->lastPage() ==7 && $posts->currentPage()==7 ||$posts->currentPage()==6)--}}
-                                            {{--<li class="page-item">--}}
-                                            {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                            {{--</li>--}}
-                                            {{--@elseif($posts->lastPage() >=7)--}}
-                                            {{--<li class="page-item">--}}
-                                            {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                            {{--</li>--}}
                                         @endif
                                     @endif
                                 @endif
