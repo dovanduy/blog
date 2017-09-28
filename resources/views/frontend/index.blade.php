@@ -9,19 +9,23 @@
                 </p>
                 @foreach($posts as $post)
                     <div class="item">
-                        <p data-id="{{$post->id}}"><a href="{{ url($post->title_seo) }}">{{$post->title}}</a></p>
+                        <h5 data-id="{{$post->id}}"><a href="{{ url($post->title_seo) }}">{{$post->title}}</a></h5>
                         <span><i class="fa fa-eye" aria-hidden="true">
-                            </i> {{$post->view}}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true">
+                            </i>{{$post->view}}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true">
                                 <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{time_elapsed_string($post->created_at) }}
                             </i>
                         </span>
-                        <p class="description">
-                            {!! str_limit($post->content, $limit = 200, $end = '...') !!}
-                        </p>
+                        <a href="{{ url($post->title_seo) }}">
+                            <p class="description">
+                                {!! str_limit($post->content, $limit = 200, $end = '...') !!}
+                            </p>
+                        </a>
                     </div>
-                <div class="container">
-                    <hr style="background: #DEAAC8">
-                </div>
+
+
+                    <div class="container">
+                        <hr style="background: #DEAAC8">
+                    </div>
                 @endforeach
 
                 <nav aria-label="paginationStory">
@@ -155,25 +159,49 @@
                         @endforeach
                     </div>
                 </div>
-
+                {{--//top 30--}}
                 <div class="top-story">
-                    <p class="sidebar-title">
-                        <i class="fa fa-bar-chart" aria-hidden="true"></i>Top truyện tháng
-                    </p>
-                    <div class="stories">
-                        @foreach($tops_30 as $key=>$top_30)
-                            <div class="item-sidebar">
-                                <span class="rank-story-sidebar">{{$key+1}}</span>
-                                <div class="item-story-sidebar">
-                                    <p class="name"><a href="{{$top_30->title_seo}}">{{$top_30->title}}</a></p>
-                                    <span class="stats">
+                    <div class="form-group">
+                        <p class="sidebar-title">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>Top truyện tháng.
+                        </p>
+                        <div class="stories">
+                            @foreach($tops_30 as $key=>$top_30)
+                                <div class="item-sidebar">
+                                    <span class="rank-story-sidebar">{{$key+1}}</span>
+                                    <div class="item-story-sidebar">
+                                        <p class="name"><a href="{{$top_30->title_seo}}">{{$top_30->title}}</a></p>
+                                        <span class="stats">
                                     <i class="fa fa-eye" aria-hidden="true"></i> {{$top_30->view}} -
                                     <i class="fa fa-clock-o"
                                        aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
                                 </span>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{--//top 7--}}
+                    <div class="stories">
+                        <div class="form-group">
+                            <p class="sidebar-title">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>Top truyện 7 ngày.
+                            </p>
+                            @foreach($tops_7 as $key=>$top_7)
+                                <div class="item-sidebar">
+                                    <span class="rank-story-sidebar">{{$key+1}}</span>
+                                    <div class="item-story-sidebar">
+                                        <p class="name"><a href="{{$top_7->title_seo}}">{{$top_7->title}}</a></p>
+                                        <span class="stats">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{$top_7->view}} -
+                                    <i class="fa fa-clock-o"
+                                       aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
+                                </span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <!-- End sidebar -->
