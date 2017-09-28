@@ -5,13 +5,13 @@
 
 @section('content')
     @if(session('mes'))
-        <div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">
+        <div class="mes-page height_page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">
             <div class="alert alert-success" role="alert">
                 <strong>Thành công!</strong> {{session('mes')}}.
             </div>
         </div>
     @endif
-    <div class="col-md-3 col-sm-3 col-xs-12">
+    <div class="col-md-3 col-sm-3 col-xs-12 height_user_page" style="overflow-y: scroll">
         <span style="font-size: 50px; font-weight: bold">IP</span>
         <small>"Internet Protocol"</small>
         <div class="content">
@@ -318,6 +318,11 @@
                         location.reload();
                     }
                 });
+            });
+            //height
+            $(document).ready(function () {
+                $height_current = $(window).height() - $('#app').height() - 70;
+                $('.height_user_page').css({'height': $height_current});
             });
         });
     </script>

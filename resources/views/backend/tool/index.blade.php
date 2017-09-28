@@ -33,7 +33,7 @@
     <div class="col-md-3 col-sm-3 height_page" style="overflow-y: scroll; height: auto">
         <div class="form-group">
             <div class="form-group">
-                <h6>Hunter is my life:</h6>
+                <small>Hunter is my life:</small>
             </div>
             <form name="validate">
                 <div class="form-group">
