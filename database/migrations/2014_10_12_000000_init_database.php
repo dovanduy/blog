@@ -48,6 +48,8 @@ class InitDatabase extends Migration
             $table->rememberToken();
             $table->string('ip')->nullable();
             $table->tinyInteger('role')->references('id')->on('roles')->default(0);
+            $table->integer('block')->nullable();
+
             $table->timestamps();
         });
 

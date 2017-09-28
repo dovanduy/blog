@@ -21,8 +21,8 @@ class CreatePostsTable extends Migration
             $table->integer('type')->references('id')->on('types')->default(1);
             $table->longText('content');
             $table->integer('view')->default(0);
-            $table->integer('user_id')->references('id')->on('users');
-            $table->integer('status')->default(0);
+            $table->smallInteger('user_id')->references('id')->on('users');
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
         });
     }
