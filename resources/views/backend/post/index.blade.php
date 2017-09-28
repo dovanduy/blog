@@ -314,13 +314,12 @@ $role_bus = 3;
             $('.change-type').change(function () {
                 var id = $(this).closest('tr').attr('id');
                 var type_id = $(this).val();
-
                 $.ajax({
                     type:'POST',
                     url: '{{ route('ajax.EditType') }}',
                     data: {"_token": "{{ csrf_token() }}",
                         'id':id,
-                        'type_id' : id
+                        'type_id' : type_id
                         },
                     dataType:'JSON',
                     success: function (rsp) {
@@ -333,7 +332,6 @@ $role_bus = 3;
                 });
             });
         });
-
         //status
         $(document).ready(function () {
             $('.onoffswitch-checkbox').on('change', function () {
