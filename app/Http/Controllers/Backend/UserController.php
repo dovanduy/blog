@@ -13,6 +13,11 @@ use Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $this->middleware('auth');
+    }
     //
     public function index() {
         $users = User::where('id', '<>', Auth::id())->paginate(10);
@@ -60,5 +65,14 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('pw-er', 'Bạn không thể xóa thành viên này...');
         }
+    }
+
+    public function ajaxChangeRole(Request $request) {
+        $id = $request->id;
+        $role_user = $request->role;
+        $role = User::find($id);
+        $role->role = $role_user;
+        $role->save();
+        return array('Thay đổi thành công');
     }
 }

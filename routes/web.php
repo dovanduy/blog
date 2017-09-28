@@ -67,4 +67,6 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('changeUserPassword', 'Backend\ChangePassword@postChangeUserPassword')->name('changeUserPassword');
     //reset password
     Route::get('user/reset/{id}', 'Backend\ChangePassword@resetPassword')->name('resetPassword');
+    //cahnge role user
+    Route::post('user/changeRole', 'Backend\UserController@ajaxChangeRole')->name('ajax.ChangeRole');
 });

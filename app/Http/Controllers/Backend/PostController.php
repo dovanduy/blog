@@ -24,7 +24,8 @@ class PostController extends Controller
     }
 
     //all role
-    public function role($user_id) {
+    public function role($user_id)
+    {
         $role = User::where('id', $user_id)->pluck('role');
         return json_decode($role);
     }
@@ -69,7 +70,7 @@ class PostController extends Controller
             'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
         ]);
         if (!isset($content)) {
-            return redirect(url(route('post.create').'/create'))->with('er', 'Vui lòng bạn nhập lại');
+            return redirect(url(route('post.create') . '/create'))->with('er', 'Vui lòng bạn nhập lại');
         } else {
             $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
             $post = new Post();
@@ -122,7 +123,7 @@ class PostController extends Controller
             'content_.required' => 'Bạn cần xem lại nội dung đã nhập...',
             'content_.min' => 'Nội dung của bạn phải từ 10 ký tự trở lên',
         ]);
-        if(count($story_role_leader->StoryIdNotLeader($user_id)) >0) {
+        if (count($story_role_leader->StoryIdNotLeader($user_id)) > 0) {
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->where('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
         } else {
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
@@ -139,10 +140,10 @@ class PostController extends Controller
         $post->content = $request->content_;
         $post->type = $request->type;
         $post->user_id = Auth::id();
-        if(isset($request->status)) {
-            $post->status =1;
+        if (isset($request->status)) {
+            $post->status = 1;
         } else {
-            $post->status =0;
+            $post->status = 0;
         }
 
         if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
@@ -166,7 +167,7 @@ class PostController extends Controller
     {
         $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
-        if(count($story_role_leader->StoryIdNotLeader($user_id)) >0) {
+        if (count($story_role_leader->StoryIdNotLeader($user_id)) > 0) {
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->whereIn('user_id', '<>', $story_role_leader->StoryIdNotLeader($user_id))->pluck('id');
         } else {
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
@@ -191,8 +192,7 @@ class PostController extends Controller
                     $post->delete();
                     return redirect(route('post'))->with('mes', 'Đã xóa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
-            }
-            else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
+            } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
         }
     }
 
@@ -262,7 +262,9 @@ class PostController extends Controller
         $type->save();
         return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
     }
-    public function mainContent(Request $request) {
+
+    public function mainContent(Request $request)
+    {
         $id = $request->id;
         return Post::find($id);
     }

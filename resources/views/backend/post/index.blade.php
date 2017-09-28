@@ -330,7 +330,7 @@ $role_bus = 3;
                         alert('Đã có lỗi xảy ra xin thử lại!');
                         location.reload();
                     }
-                })
+                });
             });
         });
 
@@ -358,7 +358,7 @@ $role_bus = 3;
                     error: function () {
                         location.reload();
                     }
-                })
+                });
 
             });
         });

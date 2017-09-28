@@ -8,18 +8,20 @@
                     <i class="fa fa-newspaper-o" aria-hidden="true"></i> Truyện mới cập nhật
                 </p>
                 @foreach($posts as $post)
-
                     <div class="item">
                         <p data-id="{{$post->id}}"><a href="{{ url($post->title_seo) }}">{{$post->title}}</a></p>
-                        <span>
-                <i class="fa fa-eye" aria-hidden="true"></i> {{$post->view}} -
-                <i class="fa fa-clock-o"
-                   aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($post->created_at) }}</i>
-               </span>
+                        <span><i class="fa fa-eye" aria-hidden="true">
+                            </i> {{$post->view}}-<i class="fa fa-clock-o" aria-hidden="true">
+                                <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{time_elapsed_string($post->created_at) }}
+                            </i>
+                        </span>
                         <p class="description">
                             {!! str_limit($post->content, $limit = 200, $end = '...') !!}
                         </p>
                     </div>
+                <div class="container">
+                    <hr style="background: #DEAAC8">
+                </div>
                 @endforeach
 
                 <nav aria-label="paginationStory">
@@ -55,16 +57,16 @@
                                     <li class="page-item">
                                         <span class="page-link">...<span class="sr-only">(current)</span></span>
                                     </li>
-                                    @else
+                                @else
                                     @if($posts->currentPage() > 5)
                                         <li class="page-item">
                                             <span class="page-link">...<span class="sr-only">(current)</span></span>
                                         </li>
-                                        @endif
-                                        {{--<li class="page-item">--}}
-                                            {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                        {{--</li>--}}
                                     @endif
+                                    {{--<li class="page-item">--}}
+                                    {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
+                                    {{--</li>--}}
+                                @endif
 
                                 {{--page hien ta page thu 5 tro len--}}
                                 @if($posts->currentPage() >=4 &&$posts->currentPage() <= $posts->lastPage()-1)
@@ -96,19 +98,19 @@
                                 {{--paginate end page ...--}}
                                 @if($posts->lastPage() >=7)
                                     @if($posts->lastPage() == 7)
-                                        @else
-                                    @if($posts->currentPage() <=$posts->lastPage())
-                                    <li class="page-item">
-                                    <span class="page-link">...<span class="sr-only">(current)</span></span>
-                                    </li>
-                                    {{--@elseif($posts->lastPage() ==7 && $posts->currentPage()==7 ||$posts->currentPage()==6)--}}
-                                    {{--<li class="page-item">--}}
-                                    {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                    {{--</li>--}}
-                                    {{--@elseif($posts->lastPage() >=7)--}}
-                                    {{--<li class="page-item">--}}
-                                    {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
-                                    {{--</li>--}}
+                                    @else
+                                        @if($posts->currentPage() <=$posts->lastPage())
+                                            <li class="page-item">
+                                                <span class="page-link">...<span class="sr-only">(current)</span></span>
+                                            </li>
+                                            {{--@elseif($posts->lastPage() ==7 && $posts->currentPage()==7 ||$posts->currentPage()==6)--}}
+                                            {{--<li class="page-item">--}}
+                                            {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
+                                            {{--</li>--}}
+                                            {{--@elseif($posts->lastPage() >=7)--}}
+                                            {{--<li class="page-item">--}}
+                                            {{--<span class="page-link">...<span class="sr-only">(current)</span></span>--}}
+                                            {{--</li>--}}
                                         @endif
                                     @endif
                                 @endif
