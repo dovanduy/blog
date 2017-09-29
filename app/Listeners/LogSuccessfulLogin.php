@@ -41,5 +41,8 @@ class LogSuccessfulLogin
         $ip->user_id = Auth::id();
         $ip->ip = $addressIp;
         $ip->save();
+        //delete all
+        $ip_30_days = IP::where('created_at', '<=', date('Y-m-d', time() - 24*3600*30))->pluck('id');
+        IP::whereIn('id', $ip_30_days)->delete();
     }
 }
