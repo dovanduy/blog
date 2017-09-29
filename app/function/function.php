@@ -81,6 +81,23 @@ function changeTitle($str, $strSymbol = '-', $case = MB_CASE_LOWER)
     } else $string = $str;
     return $string . '.html';
 }
+//category story
+function categoryStory($str, $strSymbol = '-', $case = MB_CASE_LOWER)
+{// MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER
+    $str = trim($str);
+    if ($str == "") return "";
+    $str = str_replace('"', '', $str);
+    $str = str_replace("'", '', $str);
+    $str = stripUnicode($str);
+    $str = mb_convert_case($str, $case, 'utf-8');
+    $str = preg_replace('/[\W|_]+/', $strSymbol, $str);
+    $last_str = substr($str, -1);
+    rtrim($str, "-");
+    if ($last_str === "-") {
+        $string = rtrim($str, "-");
+    } else $string = $str;
+    return $string;
+}
 
 //config time
 function time_elapsed_string($datetime, $full = false)

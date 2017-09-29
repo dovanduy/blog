@@ -154,7 +154,7 @@
                         @foreach($types as $type)
                             <div class="item-sidebar">
                                 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i><a
-                                        href="#">{{$type->name}}</a>
+                                        href="{{ url($type->name_unicode) }}">{{$type->name}}</a>
                             </div>
                         @endforeach
                     </div>
