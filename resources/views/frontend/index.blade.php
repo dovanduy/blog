@@ -163,7 +163,7 @@
                 <div class="top-story">
                     <div class="form-group">
                         <p class="sidebar-title">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>Top truyện tháng.
+                            <i class="fa fa-calendar" aria-hidden="true"></i>Top truyện tháng
                         </p>
                         <div class="stories">
                             @foreach($tops_30 as $key=>$top_30)
@@ -186,7 +186,7 @@
                     <div class="stories">
                         <div class="form-group">
                             <p class="sidebar-title">
-                                <i class="fa fa-bar-chart" aria-hidden="true"></i>Top truyện 7 ngày.
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>Top truyện 7 ngày
                             </p>
                             @foreach($tops_7 as $key=>$top_7)
                                 <div class="item-sidebar">
@@ -196,7 +196,7 @@
                                         <span class="stats">
                                     <i class="fa fa-eye" aria-hidden="true"></i> {{$top_7->view}} -
                                     <i class="fa fa-clock-o"
-                                       aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
+                                       aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_7->created_at) }}</i>
                                 </span>
                                     </div>
                                 </div>

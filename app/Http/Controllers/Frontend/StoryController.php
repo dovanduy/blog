@@ -6,10 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Type;
 use App\Post;
+use Auth;
 
 class StoryController extends Controller
 {
     //
+    public function __construct()
+    {
+        Auth::logout();
+    }
+
     public function index($name) {
         $array_category = json_decode(Type::pluck('name_unicode'));
         $admin = 'admin';
@@ -30,7 +36,10 @@ class StoryController extends Controller
             $view = $story->view;
             $story->view = $view + 1;
             $story->save();
-            return view('frontend.story', compact('story', 'types'));
+
+            $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
+            $involves = Post::whereStatus('1')->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();;
+            return view('frontend.story', compact('story', 'types', 'tops_30', 'involves'));
         }
 
     }
