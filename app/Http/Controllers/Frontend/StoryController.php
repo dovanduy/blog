@@ -38,7 +38,7 @@ class StoryController extends Controller
             $story->save();
 
             $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
-            $involves = Post::whereStatus('1')->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();;
+            $involves = Post::whereStatus('1')->where('title_seo','<>', $name)->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();;
             return view('frontend.story', compact('story', 'types', 'tops_30', 'involves'));
         }
 
