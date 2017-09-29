@@ -24,7 +24,7 @@
 
 
                     <div class="container">
-                        <hr style="background: #DEAAC8">
+                        <hr class="end-story">
                     </div>
                 @endforeach
 
