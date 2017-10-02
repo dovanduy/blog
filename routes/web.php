@@ -19,6 +19,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Frontend\HomeController@index');
 Route::get('/{name}', 'Frontend\StoryController@index');
 
+//Route::group(['prefix' => 'dashboard'], function() {
+//    Route::fallback('');
+//});
+
+Route::fallback(function(){
+    return view('error.error');
+});
+
 Route::group(['prefix' => 'admin'], function() {
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

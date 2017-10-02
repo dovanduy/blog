@@ -5,32 +5,35 @@
         <div class="row" id="story">
             <div class="content col-md-9">
                 @if(count($story)!=0)
-                <nav class="breadcrumb">
-                    <a class="breadcrumb-item" href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
-                    @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item hover-link" href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif @endforeach
-                    <span class="breadcrumb-item active"><a class="hover-link" href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
-                </nav>
-                <div class="description-story item">
-                    <h4 id="name">{!! $story->title !!}</h4>
-                    <span>
-                <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                        @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item hover-link"
+                                                                                  href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif @endforeach
+                        <span class="breadcrumb-item active"><a class="hover-link"
+                                                                href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
+                    </nav>
+                    <div class="description-story item">
+                        <h4 id="name">{!! $story->title !!}</h4>
+                        <span>
+                <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
+                                                                                                 aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
                 <i class="fa fa-tags" aria-hidden="true">
                   <a href="#">tag 1</a>,
                   <a href="#">tag 2</a>
                 </i>
             </span>
-                </div>
-                <!-- // End item 1 -->
+                    </div>
+                    <!-- // End item 1 -->
 
-                <div class="item">
-                    <p class="content-story">
-                        {!! $story->content !!}
-                    </p>
-                </div>
-                    @else
+                    <div class="item">
+                        <p class="content-story">
+                            {!! $story->content !!}
+                        </p>
+                    </div>
+                @else
                     <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
-                @endif
-                <!-- // End item 2 -->
+            @endif
+            <!-- // End item 2 -->
             </div>
             <!-- // End content -->
 
@@ -63,7 +66,8 @@
                                     <div class="story-w-r">
                                         @foreach($types as $type)
                                             @if($involve->type == $type->id)
-                                                <small class="name story-r"><a href="{{$type->name_unicode}}"><i class="fa fa-reply"></i>{{$type->name}}</a></small>
+                                                <small class="name story-r"><a href="{{$type->name_unicode}}"><i
+                                                                class="fa fa-reply"></i>{{$type->name}}</a></small>
                                             @endif
                                         @endforeach
                                     </div>
