@@ -12,7 +12,7 @@
                 <div class="description-story item">
                     <h4 id="name">{!! $story->title !!}</h4>
                     <span>
-                <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true"> 2 ngày trước</i><br/>
+                <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
                 <i class="fa fa-tags" aria-hidden="true">
                   <a href="#">tag 1</a>,
                   <a href="#">tag 2</a>
@@ -25,24 +25,6 @@
                     <p class="content-story">
                         {!! $story->content !!}
                     </p>
-                    <nav aria-label="paginationStory">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <span class="page-link">Previous</span>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active">
-                  <span class="page-link">
-                        2
-                       <span class="sr-only">(current)</span>
-                  </span>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
                 <!-- // End item 2 -->
             </div>

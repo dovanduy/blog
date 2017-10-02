@@ -27,13 +27,13 @@ class StoryController extends Controller
             $keyword = $request->keyword;
             if ($request->type == 'stories') {
                 $responses = Post::select('id', 'title', 'view')
-                    ->where('status', '<>', 0)
+                    ->whereStatus(1)
                     ->where('title', 'like', '%' . $keyword . '%')
                     ->limit(10)
                     ->get();
             } else {
                 $responses = Post::select('id', 'title', 'view')
-                    ->where('status', '<>', 0)
+                    ->whereStatus(1)
                     ->where('title', 'like', '%' . $keyword . '%')
                     ->limit(10)
                     ->get();

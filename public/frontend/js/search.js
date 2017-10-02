@@ -1,5 +1,5 @@
 $('#story-search').selectize({
-    valueField: 'id',
+    valueField: 'title',
     labelField: 'title',
     searchField: ['title'],
     create: true,
@@ -33,5 +33,5 @@ $('#story-search').selectize({
 
 $(document).on('click', '#search-story', function () {
     var val = $('#story-search').val();
-    window.location.replace('?tim-kiem=' + val);
+    $(location).attr('href', 'http://' + $(location).attr('host') + '/?timkiem=' + val);
 });
