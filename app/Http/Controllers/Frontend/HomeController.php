@@ -17,7 +17,9 @@ class HomeController extends Controller
     }
 
     public function index(Request $request) {
-
+//        if($request->tim-kiem) {
+//            return 123;
+//        }
         $posts = Post::with('User')->whereStatus('1')->orderBy('created_at', 'DESC')->paginate(15);
         $types = Type::all();
         $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
