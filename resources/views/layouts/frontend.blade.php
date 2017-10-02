@@ -14,7 +14,7 @@
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
     <link href="{{asset('frontend/css/bootstrap.css')}}" rel="stylesheet"/>
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     {{--my style--}}
     <link href="{{asset('frontend/styles.css')}}" rel="stylesheet"/>
 

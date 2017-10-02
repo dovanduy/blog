@@ -27,10 +27,9 @@
                     <div class="container">
                         <hr class="end-story">
                     </div>
+                    
                 @endforeach
-                    <nav aria-label="paginationStory">
-                        {!! $posts->appends(request()->except('page'))->links() !!}
-                    </nav>
+                    {!! $posts->appends(request()->except('page'))->links() !!}
                 @else
                     <a href="{{url('/')}}"><h5>Không có truyện nào ...</h5></a>
                 @endif
