@@ -13,6 +13,7 @@ a:hover {
 p[data-id], p[data-id] ~ p {
     margin-bottom: 0;
 }
+
 .sticky {
     top: 0;
     position: fixed;
@@ -178,4 +179,21 @@ p.name {
     float: right;
     color: white;
     padding-right: 15px;
+}
+
+.end-story {
+    background: #bb97bb
+}
+
+.story-w-r {
+    float: right;
+    width: 100%;
+}
+
+.story-r {
+    float: right
+}
+
+.story-cursor {
+    cursor: pointer;
 }

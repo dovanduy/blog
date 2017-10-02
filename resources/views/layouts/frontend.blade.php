@@ -13,17 +13,17 @@
     {{--font awesome--}}
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.css')}}"/>
+    <link href="{{asset('frontend/css/bootstrap.css')}}" rel="stylesheet"/>
 
     {{--my style--}}
     <link href="{{asset('frontend/styles.css')}}" rel="stylesheet"/>
 
     {{--selectize--}}
-    <link href="{{asset('frontend/selectize/css/bootstrap2.css')}}" rel="stylesheet"/>
-    <link href="{{asset('frontend/selectize/css/bootstrap3.css')}}" rel="stylesheet"/>
-    <link href="{{asset('frontend/selectize/css/selectize.css')}}" rel="stylesheet"/>
-    <link href="{{asset('frontend/selectize/css/default.css')}}" rel="stylesheet"/>
-    <link href="{{asset('frontend/selectize/css/legacy.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/bootstrap2.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/bootstrap3.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/selectize.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/default.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/legacy.css')}}" rel="stylesheet"/>
 
     @yield('css')
 
@@ -42,13 +42,13 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto"></ul>
-                    <form method="GET" action="" class="form-inline my-2 my-lg-0">
+                    <div id="search-form-story" class="form-inline my-2 my-lg-0">
                         <select style="width: 290px;" id="story-search" class="mr-sm-2" type="text"
                                 placeholder="Tìm kiếm..." aria-label="Search"></select>
-                        <button class="btn btn-outline-success my-2 my-sm-0 story-cursor" type="submit"><i
+                        <button class="btn btn-outline-success my-2 my-sm-0 story-cursor" id="search-story" type="submit"><i
                                     class="fa fa-search"></i>&nbsp;&nbsp;Tìm...
                         </button>
-                    </form>
+                    </div>
                 </div>
             </nav>
         </header>
@@ -71,43 +71,12 @@
 <script src="{{asset('frontend/js/Bootstrap.js')}}"></script>
 
 {{--selectize--}}
-<script src="{{asset('frontend/selectize/js/standalone/selectize.js')}}"></script>
+<script src="{{asset('selectize/js/standalone/selectize.js')}}"></script>
 
-<script src="{{asset('frontend/selectize/js/selectize.js')}}"></script>
+<script src="{{asset('selectize/js/selectize.js')}}"></script>
 
-<script>
-    $('#story-search').selectize({
-        valueField: 'id',
-        labelField: 'name',
-        searchField: ['name', 'phone_number'],
-        create: true,
-        maxItems: 1,
-        maxOptions: 10,
-        render: {
-            option: function(item, escape) {
-                return '<div>' +
-                    '<span class="title">' +
-                    '<span class="name">' + escape(item.name) + '</span>' +
-                    '<span class="name">' + escape(item.phone_number) + '</span>' +
-                    '</span>' +
-                    '</div>';
-            }
-        },
-        load: function(query, callback) {
-            if (!query.length) return callback();
-            $.ajax({
-                url: '/users/search?type=stories&keyword=' + encodeURIComponent(query),
-                type: 'GET',
-                error: function() {
-                    callback();
-                },
-                success: function(res) {
-                    callback(res);
-                }
-            });
-        }
-    });
-</script>
+{{--seach--}}
+<script src="{{asset('frontend/js/search.js')}}"></script>
 
 @yield('js')
 

@@ -73,7 +73,7 @@
                         @foreach($involves as $key=>$involve)
                             <div class="item-sidebar">
                                 <div class="item-story-sidebar">
-                                    <p class="name"><a href="{{$involve->title_seo}}">{{$involve->title}}</a></p>
+                                    <p class="name"><a href="{{url($involve->title_seo)}}">{{$involve->title}}</a></p>
                                     <div class="story-w-r">
                                         @foreach($types as $type)
                                             @if($involve->type == $type->id)
