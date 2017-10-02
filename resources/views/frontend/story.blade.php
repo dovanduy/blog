@@ -4,6 +4,7 @@
     <main>
         <div class="row" id="story">
             <div class="content col-md-9">
+                @if(count($story)!=0)
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item" href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                     @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item hover-link" href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif @endforeach
@@ -26,6 +27,9 @@
                         {!! $story->content !!}
                     </p>
                 </div>
+                    @else
+                    <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
+                @endif
                 <!-- // End item 2 -->
             </div>
             <!-- // End content -->
