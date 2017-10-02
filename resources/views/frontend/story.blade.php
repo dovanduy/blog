@@ -104,7 +104,7 @@
                                 <div class="item-sidebar">
                                     <span class="rank-story-sidebar">{{$key+1}}</span>
                                     <div class="item-story-sidebar">
-                                        <p class="name"><a href="{{$top_30->title_seo}}">{{$top_30->title}}</a></p>
+                                        <p class="name"><a href="{{url($top_30->title_seo}}">{{$top_30->title}}</a></p>
                                         <span class="stats">
                                     <i class="fa fa-eye" aria-hidden="true"></i> {{$top_30->view}} -
                                     <i class="fa fa-clock-o"

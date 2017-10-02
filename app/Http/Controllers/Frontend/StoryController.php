@@ -38,7 +38,6 @@ class StoryController extends Controller
                     ->limit(10)
                     ->get();
             }
-
             return response()->json($responses);
 
         } elseif (in_array($name, $array_category)) {
