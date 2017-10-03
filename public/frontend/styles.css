@@ -18,14 +18,16 @@ p[data-id], p[data-id] ~ p {
     top: 0;
     position: fixed;
 }
-
-.collapse.navbar-collapse .mr-sm-2.single {
+.mr-sm-2.single {
   position: relative;
 }
-.collapse.navbar-collapse .mr-sm-2.single .selectize-input {
+.mr-sm-2.single .selectize-input {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+.mr-sm-2.single .selectize-dropdown {
+  position: absolute;
 }
 .sidebar-title, .content-title {
     font-size: 20px;
@@ -124,9 +126,11 @@ p.name {
 }
 
 ul.pagination li {
-  padding: 5px 10px;
   border: 1px solid #ccc;
   border-right: 0;
+}
+ul.pagination li a, ul.pagination li span {
+  padding: 5px 10px;
 }
 ul.pagination li:first-child {
   border-top-left-radius: 3px;
