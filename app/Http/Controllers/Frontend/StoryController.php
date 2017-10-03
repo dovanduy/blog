@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Type;
 use App\Post;
+use App\View;
 use Auth;
 
 class StoryController extends Controller
@@ -13,6 +14,7 @@ class StoryController extends Controller
     //
     public function __construct()
     {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         Auth::logout();
     }
 
@@ -52,6 +54,7 @@ class StoryController extends Controller
         } else {
             $types = Type::all();
             $story = Post::where('title_seo', $name)->first();
+            $post_id = $story->id;
 
             $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
             $involves = Post::whereStatus('1')->where('title_seo','<>', $name)->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();
@@ -59,6 +62,129 @@ class StoryController extends Controller
                 $view = $story->view;
                 $story->view = $view + 1;
                 $story->save();
+
+                //save view 7 day
+                $count_view_story_id = View::wherePost_id($post_id)->first();
+                if (count($count_view_story_id) != 0) {
+                    $time_db_now = date('Y-m-d', strtotime($count_view_story_id->updated_at));
+                    $time_now = date('Y-m-d', time());
+                    if ($time_db_now == $time_now) {
+                        $add_view = $count_view_story_id->today;
+                        $count_view_story_id->today = $add_view + 1;
+                        $count_view_story_id->save();
+                    } else {
+                        $time_old = strtotime($time_now) - strtotime($time_db_now);
+                        $day =  $time_old/(3600*24);
+
+                        switch ($day) {
+                            case 1:
+                                $day_2 = $count_view_story_id->today;
+                                $day_3 = $count_view_story_id->day_2;
+                                $day_4 = $count_view_story_id->day_3;
+                                $day_5 = $count_view_story_id->day_4;
+                                $day_6 = $count_view_story_id->day_5;
+                                $day_7 = $count_view_story_id->day_6;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = $day_2;
+                                $count_view_story_id->day_3 = $day_3;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+                                break;
+                            case 2:
+                                $day_3 = $count_view_story_id->today;
+                                $day_4 = $count_view_story_id->day_2;
+                                $day_5 = $count_view_story_id->day_3;
+                                $day_6 = $count_view_story_id->day_4;
+                                $day_7 = $count_view_story_id->day_5;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = $day_3;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+
+                                break;
+                            case 3:
+                                $day_4 = $count_view_story_id->today;
+                                $day_5 = $count_view_story_id->day_2;
+                                $day_6 = $count_view_story_id->day_3;
+                                $day_7 = $count_view_story_id->day_4;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+
+                                break;
+                            case 4:
+                                $day_5 = $count_view_story_id->today;
+                                $day_6 = $count_view_story_id->day_2;
+                                $day_7 = $count_view_story_id->day_3;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+
+                                break;
+                            case 5:
+                                $day_6 = $count_view_story_id->today;
+                                $day_7 = $count_view_story_id->day_2;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+
+                                break;
+                            case 6:
+                                $day_7 = $count_view_story_id->today;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->save();
+                                break;
+                            default:
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = 0;
+                                $count_view_story_id->save();
+                        }
+                    }
+                } else {
+                    $view_today = new View();
+                    $view_today->today = 1;
+                    $view_today->post_id = $post_id;
+                    $view_today->save();
+                }
             }
             return view('frontend.story', compact('story', 'types', 'tops_30', 'involves'));
         }

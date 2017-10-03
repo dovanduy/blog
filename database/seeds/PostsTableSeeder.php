@@ -20,7 +20,6 @@ class PostsTableSeeder extends Seeder
             $title = $faker->realText(rand(10, 40));
             $post = new Post();
             $user_id = array_random(json_decode(User::pluck('id')));
-            $view = rand(0, 1000);
             $type = array_random(json_decode(Type::pluck('id')));
             $status = rand(0, 1);
             $post->fill([
@@ -28,7 +27,6 @@ class PostsTableSeeder extends Seeder
                 'title_seo' => changeTitle($title),
                 'type' => $type,
                 'content' => '<p>' . $faker->realText(rand(1000, 100000)) . '</p>',
-                'view' => $view,
                 'user_id' => $user_id,
                 'status' => $status
             ]);

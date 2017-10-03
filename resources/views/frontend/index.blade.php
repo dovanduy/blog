@@ -23,7 +23,6 @@
                         </a>
                     </div>
 
-
                     <div class="container">
                         <hr class="end-story">
                     </div>
