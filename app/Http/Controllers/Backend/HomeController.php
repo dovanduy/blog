@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\View;
 use Auth;
+use Illuminate\Support\Facades\File;
+
 
 class HomeController extends Controller
 {
@@ -17,6 +19,7 @@ class HomeController extends Controller
 
     public function index()
     {
+
         $chart = [
             'days' => [],
             'data' => [],
