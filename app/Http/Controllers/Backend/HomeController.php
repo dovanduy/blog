@@ -29,6 +29,27 @@ class HomeController extends Controller
             'views' => []
         ];
 
+        $today = View::sum('today');
+        $day_2 = View::sum('day_2');
+        $day_3 = View::sum('day_3');
+        $day_4 = View::sum('day_4');
+        $day_5 = View::sum('day_5');
+        $day_6 = View::sum('day_6');
+        $day_7 = View::sum('day_7');
+        $day_8 = View::sum('day_8');
+        $chart['views'] = array($day_8, $day_7, $day_6, $day_5, $day_4, $day_3, $day_2, $today);
+
+        $post_id = json_decode(Post::where('user_id', Auth::id())->pluck('id'));
+
+        $today = View::whereIn('post_id', $post_id)->sum('today');
+        $day_2 = View::whereIn('post_id', $post_id)->sum('day_2');
+        $day_3 = View::whereIn('post_id', $post_id)->sum('day_3');
+        $day_4 = View::whereIn('post_id', $post_id)->sum('day_4');
+        $day_5 = View::whereIn('post_id', $post_id)->sum('day_5');
+        $day_6 = View::whereIn('post_id', $post_id)->sum('day_6');
+        $day_7 = View::whereIn('post_id', $post_id)->sum('day_7');
+        $day_8 = View::whereIn('post_id', $post_id)->sum('day_8');
+        $chart_user['views'] = array($day_8, $day_7, $day_6, $day_5, $day_4, $day_3, $day_2, $today);
         // thống 7 ngày gần nhất
         $time = time();
         $days = [];
@@ -48,19 +69,12 @@ class HomeController extends Controller
 
             $chart['data'][] = Post::whereBetween('created_at', [$days[$i], $days[$i + 1]])->count();
             $chart_user['data'][] = Post::whereBetween('created_at', [$days[$i], $days[$i + 1]])->whereUser_id(Auth::id())->count();
-
-            $chart['views'][] = Post::whereBetween('created_at', [$days[$i], $days[$i + 1]])->sum('view');
-            $chart_user['views'][] = Post::whereBetween('created_at', [$days[$i], $days[$i + 1]])->whereUser_id(Auth::id())->sum('view');
         }
         $chart['days'][] = date('d/m/y', time());
         $chart_user['days'][] = date('d/m/y', time());
 
         $chart['data'][] = Post::where('created_at', '>=', date('Y-m-d', time()))->count();
         $chart_user['data'][] = Post::where('created_at', '>=', date('Y-m-d', time()))->whereUser_id(Auth::id())->count();
-
-        $chart['views'][] = Post::where('created_at', '>=', date('Y-m-d', time()))->sum('view');
-        $chart_user['views'][] = Post::where('created_at', '>=', date('Y-m-d', time()))->whereUser_id(Auth::id())->sum('view');
-
         return view('backend.home.index', compact('chart', 'chart_user'));
     }
 }

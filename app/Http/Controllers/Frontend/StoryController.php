@@ -84,6 +84,7 @@ class StoryController extends Controller
                                 $day_5 = $count_view_story_id->day_4;
                                 $day_6 = $count_view_story_id->day_5;
                                 $day_7 = $count_view_story_id->day_6;
+                                $day_8 = $count_view_story_id->day_7;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = $day_2;
@@ -92,6 +93,7 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = $day_5;
                                 $count_view_story_id->day_6 = $day_6;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
                                 break;
                             case 2:
@@ -100,6 +102,7 @@ class StoryController extends Controller
                                 $day_5 = $count_view_story_id->day_3;
                                 $day_6 = $count_view_story_id->day_4;
                                 $day_7 = $count_view_story_id->day_5;
+                                $day_8 = $count_view_story_id->day_6;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = 0;
@@ -108,6 +111,7 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = $day_5;
                                 $count_view_story_id->day_6 = $day_6;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
 
                                 break;
@@ -116,6 +120,7 @@ class StoryController extends Controller
                                 $day_5 = $count_view_story_id->day_2;
                                 $day_6 = $count_view_story_id->day_3;
                                 $day_7 = $count_view_story_id->day_4;
+                                $day_8 = $count_view_story_id->day_5;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = 0;
@@ -124,6 +129,7 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = $day_5;
                                 $count_view_story_id->day_6 = $day_6;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
 
                                 break;
@@ -131,6 +137,7 @@ class StoryController extends Controller
                                 $day_5 = $count_view_story_id->today;
                                 $day_6 = $count_view_story_id->day_2;
                                 $day_7 = $count_view_story_id->day_3;
+                                $day_8 = $count_view_story_id->day_4;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = 0;
@@ -139,12 +146,14 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = $day_5;
                                 $count_view_story_id->day_6 = $day_6;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
 
                                 break;
                             case 5:
                                 $day_6 = $count_view_story_id->today;
                                 $day_7 = $count_view_story_id->day_2;
+                                $day_8 = $count_view_story_id->day_3;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = 0;
@@ -153,11 +162,13 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = 0;
                                 $count_view_story_id->day_6 = $day_6;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
 
                                 break;
                             case 6:
                                 $day_7 = $count_view_story_id->today;
+                                $day_8 = $count_view_story_id->day_2;
 
                                 $count_view_story_id->today = 1;
                                 $count_view_story_id->day_2 = 0;
@@ -166,6 +177,20 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = 0;
                                 $count_view_story_id->day_6 = 0;
                                 $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
+                                $count_view_story_id->save();
+                                break;
+                            case 7:
+                                $day_8 = $count_view_story_id->today;
+
+                                $count_view_story_id->today = 1;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = 0;
+                                $count_view_story_id->day_8 = $day_8;
                                 $count_view_story_id->save();
                                 break;
                             default:
@@ -176,6 +201,7 @@ class StoryController extends Controller
                                 $count_view_story_id->day_5 = 0;
                                 $count_view_story_id->day_6 = 0;
                                 $count_view_story_id->day_7 = 0;
+                                $count_view_story_id->day_8 = 0;
                                 $count_view_story_id->save();
                         }
                     }
