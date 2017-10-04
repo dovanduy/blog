@@ -1,5 +1,17 @@
 @extends('layouts.frontend')
-<?php setlocale(LC_TIME, 'Vietnamese');?>
+<?php setlocale(LC_TIME, 'Vietnamese');
+//$arr[] = array('truyện sex');
+$arr = explode(' ', $story->title);
+$count_title = count($arr);
+
+?>
+@section('title')
+    @if(count($story)!=0)
+        {!! $story->title !!}
+    @else
+        Truyện không tồn tại
+    @endif
+@endsection
 @section('content')
     <main>
         <div class="row" id="story">
@@ -8,7 +20,8 @@
                     <nav class="breadcrumb">
                         <a class="breadcrumb-item" href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                         @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item hover-link"
-                                                                                  href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif @endforeach
+                                                                                  href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif
+                        @endforeach
                         <span class="breadcrumb-item active"><a class="hover-link"
                                                                 href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
                     </nav>
@@ -18,13 +31,18 @@
                 <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
                                                                                                  aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
                 <i class="fa fa-tags" aria-hidden="true">
-                  <a href="#">tag 1</a>,
-                  <a href="#">tag 2</a>
+                  <a class="tag-story" href="{{url('/?timkiem=truyen-sex')}}">Truyện sex</a>
+                    @for($i=0; $i<$count_title;$i++)
+                        @if($i+1 < $count_title)
+                            <a class="tag-story" href="{{url('/?timkiem=' .  $arr[$i] . ' ' . $arr[$i+1] )}}">{{ $arr[$i] . ' ' . $arr[$i+1] }}</a>
+                        @else
+                            <a class="tag-story" href="{{url('/?timkiem=' .  $arr[$i])}}">{{ $arr[$i] }}</a>
+                        @endif
+                        <?php $i += 1; ?>
+                    @endfor
                 </i>
             </span>
                     </div>
-                    <!-- // End item 1 -->
-
                     <div class="item">
                         <p class="content-story">
                             {!! $story->content !!}
@@ -32,11 +50,9 @@
                     </div>
                 @else
                     <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
-            @endif
-            <!-- // End item 2 -->
+                @endif
             </div>
             <!-- // End content -->
-
             <!-- Start sidebar -->
             <div class="sidebar col-md-3">
                 <div class="list-categories">
@@ -52,7 +68,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 {{--//top 7--}}
                 <div class="stories">
                     <div class="form-group">

@@ -232,3 +232,9 @@ ul.pagination li.active {
 .story-cursor {
     cursor: pointer;
 }
+
+.tag-story {
+    background: #ccc;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+}

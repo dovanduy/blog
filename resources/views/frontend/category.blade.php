@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');?>
+@section('title')
+    {{$type_name->name}}
+@endsection
 @section('content')
     <main>
         <div class="row">

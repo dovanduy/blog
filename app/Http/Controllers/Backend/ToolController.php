@@ -9,6 +9,7 @@ use App\Tool;
 use App\Post;
 use Auth;
 use App\Test;
+use Illuminate\Support\Facades\File;
 
 class ToolController extends Controller
 {
@@ -66,52 +67,7 @@ class ToolController extends Controller
 
     public function getStory(Request $request)
     {
-        $code = [
-            'content' => '',
-            'title' => ''
-        ];
-        $get_site = rtrim($request->get_site, '/');
-        $id = $request->select_site;
-        $request->get_pagintion >= 1 ? $get_pagintion = $request->get_pagintion : $get_pagintion = 15;
-        $tool = Tool::find($id);
 
-        //content db
-        $start_content_code = $tool->start_content_code;
-        $end_content_code = $tool->end_content_code;
-        //title db
-        $start_title_code = $tool->start_title_code;
-        $end_title_code = $tool->end_title_code;
-        $site = array();
-
-        for ($i = 1; $i <= (int)$get_pagintion; $i++) {
-            if ($i == 1) {
-                $site[] = $get_site;
-            } else {
-                $site[] = $get_site . $tool->url_child . $i;
-            }
-        }
-//        sleep(1000);
-        $request_sites = array_values($this->multiple_threads_request($site));
-
-        for ($i = 0; $i < (int)$get_pagintion; $i++) {
-            $html = $request_sites[$i];
-            if ($i == 0) {
-                //title
-                $code['title'] = $this->getStringStotry($html, $start_title_code, $end_title_code);
-            }
-            if ($html != '') {
-                //content
-                $start_content = strpos($html, $start_content_code) + strlen($start_content_code);
-                $end_content = strpos($html, $end_content_code) - $start_content;
-                $content[] = substr($html, $start_content, $end_content);
-            }
-        }
-
-        $count_content = count($content);
-        for ($i = 0; $i < $count_content; $i++) {
-            $code['content'] = $code['content'] . $content[$i];
-        }
-        return $code;
     }
 
 

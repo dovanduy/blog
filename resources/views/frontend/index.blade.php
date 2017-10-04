@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');?>
+@section('title')
+    @if(!isset($_GET['timkiem']))Trang chủ -  @else Tìm kiếm @endif
+@endsection
 @section('content')
     <main>
         <div class="row">
