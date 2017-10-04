@@ -1,8 +1,7 @@
 @extends('layouts.backend')
-@section('css')
-
+@section('title')
+    Tài khoản
 @endsection
-
 @section('content')
     @if(session('mes'))
         <div class="mes-page height_page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">

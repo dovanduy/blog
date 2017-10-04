@@ -4,7 +4,9 @@ $role_admin = 1;
 $role_leader = 2;
 $role_bus = 3;
 ?>
-
+@section('title')
+    Kho truyện
+@endsection
 @section('css')
     <style>
         .onoffswitch {

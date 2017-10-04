@@ -1,5 +1,7 @@
 @extends('layouts.backend')
-
+@section('title')
+    Thêm truyện
+@endsection
 @section('content')
     @if ($errors->any())
         <div class="mes-page" style="position: absolute;z-index: 1;opacity: 0.9;left: 30%">

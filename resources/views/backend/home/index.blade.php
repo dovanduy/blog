@@ -1,4 +1,7 @@
 @extends('layouts.backend')
+@section('title')
+    Tổng quan
+@endsection
 @section('content')
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -10,33 +13,6 @@
             <div id="chart_div" style="height: 500px"></div>
         </div>
     </div>
-
-    {{--<div class="col-md-12 col-sm-12 col-xs-12">--}}
-        {{--<div class="x_panel tile fixed_height_320 widget-custom-padding">--}}
-            {{--<div class="content">--}}
-                {{--<h4>Tất cả các bài viết.</h4>--}}
-            {{--</div>--}}
-            {{--<div class="content">--}}
-                {{--<table class="table table-hover">--}}
-                    {{--<thead>--}}
-                    {{--<tr>--}}
-                        {{--<th>STT</th>--}}
-                        {{--<th>Tài khoản</th>--}}
-                        {{--<th>Số lượt đăng trong tuần</th>--}}
-                        {{--<th>Nội dung</th>--}}
-                        {{--<th>Nội dung ngắn</th>--}}
-                        {{--<th>Trạng thái</th>--}}
-                        {{--<th>Ngày đăng</th>--}}
-                        {{--<th></th>--}}
-                    {{--</tr>--}}
-                    {{--</thead>--}}
-                    {{--<tbody>--}}
-
-                    {{--</tbody>--}}
-                {{--</table>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 @endsection
 @section('js')
     <script src="{{ asset('chart-gg/chart.js') }}"></script>

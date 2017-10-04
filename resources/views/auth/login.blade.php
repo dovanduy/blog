@@ -1,5 +1,7 @@
 @extends('layouts.backend')
-
+@section('title')
+    Đăng nhập
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
