@@ -8,8 +8,6 @@ use App\Type;
 use App\Tool;
 use App\Post;
 use Auth;
-use App\Test;
-use Illuminate\Support\Facades\File;
 
 class ToolController extends Controller
 {
@@ -67,7 +65,22 @@ class ToolController extends Controller
 
     public function getStory(Request $request)
     {
+        header('Content-type: text/plain; charset=utf-8');
+        $html = file_get_contents('http://truyensex88.net/con-nho-bien-thai-p2-bao-dam-manh.html');
+//        $tool = Tool::find(1);
+//        $tool->html = $html;
+//        $tool->save();
+//
+//        $tool = Tool::find(1);
 
+//        $html = $tool->html;
+        $str_first = strpos($html, '</strong></em></h2>') + strlen('</strong></em></h2>');
+        $str_last = strpos($html, '<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>');
+        $html = substr($html, 0, $str_last);
+        mb_convert_encoding($html, mb_internal_encoding(), 'UTF-8');
+        $html = substr($html, $str_first);
+        mb_convert_encoding($html, mb_internal_encoding(), 'UTF-8');
+        return $html;
     }
 
 
