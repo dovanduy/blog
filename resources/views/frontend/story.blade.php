@@ -28,7 +28,7 @@ $count_title = count($arr);
                     <div class="description-story item">
                         <h4 id="name">{!! $story->title !!}</h4>
                         <div>
-                            <small class="name story-r">Trang {{$paragraph_paginate['current_page']}}</small>
+                            <small class="name story-r fa fa-modx">Trang {{$paragraph_paginate['current_page']}}</small>
                         </div>
                         <span>
                 <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
@@ -50,7 +50,7 @@ $count_title = count($arr);
                     <div class="item">
                         <p class="content-story">
                             {!! $paragraph_paginate['content'] !!}
-                            <small class="name story-r">{{$paragraph_paginate['current_page']}}</small>
+                            <small class="name story-r">-- {{$paragraph_paginate['current_page']}} {{$paragraph_paginate['current_page']==$paragraph_paginate['total_page']?'"Trang cuối"':''}} --</small>
                         </p>
                     </div>
                     <ul class="pagination">

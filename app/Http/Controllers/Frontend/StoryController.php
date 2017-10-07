@@ -69,7 +69,7 @@ class StoryController extends Controller
             $content = explode(' ', $content);
             $count = count($content);
 
-            if ($trang) {
+            if (is_numeric($trang)) {
 
                 $paragraph_paginate['total_page'] = ceil($count / $this->pa);
                 $total_page = $paragraph_paginate['total_page'];
