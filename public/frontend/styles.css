@@ -8,12 +8,28 @@ a {
 
 a:hover {
     text-decoration: none;
+    color: blue !important;
 }
-
+a.tag-story {
+    padding: 2px 4px;
+}
+a.tag-story:first-child {
+    margin-left: 5px;
+}
 p[data-id], p[data-id] ~ p {
     margin-bottom: 0;
 }
 
+button#search-story {
+    color: black;
+    border-color: #ccc;
+}
+button#search-story:hover {
+    background: #ccc;
+}
+.selectize-input.input-active:hover {
+    border-color: #ccc !important;
+}
 .sticky {
     top: 0;
     position: fixed;
@@ -28,6 +44,9 @@ p[data-id], p[data-id] ~ p {
 }
 .mr-sm-2.single .selectize-dropdown {
   position: absolute;
+}
+.selectize-dropdown-content .active {
+    background: #ccc;
 }
 .sidebar-title, .content-title {
     font-size: 20px;
@@ -123,11 +142,26 @@ p.name {
 .wrap main .content .pagination {
     margin-top: 15px;
     justify-content: center;
+    /* margin: auto; */
 }
-
+.custom-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start !important;
+}
+.custom-pagination li {
+    margin-left: -1px;
+    border-right: 1px solid #ccc !important;
+    margin-bottom: 5px;
+}
+.custom-pagination li:first-child,.custom-pagination li:last-child {
+    display: none !important;
+}
 ul.pagination li {
   border: 1px solid #ccc;
   border-right: 0;
+  min-width: 43px;
+  text-align: center;
 }
 ul.pagination li a, ul.pagination li span {
   padding: 5px 10px;
@@ -149,6 +183,10 @@ ul.pagination li.disabled {
 ul.pagination li.active {
   background: #337ab7;
   border: 1px solid #337ab7;
+}
+ul.pagination li.active span {
+    color: white;
+    font-weight: bold;
 }
 .wrap main .sidebar {
     padding-top: 15px;
@@ -201,6 +239,9 @@ ul.pagination li.active {
 @media (max-width: 767px) {
     .wrap main .sidebar .top-story {
         margin-bottom: 25px;
+    }
+    body {
+        font-size: 15px;
     }
 }
 

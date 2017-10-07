@@ -18,12 +18,13 @@ $count_title = count($arr);
             <div class="content col-md-9">
                 @if(count($story)!=0)
                     <nav class="breadcrumb">
-                        <a class="breadcrumb-item" href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
-                        @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item hover-link"
+                        <a class="breadcrumb-item" href="#">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </a>
+                        @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item"
                                                                                   href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif
                         @endforeach
-                        <span class="breadcrumb-item active"><a class="hover-link"
-                                                                href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
+                        <span class="breadcrumb-item active"><a href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
                     </nav>
                     <div class="description-story item">
                         <h4 id="name">{!! $story->title !!}</h4>
@@ -53,32 +54,32 @@ $count_title = count($arr);
                             <small class="name story-r">-- {{$paragraph_paginate['current_page']}} {{$paragraph_paginate['current_page']==$paragraph_paginate['total_page']?'"Trang cuối"':''}} --</small>
                         </p>
                     </div>
-                    <ul class="pagination">
-                        {{--pre--}}
-                        @if ($paragraph_paginate['total_page'] > 1)
-                            @if($paragraph_paginate['current_page'] == 1)
-                                <li class="disabled"><span>&laquo;</span></li>
-                            @else
-                                <li>
-                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']-1) }}"
-                                       rel="prev">&laquo;</a></li>
-                            @endif
-                            @for($i=1; $i<=$paragraph_paginate['total_page']; $i++)
-                                @if($i == $paragraph_paginate['current_page'])
-                                    <li class="active"><span>{{$i}}</span></li>
+                    <ul class="pagination custom-pagination">
+                            {{--pre--}}
+                            @if ($paragraph_paginate['total_page'] > 1)
+                                @if($paragraph_paginate['current_page'] == 1)
+                                    <li class="disabled"><span>&laquo;</span></li>
                                 @else
-                                    <li><a href="{{ url($story->title_seo)  . '?trang=' . $i }}">{{$i}}</a></li>
+                                    <li>
+                                        <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']-1) }}"
+                                        rel="prev">&laquo;</a></li>
                                 @endif
-                            @endfor
-                            {{--next--}}
-                            @if($paragraph_paginate['current_page'] == $paragraph_paginate['total_page'])
-                                <li class="disabled"><span>&raquo;</span></li>
-                            @else
-                                <li>
-                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']+1) }}"
-                                       rel="next">&raquo;</a></li>
+                                @for($i=1; $i<=$paragraph_paginate['total_page']; $i++)
+                                    @if($i == $paragraph_paginate['current_page'])
+                                        <li class="active"><span>{{$i}}</span></li>
+                                    @else
+                                        <li><a href="{{ url($story->title_seo)  . '?trang=' . $i }}">{{$i}}</a></li>
+                                    @endif
+                                @endfor
+                                {{--next--}}
+                                @if($paragraph_paginate['current_page'] == $paragraph_paginate['total_page'])
+                                    <li class="disabled"><span>&raquo;</span></li>
+                                @else
+                                    <li>
+                                        <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']+1) }}"
+                                        rel="next">&raquo;</a></li>
+                                @endif
                             @endif
-                        @endif
                     </ul>
                 @else
                     <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
