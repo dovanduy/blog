@@ -81,6 +81,7 @@ function changeTitle($str, $strSymbol = '-', $case = MB_CASE_LOWER)
     } else $string = $str;
     return $string . '.html';
 }
+
 //category story
 function categoryStory($str, $strSymbol = '-', $case = MB_CASE_LOWER)
 {// MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER

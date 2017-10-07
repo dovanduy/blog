@@ -18,7 +18,10 @@ class StoryController extends Controller
         Auth::logout();
     }
 
-    public function index($name, Request $request) {
+    private $pa = 1000;
+
+    public function index($name, Request $request)
+    {
         $array_category = json_decode(Type::pluck('name_unicode'));
         $admin = 'admin';
         $search = 'search';
@@ -48,16 +51,59 @@ class StoryController extends Controller
             $posts = Post::with('User')->whereType($type_id)->whereStatus('1')->orderBy('created_at', 'DESC')->paginate(15);
 
             $types = Type::all();
-            $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
-            $tops_7 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*7))->orderBy('view', 'DESC')->limit(7)->get();
+            $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24 * 3600 * 30))->orderBy('view', 'DESC')->limit(5)->get();
+            $tops_7 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24 * 3600 * 7))->orderBy('view', 'DESC')->limit(7)->get();
             return view('frontend.category', compact('posts', 'types', 'tops_30', 'tops_7', 'type_name'));
         } else {
             $types = Type::all();
             $story = Post::whereTitle_seo($name)->first();
+//
+            $paragraph_paginate = [
+                'total_page' => 1,
+                'content' => '',
+                'current_page' => 1
+            ];
+            $trang = $request->trang;
 
-            $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*30))->orderBy('view', 'DESC')->limit(5)->get();
-            $involves = Post::whereStatus('1')->where('title_seo','<>', $name)->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();
-            if ( count($story) != 0) {
+            $content = $story->content;
+            $content = explode(' ', $content);
+            $count = count($content);
+
+            if ($trang) {
+
+                $paragraph_paginate['total_page'] = ceil($count / $this->pa);
+                $total_page = $paragraph_paginate['total_page'];
+
+                $paragraph = $trang * $this->pa;
+
+                if ($paragraph > $count) {
+                    $paragraph = $count;
+                }
+
+                if($trang <=1) {
+                    $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $this->pa)) . '</p>';
+                    $paragraph_paginate['current_page'] = 1;
+                } else {
+                    if ($trang < $total_page) {
+                        $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa)) . '</p>';
+                    } else {
+                        $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa));
+                    }
+                    $trang <= $total_page?$paragraph_paginate['current_page'] = $trang:$paragraph_paginate['current_page']=$total_page;
+                }
+            } else {
+
+                $paragraph_paginate['total_page'] = ceil($count / $this->pa);
+
+                $paragraph = 1 * $this->pa;
+
+                $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $paragraph)) . '</p>';
+                $paragraph_paginate['current_page'] = 1;
+            }
+//
+            $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24 * 3600 * 30))->orderBy('view', 'DESC')->limit(5)->get();
+            $involves = Post::whereStatus('1')->where('title_seo', '<>', $name)->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();
+            if (count($story) != 0) {
                 $post_id = $story->id;
                 $view = $story->view;
                 $story->view = $view + 1;
@@ -74,7 +120,7 @@ class StoryController extends Controller
                         $count_view_story_id->save();
                     } else {
                         $time_old = strtotime($time_now) - strtotime($time_db_now);
-                        $day =  $time_old/(3600*24);
+                        $day = $time_old / (3600 * 24);
 
                         switch ($day) {
                             case 1:
@@ -212,7 +258,7 @@ class StoryController extends Controller
                     $view_today->save();
                 }
             }
-            return view('frontend.story', compact('story', 'types', 'tops_30', 'involves'));
+            return view('frontend.story', compact('story', 'types', 'tops_30', 'involves', 'paragraph_paginate'));
         }
     }
 }

@@ -27,6 +27,9 @@ $count_title = count($arr);
                     </nav>
                     <div class="description-story item">
                         <h4 id="name">{!! $story->title !!}</h4>
+                        <div>
+                            <small class="name story-r">Trang {{$paragraph_paginate['current_page']}}</small>
+                        </div>
                         <span>
                 <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
                                                                                                  aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
@@ -34,7 +37,8 @@ $count_title = count($arr);
                   <a class="tag-story" href="{{url('/?timkiem=truyen-sex')}}">Truyện sex</a>
                     @for($i=0; $i<$count_title;$i++)
                         @if($i+1 < $count_title)
-                            <a class="tag-story" href="{{url('/?timkiem=' .  $arr[$i] . ' ' . $arr[$i+1] )}}">{{ $arr[$i] . ' ' . $arr[$i+1] }}</a>
+                            <a class="tag-story"
+                               href="{{url('/?timkiem=' .  $arr[$i] . ' ' . $arr[$i+1] )}}">{{ $arr[$i] . ' ' . $arr[$i+1] }}</a>
                         @else
                             <a class="tag-story" href="{{url('/?timkiem=' .  $arr[$i])}}">{{ $arr[$i] }}</a>
                         @endif
@@ -45,9 +49,37 @@ $count_title = count($arr);
                     </div>
                     <div class="item">
                         <p class="content-story">
-                            {!! $story->content !!}
+                            {!! $paragraph_paginate['content'] !!}
+                            <small class="name story-r">{{$paragraph_paginate['current_page']}}</small>
                         </p>
                     </div>
+                    <ul class="pagination">
+                        {{--pre--}}
+                        @if ($paragraph_paginate['total_page'] > 1)
+                            @if($paragraph_paginate['current_page'] == 1)
+                                <li class="disabled"><span>&laquo;</span></li>
+                            @else
+                                <li>
+                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']-1) }}"
+                                       rel="prev">&laquo;</a></li>
+                            @endif
+                            @for($i=1; $i<=$paragraph_paginate['total_page']; $i++)
+                                @if($i == $paragraph_paginate['current_page'])
+                                    <li class="active"><span>{{$i}}</span></li>
+                                @else
+                                    <li><a href="{{ url($story->title_seo)  . '?trang=' . $i }}">{{$i}}</a></li>
+                                @endif
+                            @endfor
+                            {{--next--}}
+                            @if($paragraph_paginate['current_page'] == $paragraph_paginate['total_page'])
+                                <li class="disabled"><span>&raquo;</span></li>
+                            @else
+                                <li>
+                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']+1) }}"
+                                       rel="next">&raquo;</a></li>
+                            @endif
+                        @endif
+                    </ul>
                 @else
                     <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
                 @endif

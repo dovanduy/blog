@@ -16,7 +16,6 @@ class ToolConfigs extends Migration
         Schema::create('tool_configs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('site', '255');
-            $table->longText('html')->nullable();
             $table->string('start_title_code');
             $table->string('end_title_code');
             $table->string('start_content_code');
