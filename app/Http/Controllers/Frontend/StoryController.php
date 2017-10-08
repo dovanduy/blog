@@ -18,7 +18,7 @@ class StoryController extends Controller
         Auth::logout();
     }
 
-    private $pa = 1500;
+    private $pa = 2500;
 
     public function index($name, Request $request)
     {
