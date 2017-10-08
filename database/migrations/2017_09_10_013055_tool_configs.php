@@ -39,8 +39,8 @@ class ToolConfigs extends Migration
             'start_url_child' => '<div id="wp_page" class="wp-pagenavi">',
             'end_url_child' => '</a></p></div></div>',
             'url_parent' => '/page/',
-            'start_url_parent' => '',
-            'end_url_parent' => ''
+            'start_url_parent' => '<h2 class="loop">',
+            'end_url_parent' => '</a></h2><p>'
         ]);
     }
 

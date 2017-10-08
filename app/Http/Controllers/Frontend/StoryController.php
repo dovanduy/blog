@@ -58,52 +58,52 @@ class StoryController extends Controller
             $types = Type::all();
             $story = Post::whereTitle_seo($name)->first();
 //
-            $paragraph_paginate = [
-                'total_page' => 1,
-                'content' => '',
-                'current_page' => 1
-            ];
-            $trang = $request->trang;
-
-            $content = $story->content;
-            $content = explode(' ', $content);
-            $count = count($content);
-
-            if (is_numeric($trang)) {
-
-                $paragraph_paginate['total_page'] = ceil($count / $this->pa);
-                $total_page = $paragraph_paginate['total_page'];
-
-                $paragraph = $trang * $this->pa;
-
-                if ($paragraph > $count) {
-                    $paragraph = $count;
-                }
-
-                if($trang <=1) {
-                    $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $this->pa)) . '</p>';
-                    $paragraph_paginate['current_page'] = 1;
-                } else {
-                    if ($trang < $total_page) {
-                        $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa)) . '</p>';
-                    } else {
-                        $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa));
-                    }
-                    $trang <= $total_page?$paragraph_paginate['current_page'] = $trang:$paragraph_paginate['current_page']=$total_page;
-                }
-            } else {
-
-                $paragraph_paginate['total_page'] = ceil($count / $this->pa);
-
-                $paragraph = 1 * $this->pa;
-
-                $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $paragraph)) . '</p>';
-                $paragraph_paginate['current_page'] = 1;
-            }
-//
             $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24 * 3600 * 30))->orderBy('view', 'DESC')->limit(5)->get();
             $involves = Post::whereStatus('1')->where('title_seo', '<>', $name)->orderby('id', 'desc')->orderby('view', 'desc')->limit('20')->take(5)->get();
             if (count($story) != 0) {
+                $paragraph_paginate = [
+                    'total_page' => 1,
+                    'content' => '',
+                    'current_page' => 1
+                ];
+                $trang = $request->trang;
+
+                $content = $story->content;
+                $content = explode(' ', $content);
+                $count = count($content);
+
+                if (is_numeric($trang)) {
+
+                    $paragraph_paginate['total_page'] = ceil($count / $this->pa);
+                    $total_page = $paragraph_paginate['total_page'];
+
+                    $paragraph = $trang * $this->pa;
+
+                    if ($paragraph > $count) {
+                        $paragraph = $count;
+                    }
+
+                    if($trang <=1) {
+                        $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $this->pa)) . '</p>';
+                        $paragraph_paginate['current_page'] = 1;
+                    } else {
+                        if ($trang < $total_page) {
+                            $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa)) . '</p>';
+                        } else {
+                            $paragraph_paginate['content'] = '<p>' . implode(' ',array_slice($content, ($paragraph - $this->pa), $this->pa));
+                        }
+                        $trang <= $total_page?$paragraph_paginate['current_page'] = $trang:$paragraph_paginate['current_page']=$total_page;
+                    }
+                } else {
+
+                    $paragraph_paginate['total_page'] = ceil($count / $this->pa);
+
+                    $paragraph = 1 * $this->pa;
+
+                    $paragraph_paginate['content'] = implode(' ', array_slice($content, 0, $paragraph)) . '</p>';
+                    $paragraph_paginate['current_page'] = 1;
+                }
+
                 $post_id = $story->id;
                 $view = $story->view;
                 $story->view = $view + 1;

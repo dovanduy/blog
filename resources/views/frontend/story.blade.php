@@ -1,9 +1,10 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');
 //$arr[] = array('truyện sex');
-$arr = explode(' ', $story->title);
-$count_title = count($arr);
-
+if(count($story)!=0) {
+    $arr = explode(' ', $story->title);
+    $count_title = count($arr);
+}
 ?>
 @section('title')
     @if(count($story)!=0)

@@ -37,7 +37,7 @@
             <div class="form-group">
                 <small>Hunter is my life:</small>
             </div>
-            <form name="validate">
+            <form method="GET">
                 <div class="form-group">
                     <label for="select_site">Chọn các site sau:</label>
                     <select class="form-control" id="select_site" name="select_site">
@@ -50,15 +50,9 @@
                     <label for="short_content">Link truyện</label>
                     <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
                 </div>
-                <div class="form-group">
-                    <label for="short_content">Pagination (Mặc định: 15 page)</label>
-                    <input type="number" class="form-control" id="get_pagination" name="get_pagination" placeholder="Tổng số trang truyện" required>
-                </div>
                 <div class="form-inline">
                     <div class="form-group">
-                        <button type="button" title="Sẽ chuyển truyện sang phải" id="get_story" class="btn btn-info">Lấy truyện&nbsp;&nbsp;<span
-                                    class="fa fa-arrow-right"></span>
-                        </button>
+                        <input type="submit" class="btn btn-info" value="Lấy...">
                     </div>
                 </div>
             </form>

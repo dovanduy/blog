@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Type;
@@ -17,14 +18,7 @@ class ToolController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        $sites = Tool::all();
-        $types = Type::all();
-        return view('backend.tool.index', compact('types', 'sites'));
-    }
-
-    public function multiple_threads_request($nodes)
+    private function multiple_threads_request($nodes)
     {
         $mh = curl_multi_init();
         $curl_array = array();
@@ -51,40 +45,62 @@ class ToolController extends Controller
         return $res;
     }
 
-    public function getStringStotry($html, $start, $end)
+    public function index(Request $request)
     {
-        $start_content = strpos($html, $start) + strlen($start);
-        $end_content = strpos($html, $end) - $start_content;
-        $result = substr($html, $start_content, $end_content);
-        if (strlen($result) <= 255) {
-            return $result;
+        $sites = Tool::all();
+        $types = Type::all();
+        if($request->select_site) {
+            //get site
+            $get_site = $request->get_site;
+
+            $site_id = $request->select_site;
+            $page = Tool::find($site_id);
+            //content
+            $start_content = $page->start_content_code;
+            $end_content = $page->end_content_code;
+            //title
+            $start_title = $page->start_title_code;
+            $end_title = $page->end_title_code;
+
+            $start_page = $page->start_url_child;
+            $end_page = $page->end_url_child;
+//cout total page
+            $get_paginate = array_values($this->multiple_threads_request(array($get_site)));
+            $start = strpos($get_paginate[0], $start_page);
+            $str = substr($get_paginate[0], $start);
+            $end = strpos($str, $end_page);
+            $str = explode(' ', strip_tags(substr($str, 0, $end)));
+            $total_page = $str[count($str) - 1];
+            if ($total_page == null) {
+                $total_page = 1;
+            }
+            //title
+            $start = strpos($get_paginate[0], $start_title) + strlen($start_title);
+            $str = substr($get_paginate[0], $start);
+            $end = strpos($str, $end_title);
+            $title = strip_tags(substr($str, 0, $end));
+//content
+            $site = array($get_site);
+            for ($i = 2; $i <= $total_page; $i++) {
+                $site[] = $get_site . '/' . $i;
+            }
+            $html = array_values($this->multiple_threads_request($site));
+
+            for ($i = 0; $i < $total_page; $i++) {
+                $start = strpos($html[$i], $start_content) + strlen($start_content);
+                $str = substr($html[$i], $start);
+                $end = strpos($str, $end_content);
+                $body[] = substr($str, 0, $end);
+            }
+
+            $body = implode(' ', $body);
+            $body = str_replace(' j ', ' gì ', $body);
+            $title_seo = changeTitle($title);
+            return view('backend.tool.request', compact('body', 'title', 'title_seo', 'sites', 'types'));
         } else {
-            return '';
+            return view('backend.tool.index', compact('types', 'sites'));
         }
     }
-
-    //
-
-    public function file_get_contents_curl($url)
-    {
-        header("Content-Type: text/html; charset=utf-8");
-        $ch=curl_init();
-        curl_setopt($ch,CURLOPT_HEADER,0);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
-        $data=curl_exec($ch);
-        curl_close($ch);
-        return $data;
-    }
-
-    public function getStory(Request $request)
-    {
-
-        return get_web_page('http://truyensex88.net/con-nho-bien-thai-p2-bao-dam-manh.html');
-        return $this->getCookies('http://truyensex88.net/con-nho-bien-thai-p2-bao-dam-manh.html');
-    }
-
 
     public function siteStory(Request $request)
     {
