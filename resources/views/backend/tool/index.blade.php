@@ -69,10 +69,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="total_page">Link truyện</label>
-                    <input type="number" class="form-control" name="total_page" id="total_page" placeholder="Link truyện" required maxlength="3">
-                </div>
                 <div class="form-inline">
                     <div class="form-group">
                         <button type="submit" class="btn btn-info">Download Link <span class="fa fa-download"></span></button>

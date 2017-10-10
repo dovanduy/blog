@@ -102,15 +102,26 @@ class ToolController extends Controller
             return view('backend.tool.request', compact('body', 'title', 'title_seo', 'sites', 'types'));
         } elseif ($request->select_site_download) {
             $full_site = array();
-            $total_page = $request->total_page;
             $id = $request->select_site_download;
             $site = Tool::find($id);
             $url = $site->site;
             $start_url_parent = $site->start_url_parent;
             $end_url_parent = $site->end_url_parent;
             $url_parent = $site->url_parent;
+//get total page
+            $parent_code = array_values($this->multiple_threads_request(array($url)));
+            $start = strpos($parent_code[0], $start_url_parent);
+            $str = substr($parent_code[0], $start);
+            $end = strpos($str, $end_url_parent)+strlen($end_url_parent);
+            $ok_body[] = substr($str, 0, $end);
+            $parent_paginate = explode($start_url_parent, $parent_code[0]);
+            $end_parent_paginate = array_pop($parent_paginate);
+            $last_code_parent = explode($url . $url_parent,$end_parent_paginate);
+            $last_code_parent = str_replace("'", '"', $last_code_parent);
+            $first_string_parent = explode('"',array_pop($last_code_parent));
+            $total_good_page = array_shift($first_string_parent);
 
-            for($i=$total_page; $i>=1;$i--) {
+            for($i=$total_good_page; $i>=1;$i--) {
                 $full_site[] = $url . $url_parent . $i;
             }
             $html = array_values($this->multiple_threads_request($full_site));
