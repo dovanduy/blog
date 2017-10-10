@@ -75,8 +75,7 @@ class PostController extends Controller
             $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
             $post = new Post();
             $post->title = $request->title;
-            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : $post->title_seo = changeTitle($request->title);
-            $post->title_seo = $request->title_seo;
+            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title.'-'.time()): $post->title_seo = changeTitle($request->title);
             $post->content = $content;
             $post->type = $request->type;
             $post->user_id = Auth::id();
@@ -135,8 +134,7 @@ class PostController extends Controller
         $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
         $post = Post::find($id);
         $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title) . '-' . time() : changeTitle($request->title);
-        $post->title_seo = $request->title_seo;
+        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title.'-'.time()): $post->title_seo = changeTitle($request->title);
         $post->content = $request->content_;
         $post->type = $request->type;
         $post->user_id = Auth::id();
@@ -173,7 +171,6 @@ class PostController extends Controller
             $role_leader = Post::where('user_id', '<>', $this->role_admin)->pluck('id');
         }
         $story_user_id = Post::whereId($id)->pluck('user_id');
-        $story_id = Post::pluck('user_id');
         $all_story_id = Post::pluck('id');
         if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
             $post = Post::find($id);
@@ -248,7 +245,7 @@ class PostController extends Controller
         if (count($val) == 0) {
             $a[] = $title_seo;
         } else {
-            $a[] = $title_seo . '-' . time();
+            $a[] = changeTitle($request->title_seo . '-' . time());
         }
         return $a;
     }

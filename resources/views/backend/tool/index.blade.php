@@ -60,18 +60,18 @@
         </div>
         <div class="form-group">
             <h3>Download Link truyện</h3>
-            <form method="GET">
+            <form method="GET" action="?select_site_download=&total_page=">
                 <div class="form-group">
-                    <label for="select_site">Chọn các site sau:</label>
-                    <select class="form-control" name="select_site_download">
+                    <label for="select_site_download">Chọn các site sau:</label>
+                    <select class="form-control" name="select_site_download" id="select_site_download">
                         @foreach($sites as $site)
                             <option value="{{$site->id}}">{{ str_limit($site->site, $limit = 40, $end='...') }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="short_content">Link truyện</label>
-                    <input type="number" class="form-control" name="total_page" placeholder="Link truyện" required maxlength="3">
+                    <label for="total_page">Link truyện</label>
+                    <input type="number" class="form-control" name="total_page" id="total_page" placeholder="Link truyện" required maxlength="3">
                 </div>
                 <div class="form-inline">
                     <div class="form-group">

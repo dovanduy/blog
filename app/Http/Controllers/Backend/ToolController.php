@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Type;
@@ -98,6 +97,8 @@ class ToolController extends Controller
             $body = implode(' ', $body);
             $body = str_replace(' j ', ' gì ', $body);
             $title_seo = changeTitle($title);
+            $count_title_seo = Post::whereTitle_seo($title_seo)->count();
+            $count_title_seo==0?'':$title_seo=changeTitle($title.time());
             return view('backend.tool.request', compact('body', 'title', 'title_seo', 'sites', 'types'));
         } elseif ($request->select_site_download) {
             $full_site = array();
@@ -141,7 +142,6 @@ class ToolController extends Controller
                 'Content-Type: application/text',
             );
 
-//            Response::download($file, 'site.txt', $headers);
             return Response::download($file, 'site.txt', $headers);
         } else {
             return view('backend.tool.index', compact('types', 'sites'));
