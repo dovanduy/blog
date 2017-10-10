@@ -9,6 +9,8 @@ use App\Type;
 use App\Tool;
 use App\Post;
 use Auth;
+use File;
+use Response;
 
 class ToolController extends Controller
 {
@@ -97,6 +99,50 @@ class ToolController extends Controller
             $body = str_replace(' j ', ' gì ', $body);
             $title_seo = changeTitle($title);
             return view('backend.tool.request', compact('body', 'title', 'title_seo', 'sites', 'types'));
+        } elseif ($request->select_site_download) {
+            $full_site = array();
+            $total_page = $request->total_page;
+            $id = $request->select_site_download;
+            $site = Tool::find($id);
+            $url = $site->site;
+            $start_url_parent = $site->start_url_parent;
+            $end_url_parent = $site->end_url_parent;
+            $url_parent = $site->url_parent;
+
+            for($i=$total_page; $i>=1;$i--) {
+                $full_site[] = $url . $url_parent . $i;
+            }
+            $html = array_values($this->multiple_threads_request($full_site));
+            $count_site = count($html);
+            for ($i=0;$i<$count_site; $i++) {
+                $body[] = explode($start_url_parent, $html[$i]);
+                array_shift($body[$i]);
+                $suc_body[] = $body[$i];
+                $count_page[] = count($body[$i]);
+                for($j=0;$j<$count_page[$i];$j++) {
+                    $start = strpos($suc_body[$i][$j], $start_url_parent);
+                    $str = substr($suc_body[$i][$j], $start);
+                    $end = strpos($str, $end_url_parent)+strlen($end_url_parent);
+                    $ok_body[] = substr($str, 0, $end);
+                    preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $ok_body[$j], $result);
+                    if (!empty($result)) {
+                        # Found a link.
+                        $m[] = $result['href'][0];
+                    }
+                }
+            }
+            $txt = implode(PHP_EOL ,$m);
+
+            File::put(storage_path('site.txt'), $txt);
+
+            $file= storage_path('site.txt');
+
+            $headers = array(
+                'Content-Type: application/text',
+            );
+
+//            Response::download($file, 'site.txt', $headers);
+            return Response::download($file, 'site.txt', $headers);
         } else {
             return view('backend.tool.index', compact('types', 'sites'));
         }
