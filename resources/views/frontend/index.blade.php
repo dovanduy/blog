@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');?>
+@section('meta')
+    <meta property="og:title" content="Trang chủ truyện 18+ | Truyện Sex" />
+    <meta property="og:url" content="{{url()->current()}}" />
+@endsection
 @section('title')
     @if(!isset($_GET['timkiem']))Trang chủ -  @else Tìm kiếm @endif
 @endsection

@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');?>
+@section('meta')
+    <meta property="og:title" content=" {{$type_name->name}}| Truyện Sex" />
+    <meta property="og:url" content="{{url()->current()}}" />
+@endsection
 @section('title')
     {{$type_name->name}}
 @endsection

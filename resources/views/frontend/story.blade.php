@@ -6,6 +6,18 @@ if(count($story)!=0) {
     $count_title = count($arr);
 }
 ?>
+@section('meta')
+    <meta property="og:title" content=" {!! $story->title !!}| Truyện Sex" />
+    <meta property="og:url" content="{{url()->current()}}" />
+    @for($i=0; $i<$count_title;$i++)
+        @if($i+1 < $count_title)
+            <meta property="article:tag" content="{{ $arr[$i] . ' ' . $arr[$i+1] }}" />
+        @else
+            <meta property="article:tag" content="{{ $arr[$i] }}" />
+        @endif
+        <?php $i += 1; ?>
+    @endfor
+@endsection
 @section('title')
     @if(count($story)!=0)
         {!! $story->title !!}

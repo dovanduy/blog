@@ -4,8 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="my web" />
 
-    <!-- CSRF Token -->
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:type" content="Truyện 18+ hay nhất, cập nhật mọi lúc" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Truyện sex" />
+    <meta property="og:description" content="Những truyện sex dâm nhất nhiều thể loại truyện sex hấp dẫn như loạn luân, anh em. Mời các bạn trên 18 tuổi theo dõi đọc truyện và cùng thủ dâm nhé" />
+    @yield('meta')
+
+    <meta property="article:tag" content="Nữ thần" />
+    <meta property="article:tag" content="Thủ dâm" />
+    <meta property="article:tag" content="Truyện anh và em" />
+    <meta property="article:tag" content="truyện loạn luân" />
+    <meta property="article:tag" content="truyện sex loạn luân" />
+    <meta property="article:tag" content="truyện xxx" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>

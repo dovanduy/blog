@@ -86,7 +86,7 @@ $role_bus = 3;
             @foreach($types as $type)
                 <div class="form-group">
                     <a href="{{url('admin/post/typeDelete/' . $type->id)}}" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close" style="color: #ff2222"></span></a>
-                    <input type="text" class="form-control" value="{{$type->name}}" disabled>
+                    <input type="text" class="form-control type-value" value="{{$type->name}}" disabled>
                 </div>
             @endforeach
             <div class="form-group">
@@ -365,6 +365,5 @@ $role_bus = 3;
         setTimeout(function () {
             $('.mes-page').empty();
         }, 1500);
-        //
     </script>
 @endsection
