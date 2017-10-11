@@ -131,7 +131,7 @@ class PostController extends Controller
         $story_user_id = Post::whereId($id)->pluck('user_id');
         $all_story_id = Post::pluck('id');
 
-        $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
+        $count_title_seo = Post::whereTitle_seo($request->title_seo)->where('id','<>',$id)->count();
         $post = Post::find($id);
         $post->title = $request->title;
         $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title . '-' . time()) : $post->title_seo = changeTitle($request->title);
@@ -212,7 +212,7 @@ class PostController extends Controller
         $title_Seo = $request->title_seo;
         $count_title_seo = Post::whereTitle_seo($title_Seo)->where('id', '<>', $id)->count();
         $post = Post::find($id);
-        $count_title_seo > 0 ? $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo) . time()) : $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo));
+        $count_title_seo > 0 ? $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo) .'-'. time()) : $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo));
         $post->save();
         return $post;
     }
