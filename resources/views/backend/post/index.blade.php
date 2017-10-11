@@ -174,7 +174,7 @@ $role_bus = 3;
                                     @endforeach
                                 </select>
                             </td>
-                            <td class="title-seo-after-edit" data-toggle="modal" data-target=".myModal-title-seo"
+                            <td class="title-seo-after-edit" data-toggle="modal" data-target="#myModal-title-seo"
                                 title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
                             <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content"
                                 title="Ấn để sửa..."
@@ -238,7 +238,7 @@ $role_bus = 3;
         </div>
     </div>
     <!-- Modal title seo-->
-    <div class="modal fade myModal-title-seo" role="dialog">
+    <div class="modal fade" id="myModal-title-seo" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content aj-form-page">
                 <form>
@@ -330,7 +330,7 @@ $role_bus = 3;
                 var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ajax.editShortContent') }}',
+                    url: '{{ route('ajax.changeTitleSeo') }}',
                     data: {
                         "_token": "{{ csrf_token() }}",
                         'id': id,
@@ -341,6 +341,7 @@ $role_bus = 3;
                         alert('Cập nhật truyện thành công!');
                         $('#' + rsp.id).find('.title-seo-after-edit').empty();
                         $('#' + rsp.id).find('.title-seo-after-edit').append(TruncateText(rsp.title_seo));
+                        $('#myModal-title-seo').modal('toggle');
                     },
                     error: function () {
                         alert('Có một lỗi xảy ra!');

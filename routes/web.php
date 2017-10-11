@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('edit/{id}', 'Backend\PostController@edit');
         Route::post('postEdit/{id}', 'Backend\PostController@postEdit');
         Route::get('delete/{id}', 'Backend\PostController@delete');
-        Route::post('ajaxEditShortContent', 'Backend\PostController@ajaxEditShortContent')->name('ajax.editShortContent');
+        Route::post('ajaxChangeTitleSeo', 'Backend\PostController@ajaxChangeTitleSeo')->name('ajax.changeTitleSeo');
         Route::post('ajaxEditContent', 'Backend\PostController@ajaxEditContent')->name('ajax.editContent');
         Route::post('ajaxEditStatus', 'Backend\PostController@ajaxEditStatus')->name('ajax.editStatus');
         Route::post('validateTitleSeo', 'Backend\PostController@validateTitleSeo')->name('ajax.validateTitleSeo');

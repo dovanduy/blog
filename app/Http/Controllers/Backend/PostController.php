@@ -75,7 +75,7 @@ class PostController extends Controller
             $count_title_seo = Post::whereTitle_seo(changeTitle($request->title))->count();
             $post = new Post();
             $post->title = $request->title;
-            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title.'-'.time()): $post->title_seo = changeTitle($request->title);
+            $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title . '-' . time()) : $post->title_seo = changeTitle($request->title);
             $post->content = $content;
             $post->type = $request->type;
             $post->user_id = Auth::id();
@@ -134,7 +134,7 @@ class PostController extends Controller
         $count_title_seo = Post::whereTitle_seo($request->title_seo)->whereId($id)->count();
         $post = Post::find($id);
         $post->title = $request->title;
-        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title.'-'.time()): $post->title_seo = changeTitle($request->title);
+        $count_title_seo > 0 ? $post->title_seo = changeTitle($request->title . '-' . time()) : $post->title_seo = changeTitle($request->title);
         $post->content = $request->content_;
         $post->type = $request->type;
         $post->user_id = Auth::id();
@@ -206,12 +206,13 @@ class PostController extends Controller
         }
     }
 
-    public function ajaxEditShortContent(Request $request)
+    public function ajaxChangeTitleSeo(Request $request)
     {
         $id = $request->id;
         $title_Seo = $request->title_seo;
+        $count_title_seo = Post::whereTitle_seo($title_Seo)->where('id', '<>', $id)->count();
         $post = Post::find($id);
-        $post->title_seo = $title_Seo;
+        $count_title_seo > 0 ? $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo) . time()) : $post->title_seo = changeTitle(str_replace('.html', '', $title_Seo));
         $post->save();
         return $post;
     }
@@ -238,7 +239,7 @@ class PostController extends Controller
 
     public function validateTitleSeo(Request $request)
     {
-        $title_seo = changeTitle($request->title_seo);
+        $title_seo = changeTitle(str_replace('.html', '', $request->title_seo));
         $val = Post::select('title_seo')->whereTitle_seo($title_seo)->get();
 
         $rt = null;
@@ -273,7 +274,7 @@ class PostController extends Controller
     public function mainContent(Request $request)
     {
         $id = $request->id;
-        return Post::find($id);
+        return Post::select('title_seo')->whereId($id)->first();
     }
 
     public function ajaxEditType(Request $request)
