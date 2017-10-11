@@ -29,7 +29,7 @@ class HomeController extends Controller
                     ->paginate(15);
             } else {
                 $posts = Post::whereStatus(1)
-                    ->where('title', 'like', '%' . $request->timkiem . '%')
+                    ->where('title_seo', 'like', '%' . categoryStory($request->timkiem) . '%')
                     ->orderBy('created_at', 'DESC')
                     ->paginate(15);
             }
