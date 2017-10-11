@@ -11,18 +11,14 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Frontend\HomeController@index');
 Route::get('/{name}', 'Frontend\StoryController@index');
 
 
-//Route::fallback(function(){
-//    return view('error.error');
-//});
+Route::fallback(function(){
+    return view('error.error');
+});
 
 Route::group(['prefix' => 'admin'], function() {
     // Authentication Routes...
