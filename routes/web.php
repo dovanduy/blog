@@ -52,8 +52,10 @@ Route::group(['prefix' => 'admin'], function() {
 
         //delete type
         Route::get('typeDelete/{id}', 'Backend\PostController@typeDelete');
-
+        //add type
         Route::post('addType', 'Backend\PostController@addType')->name('addType');
+        //edit type
+        Route::post('editType', 'Backend\PostController@editType')->name('editType');
     });
     //tool đăng bài tự động
     Route::group(['prefix' => 'tool', 'middleware' => 'post'], function () {

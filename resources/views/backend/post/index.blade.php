@@ -10,47 +10,79 @@ $role_bus = 3;
 @section('css')
     <style>
         .onoffswitch {
-            position: relative; width: 50px;
-            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+            position: relative;
+            width: 50px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
+
         .onoffswitch-checkbox {
             display: none;
         }
+
         .onoffswitch-label {
-            display: block; overflow: hidden; cursor: pointer;
-            border: 2px solid #E3E3E3; border-radius: 19px;
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #E3E3E3;
+            border-radius: 19px;
         }
+
         .onoffswitch-inner {
-            display: block; width: 200%; margin-left: -100%;
+            display: block;
+            width: 200%;
+            margin-left: -100%;
             transition: margin 0.3s ease-in 0s;
         }
+
         .onoffswitch-inner:before, .onoffswitch-inner:after {
-            display: block; float: left; width: 50%; height: 26px; padding: 0; line-height: 26px;
-            font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            display: block;
+            float: left;
+            width: 50%;
+            height: 26px;
+            padding: 0;
+            line-height: 26px;
+            font-size: 10px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
             box-sizing: border-box;
         }
+
         .onoffswitch-inner:before {
             content: "";
             padding-left: 5px;
-            background-color: #FFFFFF; color: #FFFFFF;
+            background-color: #FFFFFF;
+            color: #FFFFFF;
         }
+
         .onoffswitch-inner:after {
             content: "";
             padding-right: 5px;
-            background-color: #FFFFFF; color: #666666;
+            background-color: #FFFFFF;
+            color: #666666;
             text-align: right;
         }
+
         .onoffswitch-switch {
-            display: block; width: 21px; margin: 2.5px;
+            display: block;
+            width: 21px;
+            margin: 2.5px;
             background: #A1A1A1;
-            position: absolute; top: 0; bottom: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
             right: 20px;
-            border: 2px solid #E3E3E3; border-radius: 19px;
+            border: 2px solid #E3E3E3;
+            border-radius: 19px;
             transition: all 0.3s ease-in 0s;
         }
+
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
             margin-left: 0;
         }
+
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
             right: 0px;
             background-color: #27A1CA;
@@ -78,14 +110,21 @@ $role_bus = 3;
             <button class="btn btn-success"><span class="fa fa-plus"></span>&nbsp;&nbsp;Thêm truyện</button>
         </a>
         <div class="form-group">
-            <h5>@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader) Có tất cả: <span style="color: pink"> {{$posts->total()}}</span></h5>
-            <h5>Bạn có tất cả:<span style="color: pink"> {{(\App\Post::where('user_id', \Illuminate\Support\Facades\Auth::id())->count())}}</span></h5>@endif
+            <h5>@if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
+                    Có tất cả: <span style="color: pink"> {{$posts->total()}}</span></h5>
+            <h5>Bạn có tất cả:<span
+                        style="color: pink"> {{(\App\Post::where('user_id', \Illuminate\Support\Facades\Auth::id())->count())}}</span>
+            </h5>@endif
         </div>
         <div>
             <h4 style="color: #7da8c3">Các thể loại:</h4>
             @foreach($types as $type)
                 <div class="form-group">
-                    <a href="{{url('admin/post/typeDelete/' . $type->id)}}" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close" style="color: #ff2222"></span></a>
+                    <a href="{{url('admin/post/typeDelete/' . $type->id)}}"
+                       onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-close"
+                                                                              style="color: #ff2222"></span></a>
+                    <a data-id="{{$type->id}}" href="#" class="editType">&nbsp;&nbsp;<span class="fa fa-pencil" data-toggle="modal"
+                                                                   data-target="#editType"></span></a>
                     <input type="text" class="form-control type-value" value="{{$type->name}}" disabled>
                 </div>
             @endforeach
@@ -135,14 +174,19 @@ $role_bus = 3;
                                     @endforeach
                                 </select>
                             </td>
-                            <td class="title-seo-after-edit" data-toggle="modal" data-target=".myModal-title-seo" title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
-                            <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content" title="Ấn để sửa..." style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
+                            <td class="title-seo-after-edit" data-toggle="modal" data-target=".myModal-title-seo"
+                                title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
+                            <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content"
+                                title="Ấn để sửa..."
+                                style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
                             @if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
                                 <td>@foreach(App\User::select('name')->where('id', $post->user_id)->get() as $val) {{$val->name}} @endforeach</td>
                             @endif
                             <td>
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-{{$key}}" value="{{$post->status}}" {{$post->status == 1? 'checked':''}}>
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                           id="myonoffswitch-{{$key}}"
+                                           value="{{$post->status}}" {{$post->status == 1? 'checked':''}}>
                                     <label class="onoffswitch-label" for="myonoffswitch-{{$key}}">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>
@@ -152,10 +196,13 @@ $role_bus = 3;
                             <td>{{ $post->created_at }}</td>
                             <td>
                                 <div>
-                                    <a title="Xóa truyện" href="{{url('admin/post/delete/' . $post->id)}}" onclick="return window.confirm('Bạn muốn xóa?')"><span class="fa fa-trash"></span></a>
+                                    <a title="Xóa truyện" href="{{url('admin/post/delete/' . $post->id)}}"
+                                       onclick="return window.confirm('Bạn muốn xóa?')"><span
+                                                class="fa fa-trash"></span></a>
                                 </div>
                                 <div>
-                                    <a title="Sửa truyện" href="{{url('admin/post/edit/' . $post->id)}}"><span class="fa fa-edit"></span></a>
+                                    <a title="Sửa truyện" href="{{url('admin/post/edit/' . $post->id)}}"><span
+                                                class="fa fa-edit"></span></a>
                                 </div>
                             </td>
                         </tr>
@@ -181,7 +228,9 @@ $role_bus = 3;
                         <textarea class="aj-text-page" name="content" id="aj-content"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="submit-content" data-content="" class="btn btn-default sm-content-page">Thay đổi</button>
+                        <button type="button" id="submit-content" data-content=""
+                                class="btn btn-default sm-content-page">Thay đổi
+                        </button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
                     </div>
                 </form>
@@ -199,14 +248,43 @@ $role_bus = 3;
                         <h4 class="modal-title">Title SEO</h4>
                     </div>
                     <div class="modal-body">
-                        <input class="aj-text-page form-control" name="title_seo" id="title_seo" placeholder="Nhập title seo">
+                        <input class="aj-text-page form-control" name="title_seo" id="title_seo"
+                               placeholder="Nhập title seo">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="submit-title-seo" data-seo="" class="btn btn-default sm-title-seo-page">Thay đổi</button>
+                        <button type="button" id="submit-title-seo" data-seo=""
+                                class="btn btn-default sm-title-seo-page">Thay đổi
+                        </button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <!-- Change types -->
+    <div class="modal fade" id="editType" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sửa thể loại</h4>
+                </div>
+                <form method="POST" action="{{route('editType')}}" id="formEditType">
+                    <div class="modal-body">
+                        {{ csrf_field() }}
+                        <input type="hidden" class="id" name="id" value="0">
+                        <input type="text" class="form-control type" name="name" placeholder="Nhập thể loại">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info">Xác nhận</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 
@@ -215,26 +293,28 @@ $role_bus = 3;
 @section('js')
     <script type="text/javascript">
         CKEDITOR.replace('aj-content');
-//short text
-        function TruncateText(text)
-        {
-            if(text.length > 100)
-            {
+
+        //short text
+        function TruncateText(text) {
+            if (text.length > 100) {
                 text = text.substring(0, 100) + "...";
             }
             return text;
         }
-//title seo
+
+        //title seo
         $(document).ready(function () {
-            $(document).on('click', '.title-seo-after-edit',function () {
+            $(document).on('click', '.title-seo-after-edit', function () {
                 var id = $(this).closest('tr').attr('id');
                 $('#submit-title-seo').attr('data-seo', id);
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.mainContent') }}',
-                    data: {"_token": '{{ csrf_token() }}',
-                        'id':id},
-                    dataType:'JSON',
+                    data: {
+                        "_token": '{{ csrf_token() }}',
+                        'id': id
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         $('#title_seo').val(rsp.title_seo)
                     },
@@ -249,36 +329,37 @@ $role_bus = 3;
                 var id = $(this).data('seo');
                 var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.editShortContent') }}',
-                    data: {"_token": "{{ csrf_token() }}",
-                        'id':id,
-                        'title_seo':title_seo},
-                    dataType:'JSON',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id,
+                        'title_seo': title_seo
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         alert('Cập nhật truyện thành công!');
-                        $('#'+rsp.id).find('.title-seo-after-edit').empty();
-                        $('#'+rsp.id).find('.title-seo-after-edit').append(TruncateText(rsp.title_seo));
+                        $('#' + rsp.id).find('.title-seo-after-edit').empty();
+                        $('#' + rsp.id).find('.title-seo-after-edit').append(TruncateText(rsp.title_seo));
                     },
                     error: function () {
                         alert('Có một lỗi xảy ra!');
                         location.reload();
                     }
                 })
-            })
-        });
-
-        //content
-        $(document).ready(function () {
-            $(document).on('click', '.content-after-edit',function () {
+            });
+            //content
+            $(document).on('click', '.content-after-edit', function () {
                 var id = $(this).closest('tr').attr('id');
                 $('#submit-content').attr('data-content', id);
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.mainContent') }}',
-                    data: {"_token": '{{ csrf_token() }}',
-                        'id':id},
-                    dataType:'JSON',
+                    data: {
+                        "_token": '{{ csrf_token() }}',
+                        'id': id
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         CKEDITOR.instances['aj-content'].setData(rsp.content)
                     },
@@ -294,16 +375,18 @@ $role_bus = 3;
                 var id = $(this).data('content');
                 var content = CKEDITOR.instances[get_id_ckeditor].getData();
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.editContent') }}',
-                    data: {"_token": "{{ csrf_token() }}",
-                        'id':id,
-                        'content_':content},
-                    dataType:'JSON',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id,
+                        'content_': content
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         alert('Cập nhật truyện thành công!');
-                        $('#'+rsp.id).find('.content-after-edit').empty();
-                        $('#'+rsp.id).find('.content-after-edit').append(TruncateText(rsp.content));
+                        $('#' + rsp.id).find('.content-after-edit').empty();
+                        $('#' + rsp.id).find('.content-after-edit').append(TruncateText(rsp.content));
                     },
                     error: function () {
                         alert('Đã có lỗi xảy ra xin thử lại!');
@@ -312,18 +395,19 @@ $role_bus = 3;
                 })
             });
 
-            //change typr
+            //change type
             $('.change-type').change(function () {
                 var id = $(this).closest('tr').attr('id');
                 var type_id = $(this).val();
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.EditType') }}',
-                    data: {"_token": "{{ csrf_token() }}",
-                        'id':id,
-                        'type_id' : type_id
-                        },
-                    dataType:'JSON',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id,
+                        'type_id': type_id
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         alert('Cập nhật thể loại thành công!');
                     },
@@ -333,11 +417,10 @@ $role_bus = 3;
                     }
                 });
             });
-        });
-        //status
-        $(document).ready(function () {
+            //status
+
             $('.onoffswitch-checkbox').on('change', function () {
-                if($(this).val() == 1 || $(this).val() == '1') {
+                if ($(this).val() == 1 || $(this).val() == '1') {
                     $(this).val('0');
                 } else {
                     $(this).val('1');
@@ -346,12 +429,14 @@ $role_bus = 3;
                 var id = $(this).closest('tr').attr('id');
                 console.log(id);
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: '{{ route('ajax.editStatus') }}',
-                    data: {"_token": "{{ csrf_token() }}",
-                        'id':id,
-                        'status':status},
-                    dataType:'JSON',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id,
+                        'status': status
+                    },
+                    dataType: 'JSON',
                     success: function (rsp) {
                         alert('Cập nhật trạng thái thành công!');
                     },
@@ -361,6 +446,15 @@ $role_bus = 3;
                 });
 
             });
+            //edit type
+            
+            $('.editType').click(function () {
+                var id = $(this).attr('data-id');
+                var value = $(this).parent().find('.type-value').val();
+                $('#formEditType').find('.id').val(id);
+                $('#formEditType').find('.type').val(value);
+            });
+            
         });
         setTimeout(function () {
             $('.mes-page').empty();

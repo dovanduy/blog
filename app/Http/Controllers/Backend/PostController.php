@@ -260,6 +260,16 @@ class PostController extends Controller
         return redirect(route('post'))->with('mes', 'Đã thêm truyện...');
     }
 
+    public function editType(Request $request)
+    {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $id = $request->id;
+        $type = Type::find($id);
+        $type->name = $request->name;
+        $type->save();
+        return redirect()->back()->with('mes', 'Đã sửa thể loại...');
+    }
+
     public function mainContent(Request $request)
     {
         $id = $request->id;

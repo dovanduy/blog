@@ -5,7 +5,7 @@
     <meta property="og:url" content="{{url()->current()}}" />
 @endsection
 @section('title')
-    @if(!isset($_GET['timkiem']))Trang chủ -  @else Tìm kiếm @endif
+    @if(!isset($_GET['timkiem']))Trang chủ - {{url()->current()}} @else Tìm kiếm @endif
 @endsection
 @section('content')
     <main>
