@@ -124,19 +124,18 @@ class ToolController extends Controller
             for($i=$total_good_page; $i>=1;$i--) {
                 $full_site[] = $url . $url_parent . $i;
             }
-            $html = array_values($this->multiple_threads_request($full_site));
+
+            $html = $this->multiple_threads_request($full_site);
             $count_site = count($html);
+            $html = array_values($html);
+
+            $result =array();
             for ($i=0;$i<$count_site; $i++) {
                 $body[] = explode($start_url_parent, $html[$i]);
                 array_shift($body[$i]);
-                $suc_body[] = $body[$i];
-                $count_page[] = count($body[$i]);
-                for($j=0;$j<$count_page[$i];$j++) {
-                    $start = strpos($suc_body[$i][$j], $start_url_parent);
-                    $str = substr($suc_body[$i][$j], $start);
-                    $end = strpos($str, $end_url_parent)+strlen($end_url_parent);
-                    $ok_body[] = substr($str, 0, $end);
-                    preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $ok_body[$j], $result);
+                $count_page = count($body[$i]);
+                for($j=0;$j<$count_page;$j++) {
+                    preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $body[$i][$j], $result);
                     if (!empty($result)) {
                         # Found a link.
                         $m[] = $result['href'][0];
