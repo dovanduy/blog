@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="short_content">Link truyện</label>
-                    <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required maxlength="50">
+                    <input type="url" class="form-control" id="get_site" name="get_site" placeholder="Link truyện" required>
                 </div>
                 <div class="form-inline">
                     <div class="form-group">
