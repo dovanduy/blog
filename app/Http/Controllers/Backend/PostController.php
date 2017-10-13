@@ -274,7 +274,7 @@ class PostController extends Controller
     public function mainContent(Request $request)
     {
         $id = $request->id;
-        return Post::select('title_seo')->whereId($id)->first();
+        return Post::select('content')->whereId($id)->first();
     }
 
     public function ajaxEditType(Request $request)
