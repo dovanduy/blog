@@ -12,10 +12,12 @@ class InitDatabase extends Migration
      * @return void
      */
 
-    protected $TYPE_1 = 'Truyện người lớn';
+    protected $TYPE_1 = 'Truyện sex';
     protected $TYPE_2 = 'Truyện loạn luân';
-    protected $TYPE_3 = 'Truyện phá trinh';
+    protected $TYPE_3 = 'Truyện ngôn tình';
     protected $TYPE_4 = 'Truyện ma';
+    protected $TYPE_5 = 'Truyện tâm sự';
+    protected $TYPE_6 = 'Truyện tinh yêu';
 
     public function up()
     {
@@ -88,10 +90,12 @@ class InitDatabase extends Migration
         });
         // Insert type init
         $types = [
-            ['id' => 1, 'name' => $this->TYPE_1, 'name_unicode' => categoryStory($this->TYPE_1)],
-            ['id' => 2, 'name' => $this->TYPE_2, 'name_unicode' => categoryStory($this->TYPE_2)],
-            ['id' => 3, 'name' => $this->TYPE_3, 'name_unicode' => categoryStory($this->TYPE_3)],
-            ['id' => 4, 'name' => $this->TYPE_4, 'name_unicode' => categoryStory($this->TYPE_4)]
+            ['name' => $this->TYPE_1, 'name_unicode' => categoryStory($this->TYPE_1)],
+            ['name' => $this->TYPE_2, 'name_unicode' => categoryStory($this->TYPE_2)],
+            ['name' => $this->TYPE_3, 'name_unicode' => categoryStory($this->TYPE_3)],
+            ['name' => $this->TYPE_4, 'name_unicode' => categoryStory($this->TYPE_4)],
+            ['name' => $this->TYPE_5, 'name_unicode' => categoryStory($this->TYPE_5)],
+            ['name' => $this->TYPE_6, 'name_unicode' => categoryStory($this->TYPE_6)]
         ];
 
         foreach($types as $type) {
