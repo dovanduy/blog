@@ -17,7 +17,7 @@ class InitDatabase extends Migration
     protected $TYPE_3 = 'Truyện ngôn tình';
     protected $TYPE_4 = 'Truyện ma';
     protected $TYPE_5 = 'Truyện tâm sự';
-    protected $TYPE_6 = 'Truyện tinh yêu';
+    protected $TYPE_6 = 'Truyện tình yêu';
 
     public function up()
     {
