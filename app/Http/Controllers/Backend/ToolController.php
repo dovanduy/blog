@@ -57,6 +57,9 @@ class ToolController extends Controller
             $site_id = $request->select_site;
             $page = Tool::find($site_id);
             $g = $page->site;
+            $rpl1_g = str_replace('http://', '', $g);
+            $rpl2_g = str_replace('https://', '', $g);
+
             //content
             $start_content = $page->start_content_code;
             $end_content = $page->end_content_code;
@@ -98,6 +101,8 @@ class ToolController extends Controller
             $body = implode(' ', $body);
             $body = str_replace(' j ', ' gì ', $body);
             $body = str_replace($g, '#', $body);
+            $body = str_replace($rpl1_g, 'my story', $body);
+            $body = str_replace($rpl2_g, 'my story', $body);
             $title_seo = changeTitle($title);
             $count_title_seo = Post::whereTitle_seo($title_seo)->count();
             $count_title_seo==0?'':$title_seo=changeTitle($title.time());
