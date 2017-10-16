@@ -236,7 +236,7 @@ $role_bus = 3;
                 </table>
             </div>
         </div>
-        {!! $posts->render() !!}
+        {!! $posts->appends(request()->except('page'))->links() !!}
     </div>
 
     <!-- Modal content-->
@@ -321,9 +321,45 @@ $role_bus = 3;
 
     <script src="{{asset('selectize/js/selectize.js')}}"></script>
 
-    {{--seach--}}
-    <script src="{{asset('frontend/js/search.js')}}"></script>
     <script type="text/javascript">
+        $('#story-search').selectize({
+            valueField: 'title',
+            labelField: 'title',
+            searchField: ['title'],
+            create: true,
+            maxItems: 1,
+            maxOptions: 10,
+            render: {
+                option: function(item, escape) {
+                    return '<div>' +
+                        '<span class="title">' +
+                        '<span class="name">' + escape(item.title) + '</span>' +
+                        '<span style="float: right;" class="name">' + escape(item.view) + '</span>' +
+                        '</span>' +
+                        '</div>';
+                }
+            },
+            load: function(query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '/admin/post/search?type=stories&keyword=' + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        callback(res);
+                    }
+                });
+            },
+        });
+
+
+        $(document).on('click', '#search-story', function () {
+            var val = $('#story-search').val();
+            $(location).attr('href', '{{url('admin/post?search=')}}' + val);
+        });
+
         CKEDITOR.replace('aj-content');
 
         //short text

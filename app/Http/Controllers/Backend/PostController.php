@@ -34,6 +34,7 @@ class PostController extends Controller
     {
         $types_all = json_decode(Type::pluck('name_unicode'));
         $get_type = $request->type;
+        $search = $request->search;
 
         $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
@@ -43,6 +44,8 @@ class PostController extends Controller
             if(in_array($get_type, $types_all)) {
                 $id = Type::select('id')->whereName_unicode($get_type)->first();
                 $posts = Post::with('Type')->whereType($id->id)->orderBy('id', 'DESC')->paginate(10);
+            } elseif ($search) {
+                $posts = Post::with('Type')->where('title', 'like', '%' . $search . '%')->orderBy('id', 'DESC')->paginate(10);
             } else {
                 $posts = Post::with('Type')->orderBy('id', 'DESC')->paginate(10);
             }
@@ -55,6 +58,14 @@ class PostController extends Controller
                     ->whereIn('users.role', [$this->role_leader, $this->role_bus])
                     ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
                     ->where('posts.type',$id->id)
+                    ->orderBy('id', 'DESC')->paginate(10);
+            } elseif ($search) {
+                $posts = Post::with('Type')
+                    ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->selectRaw('posts.*, users.role')
+                    ->whereIn('users.role', [$this->role_leader, $this->role_bus])
+                    ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
+                    ->where('posts.title', 'like', '%' . $search . '%')
                     ->orderBy('id', 'DESC')->paginate(10);
             } else {
                 $posts = Post::with('Type')
@@ -304,5 +315,21 @@ class PostController extends Controller
         $post->type = $type;
         $post->save();
         return $post;
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->keyword;
+        if ($request->type == 'stories') {
+            $responses = Post::select('id', 'title', 'view')
+                ->where('title', 'like', '%' . $keyword . '%')
+                ->limit(10)
+                ->get();
+        } else {
+            $responses = Post::select('id', 'title', 'view')
+                ->where('title', 'like', '%' . $keyword . '%')
+                ->limit(10)
+                ->get();
+        }
+        return response()->json($responses);
     }
 }

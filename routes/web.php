@@ -52,6 +52,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('addType', 'Backend\PostController@addType')->name('addType');
         //edit type
         Route::post('editType', 'Backend\PostController@editType')->name('editType');
+        //search
+        Route::get('search', 'Backend\PostController@search');
     });
     //tool đăng bài tự động
     Route::group(['prefix' => 'tool', 'middleware' => 'post'], function () {
