@@ -8,6 +8,12 @@ $role_bus = 3;
     Kho truyện
 @endsection
 @section('css')
+    {{--selectize--}}
+    <link href="{{asset('selectize/css/bootstrap2.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/bootstrap3.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/selectize.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/default.css')}}" rel="stylesheet"/>
+    <link href="{{asset('selectize/css/legacy.css')}}" rel="stylesheet"/>
     <style>
         .onoffswitch {
             position: relative;
@@ -141,6 +147,25 @@ $role_bus = 3;
         </div>
     </div>
     <div class="col-md-10 col-sm-10 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="navbarSupportedContent">
+                <div style="float: left">
+                    <a href="{{url('/admin/post') }}">
+                        <button class="btn btn-warning">All</button></a>
+                    @foreach($types as $type)
+                        <a href="{{url('/admin/post?type=') . $type->name_unicode }}">
+                            <button class="btn {{ url('/admin/post?type=') . $type->name_unicode==Request::fullUrl()?'btn-default':'' }}">{{$type->name}}</button></a>
+                    @endforeach
+                </div>
+                <div id="search-form-story" class="form-inline" style="float: right">
+                    <select style="width: 290px;" id="story-search" type="text"
+                            placeholder="Tìm kiếm..." aria-label="Search"></select>
+                    <button class="btn btn-outline-success story-cursor" id="search-story" type="submit" style="float: right"><i
+                                class="fa fa-search"></i>&nbsp;&nbsp;Tìm...
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="x_panel tile fixed_height_320 widget-custom-padding">
             <div class="content">
                 <h4>Tất cả các bài viết.</h4>
@@ -291,6 +316,13 @@ $role_bus = 3;
 @endsection
 
 @section('js')
+    {{--selectize--}}
+    <script src="{{asset('selectize/js/standalone/selectize.js')}}"></script>
+
+    <script src="{{asset('selectize/js/selectize.js')}}"></script>
+
+    {{--seach--}}
+    <script src="{{asset('frontend/js/search.js')}}"></script>
     <script type="text/javascript">
         CKEDITOR.replace('aj-content');
 

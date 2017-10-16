@@ -30,21 +30,40 @@ class PostController extends Controller
         return json_decode($role);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $types_all = json_decode(Type::pluck('name_unicode'));
+        $get_type = $request->type;
+
         $story_role_leader = new PostStoryLeader();
         $user_id = Auth::id();
         $authors = Post::with('User')->select('user_id')->get();
 
         if ($this->role($user_id)[0] == $this->role_admin) {
-            $posts = Post::with('Type')->orderBy('id', 'DESC')->paginate(10);
+            if(in_array($get_type, $types_all)) {
+                $id = Type::select('id')->whereName_unicode($get_type)->first();
+                $posts = Post::with('Type')->whereType($id->id)->orderBy('id', 'DESC')->paginate(10);
+            } else {
+                $posts = Post::with('Type')->orderBy('id', 'DESC')->paginate(10);
+            }
         } elseif ($this->role($user_id)[0] == $this->role_leader) {
-            $posts = Post::with('Type')
-                ->join('users', 'posts.user_id', '=', 'users.id')
-                ->selectRaw('posts.*, users.role')
-                ->whereIn('users.role', [$this->role_leader, $this->role_bus])
-                ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
-                ->orderBy('id', 'DESC')->paginate(10);
+            if(in_array($get_type, $types_all)) {
+                $id = Type::select('id')->whereName_unicode($get_type)->first();
+                $posts = Post::with('Type')
+                    ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->selectRaw('posts.*, users.role')
+                    ->whereIn('users.role', [$this->role_leader, $this->role_bus])
+                    ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
+                    ->where('posts.type',$id->id)
+                    ->orderBy('id', 'DESC')->paginate(10);
+            } else {
+                $posts = Post::with('Type')
+                    ->join('users', 'posts.user_id', '=', 'users.id')
+                    ->selectRaw('posts.*, users.role')
+                    ->whereIn('users.role', [$this->role_leader, $this->role_bus])
+                    ->whereNotIn('posts.id', $story_role_leader->StoryIdNotLeader($user_id))
+                    ->orderBy('id', 'DESC')->paginate(10);
+            }
         } else {
             $posts = Post::with('Type')->orderBy('id', 'DESC')->where('user_id', $user_id)->paginate(10);
         }
@@ -146,15 +165,15 @@ class PostController extends Controller
 
         if ($this->role($user_id)[0] == $this->role_admin && in_array($id, json_decode($all_story_id))) {
             $post->save();
-            return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+            return redirect()->back()->with('mes', 'Đã sửa truyện...');
         } else {
             if ($this->role($user_id)[0] == $this->role_bus && in_array($id, json_decode($story_user_id))) {
                 $post->save();
-                return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+                return redirect()->back()->with('mes', 'Đã sửa truyện...');
             } elseif ($this->role($user_id)[0] == $this->role_leader) {
                 if (!in_array($id, $story_role_leader->StoryIdNotLeader($user_id)) && in_array($id, json_decode($role_leader))) {
                     $post->save();
-                    return redirect(route('post'))->with('mes', 'Đã sửa truyện...');
+                    return redirect()->back()->with('mes', 'Đã sửa truyện...');
                 } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
             } else return redirect(route('post'))->with('er', 'Không phải truyện của bạn...');
         }
