@@ -326,7 +326,7 @@ $role_bus = 3;
             });
 
             $('.sm-title-seo-page').click(function () {
-                var id = $(this).data('seo');
+                var id = $(this).attr('data-seo');
                 var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
                 $.ajax({
                     type: 'POST',
@@ -373,7 +373,7 @@ $role_bus = 3;
 
             $('.sm-content-page').click(function () {
                 var get_id_ckeditor = $(this).closest('.aj-form-page').find('.aj-text-page').attr('id');
-                var id = $(this).data('content');
+                var id = $(this).attr('data-content');
                 var content = CKEDITOR.instances[get_id_ckeditor].getData();
                 $.ajax({
                     type: 'POST',
