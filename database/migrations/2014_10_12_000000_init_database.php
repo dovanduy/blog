@@ -17,7 +17,6 @@ class InitDatabase extends Migration
     protected $TYPE_3 = 'Truyện ngôn tình';
     protected $TYPE_4 = 'Truyện ma';
     protected $TYPE_5 = 'Truyện tâm sự';
-    protected $TYPE_6 = 'Truyện tình yêu';
 
     public function up()
     {
@@ -94,8 +93,7 @@ class InitDatabase extends Migration
             ['name' => $this->TYPE_2, 'name_unicode' => categoryStory($this->TYPE_2)],
             ['name' => $this->TYPE_3, 'name_unicode' => categoryStory($this->TYPE_3)],
             ['name' => $this->TYPE_4, 'name_unicode' => categoryStory($this->TYPE_4)],
-            ['name' => $this->TYPE_5, 'name_unicode' => categoryStory($this->TYPE_5)],
-            ['name' => $this->TYPE_6, 'name_unicode' => categoryStory($this->TYPE_6)]
+            ['name' => $this->TYPE_5, 'name_unicode' => categoryStory($this->TYPE_5)]
         ];
 
         foreach($types as $type) {
