@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');?>
+@section('title')
+    404 - Trang truy cập không tòn tại...
+@endsection
 @section('content')
     <main>
         <div class="row" id="story">

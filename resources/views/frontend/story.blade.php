@@ -1,22 +1,24 @@
 @extends('layouts.frontend')
 <?php setlocale(LC_TIME, 'Vietnamese');
-if(count($story)!=0) {
+if (count($story) != 0) {
     $arr = explode(' ', $story->title);
     $count_title = count($arr);
 }
 ?>
+@if(count($story)!=0)
 @section('meta')
-    <meta property="og:title" content=" {!! $story->title !!}| Truyện Sex" />
-    <meta property="og:url" content="{{url()->current()}}" />
+    <meta property="og:title" content=" {!! $story->title !!}| Truyện Sex"/>
+    <meta property="og:url" content="{{url()->current()}}"/>
     @for($i=0; $i<$count_title;$i++)
         @if($i+1 < $count_title)
-            <meta property="article:tag" content="{{ $arr[$i] . ' ' . $arr[$i+1] }}" />
+            <meta property="article:tag" content="{{ $arr[$i] . ' ' . $arr[$i+1] }}"/>
         @else
-            <meta property="article:tag" content="{{ $arr[$i] }}" />
+            <meta property="article:tag" content="{{ $arr[$i] }}"/>
         @endif
         <?php $i += 1; ?>
     @endfor
 @endsection
+@endif
 @section('title')
     @if(count($story)!=0)
         {!! $story->title !!}
@@ -36,7 +38,8 @@ if(count($story)!=0) {
                         @foreach($types as $type)@if($type->id == $story->type)<a class="breadcrumb-item"
                                                                                   href="{{$type->name_unicode}}"> {{$type->name}}</a>@endif
                         @endforeach
-                        <span class="breadcrumb-item active"><a href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
+                        <span class="breadcrumb-item active"><a
+                                    href="{{ url($story->title_seo) }}">{!! $story->title !!}</a></span>
                     </nav>
                     <div class="description-story item">
                         <h4 id="name">{!! $story->title !!}</h4>
@@ -63,35 +66,38 @@ if(count($story)!=0) {
                     <div class="item">
                         <p class="content-story">
                             {!! $paragraph_paginate['content'] !!}
-                            <small class="name story-r">-- {{$paragraph_paginate['current_page']}} {{$paragraph_paginate['current_page']==$paragraph_paginate['total_page']?'"Trang cuối"':''}} --</small>
+                            <small class="name story-r">
+                                -- {{$paragraph_paginate['current_page']}} {{$paragraph_paginate['current_page']==$paragraph_paginate['total_page']?'"Trang cuối"':''}}
+                                --
+                            </small>
                         </p>
                     </div>
                     <ul class="pagination custom-pagination">
-                            {{--pre--}}
-                            @if ($paragraph_paginate['total_page'] > 1)
-                                @if($paragraph_paginate['current_page'] == 1)
-                                    <li class="disabled"><span>&laquo;</span></li>
-                                @else
-                                    <li>
-                                        <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']-1) }}"
-                                        rel="prev">&laquo;</a></li>
-                                @endif
-                                @for($i=1; $i<=$paragraph_paginate['total_page']; $i++)
-                                    @if($i == $paragraph_paginate['current_page'])
-                                        <li class="active"><span>{{$i}}</span></li>
-                                    @else
-                                        <li><a href="{{ url($story->title_seo)  . '?trang=' . $i }}">{{$i}}</a></li>
-                                    @endif
-                                @endfor
-                                {{--next--}}
-                                @if($paragraph_paginate['current_page'] == $paragraph_paginate['total_page'])
-                                    <li class="disabled"><span>&raquo;</span></li>
-                                @else
-                                    <li>
-                                        <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']+1) }}"
-                                        rel="next">&raquo;</a></li>
-                                @endif
+                        {{--pre--}}
+                        @if ($paragraph_paginate['total_page'] > 1)
+                            @if($paragraph_paginate['current_page'] == 1)
+                                <li class="disabled"><span>&laquo;</span></li>
+                            @else
+                                <li>
+                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']-1) }}"
+                                       rel="prev">&laquo;</a></li>
                             @endif
+                            @for($i=1; $i<=$paragraph_paginate['total_page']; $i++)
+                                @if($i == $paragraph_paginate['current_page'])
+                                    <li class="active"><span>{{$i}}</span></li>
+                                @else
+                                    <li><a href="{{ url($story->title_seo)  . '?trang=' . $i }}">{{$i}}</a></li>
+                                @endif
+                            @endfor
+                            {{--next--}}
+                            @if($paragraph_paginate['current_page'] == $paragraph_paginate['total_page'])
+                                <li class="disabled"><span>&raquo;</span></li>
+                            @else
+                                <li>
+                                    <a href="{{ url($story->title_seo)  . '?trang=' . ($paragraph_paginate['current_page']+1) }}"
+                                       rel="next">&raquo;</a></li>
+                            @endif
+                        @endif
                     </ul>
                 @else
                     <a href="{{url('/')}}" title="Trang chủ."><h5>Truyện không tồn tại...</h5></a>
