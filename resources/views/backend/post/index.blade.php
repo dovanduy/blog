@@ -199,8 +199,7 @@ $role_bus = 3;
                                     @endforeach
                                 </select>
                             </td>
-                            <td class="title-seo-after-edit" data-toggle="modal" data-target="#myModal-title-seo"
-                                title="Ấn để sửa..." style="cursor: pointer;">{{$post->title_seo}}</td>
+                            <td>{{$post->title_seo}}</td>
                             <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content"
                                 title="Ấn để sửa..."
                                 style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
@@ -255,30 +254,6 @@ $role_bus = 3;
                     <div class="modal-footer">
                         <button type="button" id="submit-content" data-content=""
                                 class="btn btn-default sm-content-page">Thay đổi
-                        </button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Modal title seo-->
-    <div class="modal fade" id="myModal-title-seo" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content aj-form-page">
-                <form>
-                    {{csrf_field()}}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Title SEO</h4>
-                    </div>
-                    <div class="modal-body">
-                        <input class="aj-text-page form-control" name="title_seo" id="title_seo"
-                               placeholder="Nhập title seo">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="submit-title-seo" data-seo=""
-                                class="btn btn-default sm-title-seo-page">Thay đổi
                         </button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Quay lại</button>
                     </div>
@@ -372,51 +347,6 @@ $role_bus = 3;
 
         //title seo
         $(document).ready(function () {
-            $(document).on('click', '.title-seo-after-edit', function () {
-                var id = $(this).closest('tr').attr('id');
-                $('#submit-title-seo').attr('data-seo', id);
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.mainContent') }}',
-                    data: {
-                        "_token": '{{ csrf_token() }}',
-                        'id': id
-                    },
-                    dataType: 'JSON',
-                    success: function (rsp) {
-                        $('#title_seo').val(rsp.title_seo)
-                    },
-                    error: function () {
-                        alert('Đã có lỗi xảy ra xin thử lại!');
-                        location.reload();
-                    }
-                });
-            });
-
-            $('.sm-title-seo-page').click(function () {
-                var id = $(this).attr('data-seo');
-                var title_seo = $(this).closest('.aj-form-page').find('.aj-text-page').val();
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.changeTitleSeo') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        'id': id,
-                        'title_seo': title_seo
-                    },
-                    dataType: 'JSON',
-                    success: function (rsp) {
-                        alert('Cập nhật truyện thành công!');
-                        $('#' + rsp.id).find('.title-seo-after-edit').empty();
-                        $('#' + rsp.id).find('.title-seo-after-edit').append(TruncateText(rsp.title_seo));
-                        $('#myModal-title-seo').modal('toggle');
-                    },
-                    error: function () {
-                        alert('Có một lỗi xảy ra!');
-                        location.reload();
-                    }
-                })
-            });
             //content
             $(document).on('click', '.content-after-edit', function () {
                 var id = $(this).closest('tr').attr('id');

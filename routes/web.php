@@ -65,7 +65,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('getStory', 'Backend\ToolController@getStory')->name('tool.ajax.getStory');
         Route::post('getPagination', 'Backend\ToolController@getPagination')->name('tool.ajax.pagination');
         Route::post('postCreate', 'Backend\ToolController@postCreate')->name('tool.postCreate');
-
+        //post
+        Route::post('store', 'Backend\ToolController@Store')->name('Tool.Store');
     });
     //change password
     Route::post('changePassword', 'Backend\ChangePassword@postCredentials')->name('changePassword');

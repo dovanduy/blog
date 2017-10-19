@@ -78,6 +78,26 @@
             <hr>
         </div>
         <div class="form-group">
+            <h3>Sửa hoặc thêm site</h3>
+            <form method="POST" action="{{route('Tool.Store')}}">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="select_store">Chọn các site sau:</label>
+                    <select class="form-control" name="select_store" id="select_store">
+                        @foreach($sites as $site)
+                            <option value="{{$site->id}}">{{ str_limit($site->site, $limit = 40, $end='...') }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info">Sửa hoặc thêm <span class="fa fa-pencil-square-o"></span></button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+        </div>
+        <div class="form-group">
             <h4 style="color: #7da8c3">Các thể loại:</h4>
             @foreach($sites as $site)
                 <div class="form-group">

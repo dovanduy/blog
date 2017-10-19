@@ -242,4 +242,8 @@ class ToolController extends Controller
         $search = Tool::where('site', 'LIKE', "%$site%")->limit(5)->get();
         return $search;
     }
+
+    public function Store(Request $request) {
+        return $request->select_store;
+    }
 }
