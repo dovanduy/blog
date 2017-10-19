@@ -33,5 +33,5 @@ $('#story-search').selectize({
 
 $(document).on('click', '#search-story', function () {
     var val = $('#story-search').val();
-    $(location).attr('href', 'http://' + $(location).attr('host') + '/?timkiem=' + val);
+    $(location).attr('href', 'http://' + window.location.origin + '/?timkiem=' + val);
 });
