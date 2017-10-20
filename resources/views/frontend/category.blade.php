@@ -18,7 +18,7 @@
                     <div class="item">
                         <h5 data-id="{{$post->id}}"><a href="{{ url($post->title_seo) }}">{{$post->title}}</a></h5>
                         <span><i class="fa fa-eye" aria-hidden="true">
-                            </i>{{$post->view}}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true">
+                            </i>{{post_views($post->view)}}&nbsp;-&nbsp;<i class="fa fa-clock-o" aria-hidden="true">
                                 <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{time_elapsed_string($post->created_at) }}
                             </i>
                         </span>
@@ -68,7 +68,7 @@
                                     <div class="item-story-sidebar">
                                         <p class="name"><a href="{{$top_30->title_seo}}">{{$top_30->title}}</a></p>
                                         <span class="stats">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> {{$top_30->view}} -
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($top_30->view)}} -
                                     <i class="fa fa-clock-o"
                                        aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
                                 </span>
@@ -90,7 +90,7 @@
                                     <div class="item-story-sidebar">
                                         <p class="name"><a href="{{$top_7->title_seo}}">{{$top_7->title}}</a></p>
                                         <span class="stats">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> {{$top_7->view}} -
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($top_7->view)}} -
                                     <i class="fa fa-clock-o"
                                        aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
                                 </span>

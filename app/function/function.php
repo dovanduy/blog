@@ -131,4 +131,21 @@ function time_elapsed_string($datetime, $full = false)
     return $string ? implode(', ', $string) . ' trước' : 'Bây giờ';
 }
 
+function post_views($view) {
+    if($view<1000) {
+        return $view;
+    } elseif ($view>=1000) {
+        $k = round((floor($view/10)*10)/1000, 2) . ' k' ;
+        return $k;
+    } elseif ($view>=1000000) {
+        $m = round((floor($view/10000)*10)/1000, 2) . ' m' ;
+        return $m;
+    } elseif ($view>=1000000000) {
+        $b = round((floor($view/10000000)*10)/1000, 2) . ' b' ;
+        return $b;
+    } else {
+        return 0;
+    }
+}
+
 ?>

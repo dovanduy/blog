@@ -47,7 +47,7 @@ if (count($story) != 0) {
                             <small class="name story-r fa fa-modx">Trang {{$paragraph_paginate['current_page']}}</small>
                         </div>
                         <span>
-                <i class="fa fa-eye" aria-hidden="true"></i> {!! $story->view !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
+                <i class="fa fa-eye" aria-hidden="true"></i> {!! post_views($story->view) !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
                                                                                                  aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
                 <i class="fa fa-tags" aria-hidden="true">
                   <a class="tag-story" href="{{url('/?timkiem=truyen-ngươi-lon')}}">Truyện người lớn</a>
@@ -138,7 +138,7 @@ if (count($story) != 0) {
                                         @endforeach
                                     </div>
                                     <div class="stats">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> {{$involve->view}} -
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($involve->view)}} -
                                         <i class="fa fa-clock-o" aria-hidden="true">
                                             <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($involve->created_at) }}
                                         </i>
@@ -162,7 +162,7 @@ if (count($story) != 0) {
                                     <div class="item-story-sidebar">
                                         <p class="name"><a href="{{url($top_30->title_seo)}}">{{$top_30->title}}</a></p>
                                         <span class="stats">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> {{$top_30->view}} -
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($top_30->view)}} -
                                     <i class="fa fa-clock-o"
                                        aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_30->created_at) }}</i>
                                 </span>
