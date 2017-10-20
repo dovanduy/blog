@@ -50,7 +50,7 @@ if (count($story) != 0) {
                 <i class="fa fa-eye" aria-hidden="true"></i> {!! post_views($story->view) !!}&nbsp;-&nbsp;<i class="fa fa-clock-o"
                                                                                                  aria-hidden="true"> {{ time_elapsed_string($story->created_at) }}</i><br/>
                 <i class="fa fa-tags" aria-hidden="true">
-                  <a class="tag-story" href="{{url('/?timkiem=truyen-ngươi-lon')}}">Truyện người lớn</a>
+                  <a class="tag-story" href="{{url('/?timkiem=truyenxxx')}}">Truyện người lớn</a>
                     @for($i=0; $i<$count_title;$i++)
                         @if($i+1 < $count_title)
                             <a class="tag-story"
