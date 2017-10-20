@@ -202,7 +202,7 @@ $role_bus = 3;
                             <td>{{$post->title_seo}}</td>
                             <td class="content-after-edit" data-toggle="modal" data-target=".myModal-content"
                                 title="Ấn để sửa..."
-                                style="cursor: pointer;">{!! str_limit($post->content, $limit = 100, $end = '...') !!}</td>
+                                style="cursor: pointer;">{!! str_limit(strip_tags($post->content), $limit = 100, $end = '...') !!}</td>
                             @if(\Illuminate\Support\Facades\Auth::id() == $role_admin || \Illuminate\Support\Facades\Auth::id() == $role_leader)
                                 <td>@foreach(App\User::select('name')->where('id', $post->user_id)->get() as $val) {{$val->name}} @endforeach</td>
                             @endif

@@ -24,7 +24,7 @@
                         </span>
                         <a href="{{ url($post->title_seo) }}">
                             <p class="description">
-                                {!! str_limit($post->content, $limit = 200, $end = '...') !!}
+                                {!! str_limit(strip_tags($post->content), $limit = 200, $end = '...') !!}
                             </p>
                         </a>
                     </div>
