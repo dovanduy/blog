@@ -169,6 +169,7 @@ class ToolController extends Controller
     {
         $site = json_decode(Tool::pluck('site'));
         $choose_site = $request->site;
+        return $choose_site;
         if (count($site) == 0 || !in_array($choose_site, $site)) {
             $tool = new Tool();
             $tool->user_id = Auth::id();
@@ -241,9 +242,5 @@ class ToolController extends Controller
         $site = $request->search_site;
         $search = Tool::where('site', 'LIKE', "%$site%")->limit(5)->get();
         return $search;
-    }
-
-    public function Store(Request $request) {
-        return $request->select_store;
     }
 }
