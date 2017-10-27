@@ -24,6 +24,7 @@ class CreateViewsTable extends Migration
             $table->integer('day_6')->default(0);
             $table->integer('day_7')->default(0);
             $table->integer('day_8')->default(0);
+            $table->integer('total')->default(0);
             $table->timestamps();
         });
     }

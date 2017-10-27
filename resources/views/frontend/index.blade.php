@@ -67,11 +67,11 @@
                             <div class="item-sidebar">
                                 <span class="rank-story-sidebar">{{$key+1}}</span>
                                 <div class="item-story-sidebar">
-                                    <p class="name"><a href="{{url($top_7->title_seo)}}">{{$top_7->title}}</a></p>
+                                    <p class="name"><a href="{{url($top_7->post->title_seo)}}">{{$top_7->post->title}}</a></p>
                                     <span class="stats">
-                                    <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($top_7->view)}} -
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{post_views($top_7->post->view)}} -
                                     <i class="fa fa-clock-o"
-                                       aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_7->created_at) }}</i>
+                                       aria-hidden="true"> <?php date_default_timezone_set("Asia/Ho_Chi_Minh");?>{{ time_elapsed_string($top_7->post->created_at) }}</i>
                                 </span>
                                 </div>
                             </div>

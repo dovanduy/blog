@@ -26,137 +26,155 @@ class HomeController extends Controller
             if (count($count_view_story_id) != 0) {
                 $time_db_now = date('Y-m-d', strtotime($count_view_story_id->updated_at));
                 $time_now = date('Y-m-d', time());
-                if ($time_db_now != $time_now) {
-                    $time_old = strtotime($time_now) - strtotime($time_db_now);
-                    $day = $time_old / (3600 * 24);
+                if($time_db_now != $time_now) {
+                    if ($time_db_now != $time_now) {
+                        $time_old = strtotime($time_now) - strtotime($time_db_now);
+                        $day = $time_old / (3600 * 24);
 
-                    switch ($day) {
-                        case 1:
-                            $day_2 = $count_view_story_id->today;
-                            $day_3 = $count_view_story_id->day_2;
-                            $day_4 = $count_view_story_id->day_3;
-                            $day_5 = $count_view_story_id->day_4;
-                            $day_6 = $count_view_story_id->day_5;
-                            $day_7 = $count_view_story_id->day_6;
-                            $day_8 = $count_view_story_id->day_7;
+                        switch ($day) {
+                            case 1:
+                                $day_2 = $count_view_story_id->today;
+                                $day_3 = $count_view_story_id->day_2;
+                                $day_4 = $count_view_story_id->day_3;
+                                $day_5 = $count_view_story_id->day_4;
+                                $day_6 = $count_view_story_id->day_5;
+                                $day_7 = $count_view_story_id->day_6;
+                                $day_8 = $count_view_story_id->day_7;
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = $day_2;
-                            $count_view_story_id->day_3 = $day_3;
-                            $count_view_story_id->day_4 = $day_4;
-                            $count_view_story_id->day_5 = $day_5;
-                            $count_view_story_id->day_6 = $day_6;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
-                            break;
-                        case 2:
-                            $day_3 = $count_view_story_id->today;
-                            $day_4 = $count_view_story_id->day_2;
-                            $day_5 = $count_view_story_id->day_3;
-                            $day_6 = $count_view_story_id->day_4;
-                            $day_7 = $count_view_story_id->day_5;
-                            $day_8 = $count_view_story_id->day_6;
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = $day_2;
+                                $count_view_story_id->day_3 = $day_3;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = $day_3;
-                            $count_view_story_id->day_4 = $day_4;
-                            $count_view_story_id->day_5 = $day_5;
-                            $count_view_story_id->day_6 = $day_6;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
+                                $count_view_story_id->total = (int)$day_2 + (int)$day_3 + (int)$day_4 + (int)$day_5 + (int)$day_6 + (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
+                                break;
+                            case 2:
+                                $day_3 = $count_view_story_id->today;
+                                $day_4 = $count_view_story_id->day_2;
+                                $day_5 = $count_view_story_id->day_3;
+                                $day_6 = $count_view_story_id->day_4;
+                                $day_7 = $count_view_story_id->day_5;
+                                $day_8 = $count_view_story_id->day_6;
 
-                            break;
-                        case 3:
-                            $day_4 = $count_view_story_id->today;
-                            $day_5 = $count_view_story_id->day_2;
-                            $day_6 = $count_view_story_id->day_3;
-                            $day_7 = $count_view_story_id->day_4;
-                            $day_8 = $count_view_story_id->day_5;
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = $day_3;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = $day_4;
-                            $count_view_story_id->day_5 = $day_5;
-                            $count_view_story_id->day_6 = $day_6;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
+                                $count_view_story_id->total = (int)$day_3 + (int)$day_4 + (int)$day_5 + (int)$day_6 + (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
 
-                            break;
-                        case 4:
-                            $day_5 = $count_view_story_id->today;
-                            $day_6 = $count_view_story_id->day_2;
-                            $day_7 = $count_view_story_id->day_3;
-                            $day_8 = $count_view_story_id->day_4;
+                                break;
+                            case 3:
+                                $day_4 = $count_view_story_id->today;
+                                $day_5 = $count_view_story_id->day_2;
+                                $day_6 = $count_view_story_id->day_3;
+                                $day_7 = $count_view_story_id->day_4;
+                                $day_8 = $count_view_story_id->day_5;
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = 0;
-                            $count_view_story_id->day_5 = $day_5;
-                            $count_view_story_id->day_6 = $day_6;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = $day_4;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
 
-                            break;
-                        case 5:
-                            $day_6 = $count_view_story_id->today;
-                            $day_7 = $count_view_story_id->day_2;
-                            $day_8 = $count_view_story_id->day_3;
+                                $count_view_story_id->total = (int)$day_4 + (int)$day_5 + (int)$day_6 + (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = 0;
-                            $count_view_story_id->day_5 = 0;
-                            $count_view_story_id->day_6 = $day_6;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
+                                break;
+                            case 4:
+                                $day_5 = $count_view_story_id->today;
+                                $day_6 = $count_view_story_id->day_2;
+                                $day_7 = $count_view_story_id->day_3;
+                                $day_8 = $count_view_story_id->day_4;
 
-                            break;
-                        case 6:
-                            $day_7 = $count_view_story_id->today;
-                            $day_8 = $count_view_story_id->day_2;
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = $day_5;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = 0;
-                            $count_view_story_id->day_5 = 0;
-                            $count_view_story_id->day_6 = 0;
-                            $count_view_story_id->day_7 = $day_7;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
-                            break;
-                        case 7:
-                            $day_8 = $count_view_story_id->today;
+                                $count_view_story_id->total = (int)$day_5 + (int)$day_6 + (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
 
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = 0;
-                            $count_view_story_id->day_5 = 0;
-                            $count_view_story_id->day_6 = 0;
-                            $count_view_story_id->day_7 = 0;
-                            $count_view_story_id->day_8 = $day_8;
-                            $count_view_story_id->save();
-                            break;
-                        default:
-                            $count_view_story_id->today = 0;
-                            $count_view_story_id->day_2 = 0;
-                            $count_view_story_id->day_3 = 0;
-                            $count_view_story_id->day_4 = 0;
-                            $count_view_story_id->day_5 = 0;
-                            $count_view_story_id->day_6 = 0;
-                            $count_view_story_id->day_7 = 0;
-                            $count_view_story_id->day_8 = 0;
-                            $count_view_story_id->save();
+                                break;
+                            case 5:
+                                $day_6 = $count_view_story_id->today;
+                                $day_7 = $count_view_story_id->day_2;
+                                $day_8 = $count_view_story_id->day_3;
+
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = $day_6;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
+
+                                $count_view_story_id->total = (int)$day_6 + (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
+
+                                break;
+                            case 6:
+                                $day_7 = $count_view_story_id->today;
+                                $day_8 = $count_view_story_id->day_2;
+
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = $day_7;
+                                $count_view_story_id->day_8 = $day_8;
+
+                                $count_view_story_id->total = (int)$day_7 + (int)$day_8;
+                                $count_view_story_id->save();
+                                break;
+                            case 7:
+                                $day_8 = $count_view_story_id->today;
+
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = 0;
+                                $count_view_story_id->day_8 = $day_8;
+
+                                $count_view_story_id->total = (int)$day_8;
+                                $count_view_story_id->save();
+                                break;
+                            default:
+                                $count_view_story_id->today = 0;
+                                $count_view_story_id->day_2 = 0;
+                                $count_view_story_id->day_3 = 0;
+                                $count_view_story_id->day_4 = 0;
+                                $count_view_story_id->day_5 = 0;
+                                $count_view_story_id->day_6 = 0;
+                                $count_view_story_id->day_7 = 0;
+                                $count_view_story_id->day_8 = 0;
+
+                                $count_view_story_id->total = 0;
+                                $count_view_story_id->save();
+                        }
                     }
                 }
             }
