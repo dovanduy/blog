@@ -5,7 +5,7 @@
     <meta property="og:url" content="{{url()->current()}}" />
 @endsection
 @section('title')
-    @if(!isset($_GET['timkiem']))Trang chủ - {{url()->current()}} @else Tìm kiếm @endif
+    @if(!isset($_GET['timkiem']))Trang chủ - {{url()->current()}} @else @if(in_array(categoryStory($_GET['timkiem']), $list_seo)) {{$_GET['timkiem'] . ' - Truyện 18+ | Truyện Sex | TruyenXXX'}} @else {{$_GET['timkiem']}} @endif @endif
 @endsection
 @section('content')
     <main>

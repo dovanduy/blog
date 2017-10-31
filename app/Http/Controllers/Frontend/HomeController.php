@@ -20,9 +20,10 @@ class HomeController extends Controller
     public function index(Request $request) {
         $types = Type::all();
         $type_dcd = json_decode(Type::pluck('name_unicode'));
+        $list_seo = ['truyenxxx', 'truyen-nguoi-lon', 'truyen-18', 'truyenxx'];
 
         if($request->timkiem) {
-            if($request->timkiem == 'truyenxxx' || categoryStory($request->timkiem) == 'truyen-nguoi-lon') {
+            if(in_array(categoryStory($request->timkiem), $list_seo)) {
                 $posts = Post::whereStatus(1)
                     ->orderBy('created_at', 'DESC')
                     ->paginate(15);
@@ -204,6 +205,6 @@ class HomeController extends Controller
 
         $tops_30 = Post::whereStatus('1')->where('created_at', '>=', date('Y-m-d', time() - 24*3600*60))->orderBy('view', 'DESC')->limit(5)->get();
         $tops_7 = View::with('post')->where('updated_at', '>=', date('Y-m-d', time() - 24*3600*7))->orderBy('total', 'DESC')->limit(7)->get();
-        return view('frontend.index', compact('posts', 'types', 'tops_30', 'tops_7'));
+        return view('frontend.index', compact('posts', 'types', 'tops_30', 'tops_7', 'list_seo'));
     }
 }

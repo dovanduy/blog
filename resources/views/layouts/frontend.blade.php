@@ -69,6 +69,7 @@
 
         <footer>
             <span class="text-right">Copyright &copy; XXX</span>
+            <div class="text-bot"><i>@Tìm kiếm:</i><a href="{{url('/?timkiem=truyện%20xxx')}}"><small>Truyện xxx</small></a><i>|</i><a href="{{url('/?timkiem=truyện%20sex')}}"><small>Truyện sex</small></a><i>|</i><a href="{{url('/?timkiem=truyện%20loạn%20luân')}}"><small>truyện loạn luân</small></a><i>|</i><a href="{{url('/?timkiem=truyện%2018+')}}"><small>truyện 18+</small></a></div>
         </footer>
     </div>
 </div>

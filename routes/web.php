@@ -15,6 +15,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Frontend\HomeController@index');
 Route::get('/{name}', 'Frontend\StoryController@index');
 
+//sitemap
+Route::get('/sitemap/index.xml', 'Sitemap\SitemapController@index');
+Route::get('/sitemap/category.xml', 'Sitemap\SitemapController@categogy');
+Route::get('/sitemap/tags.xml', 'Sitemap\SitemapController@tags');
 
 Route::fallback(function(){
     return view('error.error');

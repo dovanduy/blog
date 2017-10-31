@@ -279,3 +279,20 @@ ul.pagination li.active span {
     border: solid 1px #ccc;
     border-radius: 5px;
 }
+.text-bot {
+    line-height: 50px;
+    padding-left: 15px;
+}
+
+.text-bot i {
+    margin-left: 5px;
+    color: #337ab7;
+}
+
+.text-bot a {
+    color: white;
+    font-size: 13px;
+}
+.text-bot a:not(:first-child) {
+    margin-left: 5px;
+}
